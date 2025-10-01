@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 import AuthSideBanner from "../../../../components/authContainer/AuthSideBanner";
 import RedirectButton from "../../../../components/authContainer/RedirectButton";
 import Link from "next/link";
+import LoginForm from "../../../../components/authContainer/LoginForm";
 
 function Login() {
   return (
@@ -66,32 +67,7 @@ function Login() {
             </span>
           </div>
 
-          <form className="flex flex-col gap-4">
-            <label htmlFor="email" className="text-right font-semibold">
-              ایمیل
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="ایمیل خود را وارد کنید"
-              className="text-right w-[390px] h-[48px] bg-[#F9F9F9] rounded-[31px] p-4 outline-none border-none"
-            />{" "}
-            <label htmlFor="email" className="text-right font-semibold">
-              رمز عبور
-            </label>
-            <input
-              id="email"
-              type="email"
-              placeholder="رمز عبور خود را وارد کنید"
-              className="text-right w-[390px] h-[48px] bg-[#F9F9F9] rounded-[31px] p-4 outline-none border-none"
-            />
-            <Button
-              type="submit"
-              className="bg-[#7575FE] hover:bg-[#6d6dfc] text-white rounded-[31px] h-[48px] w-[390px] mt-[8px]"
-            >
-              ورود به حساب{" "}
-            </Button>
-          </form>
+          <LoginForm />
 
           <div className="mt-6 text-center text-sm">
             حساب کاربری ندارید؟

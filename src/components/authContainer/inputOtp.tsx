@@ -3,9 +3,10 @@ import React, { useRef, useState } from "react";
 
 interface OTPInputProps {
   length?: number;
+  setVerifyCode: (code: string) => void;
 }
 
-const OTPInput = ({ length = 6 }: OTPInputProps) => {
+const OTPInput = ({ length = 6, setVerifyCode }: OTPInputProps) => {
   const [otp, setOtp] = useState<string[]>(Array(length).fill(""));
   const inputsRef = useRef<Array<HTMLInputElement | null>>([]);
 
@@ -30,7 +31,7 @@ const OTPInput = ({ length = 6 }: OTPInputProps) => {
     const newOtp = [...otp];
     newOtp[i] = persianDigit;
     setOtp(newOtp);
-
+    setVerifyCode(persianToEnglishNumber(newOtp.join("")));
     if (value && i < length - 1) {
       inputsRef.current[i + 1]?.focus();
     }
@@ -61,12 +62,6 @@ const OTPInput = ({ length = 6 }: OTPInputProps) => {
           className="w-12 h-12 sm:w-16 sm:h-16 text-center text-[24px] rounded-xl sm:rounded-[24px] bg-[#F9F9F9] border-2 border-transparent focus:border-[#7575FE] focus:scale-110 transition-all focus:outline-none"
         />
       ))}
-      {/* Hidden input برای ارسال به سرور */}
-      <input
-        type="hidden"
-        name="otp"
-        value={persianToEnglishNumber(otp.join(""))}
-      />
     </div>
   );
 };

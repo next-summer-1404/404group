@@ -6,9 +6,9 @@ import { Input } from "@heroui/react";
 
 import googleIcone from "@/assets/auth/googleIcone.png";
 import appleIcone from "@/assets/auth/appleIcnoe.png";
-import { sendCode } from "../../../../../lib/actions/auth";
 import RedirectButton from "../../../../../components/authContainer/RedirectButton";
 import Link from "next/link";
+import RegisterFormStepOne from "../../../../../components/authContainer/RegisterFormStepOne";
 
 function registerStepOne() {
   // const router = useRouter();
@@ -66,25 +66,7 @@ function registerStepOne() {
             </span>
           </div>
 
-          <form action={sendCode} className="flex flex-col gap-4">
-            <label htmlFor="email" className="text-right font-semibold">
-              ایمیل
-            </label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              placeholder="ایمیل خود را وارد کنید"
-              required
-              className="text-right w-[390px] h-[48px] bg-[#F9F9F9] rounded-[31px] p-4 outline-none border-none"
-            />
-            <Button
-              type="submit"
-              className="bg-[#7575FE] hover:bg-[#6d6dfc] text-white rounded-[31px] h-[48px] w-[390px] mt-[8px]"
-            >
-              ارسال کد تایید
-            </Button>
-          </form>
+          <RegisterFormStepOne />
 
           <div className="mt-6 text-center text-sm">
             حساب کاربری دارید؟
