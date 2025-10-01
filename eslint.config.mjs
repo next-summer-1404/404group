@@ -19,6 +19,9 @@ const eslintConfig = [
       "build/**",
       "next-env.d.ts",
     ],
+    rules: {
+      "eslint-disable @typescript-eslint/no-require-imports": false,
+    },
   },
 ];
 
