@@ -1,5 +1,5 @@
 import http from "@/services/api/interceptor/interceptor";
-interface ILogin {
+export interface ILogin {
   accessToken: string;
   refreshToken: string;
 }

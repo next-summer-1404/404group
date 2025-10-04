@@ -8,9 +8,14 @@ import { useMutation } from "@tanstack/react-query";
 import { PostVerifyCode } from "../../services/api/auth/register/stepTow/PostVerifyCode";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
-
-function RegisterFormStepTow() {
+import { PostForgetPasswordStepTwo } from "../../services/api/auth/forgetPassword/stepTow/PostForgetPasswordStepTwo";
+interface IPropsRegisterFormStepTow {
+  inForgetPass?: boolean;
+}
+function RegisterFormStepTow({ inForgetPass }: IPropsRegisterFormStepTow) {
   const tempUserId = Cookies.get("tempUserId");
+  const email = Cookies.get("email");
+  const [verifyCode, setVerifyCode] = useState<string>("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
   const PostVerify = useMutation({
@@ -32,7 +37,32 @@ function RegisterFormStepTow() {
       toast.error("کد وارد شده صحیح نمی باشد !");
     },
   });
-  const [verifyCode, setVerifyCode] = useState<string>("");
+  const PostForgetPassStepTwo = useMutation({
+    mutationFn: (data: string) => PostForgetPasswordStepTwo(email!, data),
+    onSuccess: (response, variables) => {
+      setIsLoading(false);
+      toast.success("عملیات با موفقیت انجام شد");
+      Cookies.set("resetCode", variables, {
+        expires: 1,
+        path: "/",
+        secure: true,
+        sameSite: "strict",
+      });
+      Cookies.set("userId", response?.userId, {
+        expires: 1,
+        path: "/",
+        secure: true,
+        sameSite: "strict",
+      });
+      router.push("/forgetPassword/step3");
+    },
+    onError: (error) => {
+      setIsLoading(false);
+
+      toast.error("کد وارد شده صحیح نمی باشد !");
+    },
+  });
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!verifyCode) {
@@ -40,9 +70,12 @@ function RegisterFormStepTow() {
     } else if (verifyCode.length !== 6) {
       return toast.error("لطفا کد تایید را کامل وارد کنید !");
     }
-    if (tempUserId) {
+    if (tempUserId && !inForgetPass) {
       setIsLoading(true);
       PostVerify.mutate(verifyCode);
+    }
+    if (inForgetPass) {
+      PostForgetPassStepTwo.mutate(verifyCode);
     }
   };
   return (

@@ -13,66 +13,23 @@ import {
   toPersianDigits,
 } from "../../utils/hooks/formatNumberToPersian";
 import Link from "next/link";
-export interface Location {
-  lat: number;
-  lng: number;
-}
+import { House, HousesResponse } from "../../types/RentTypes/HomeTypes";
 
-export interface Categories {
-  name: string;
-}
-
-export interface House {
-  id: string;
-  title: string;
-  address: string;
-  photos: string[]; // آرایه از استرینگ
-  rate: number | null;
-  discounted_price: number | null;
-  price: string; // یا number بسته به API
-  tags: string[];
-  last_updated: string;
-  capacity: number;
-  location: Location;
-  categories: Categories;
-  bathrooms: number;
-  parking: number;
-  rooms: number;
-  yard_type: string;
-  num_comments: number;
-  discount_id: string | null;
-  transaction_type: string;
-  sellerId: string;
-  sellerName: string;
-  caption: string;
-  bookings: number;
-  favoriteId: string | null;
-  isFavorite: boolean;
-}
-
-// اگر میخوای برای پاسخ API استفاده کنی:
-export interface HousesResponse {
-  houses: House[];
-  totalCount: number;
-}
-
-async function HousesComponents() {
+async function HousesComponents({ data }: { data: HousesResponse }) {
+  console.log(data + "sjklhalsdksklgjldfjgdf");
   const getFirstPhoto = (photos: string[] | null) => {
     if (photos && photos.length > 0 && photos[0] !== "") return photos[0];
     return imageHouses;
   };
-  const params = {};
-  const data: HousesResponse = await getAllHouses(params); // ✅ درست تایپ شد  const home = data.houses;
-  console.log(data);
 
   return (
-    <div className="flex flex-row flex-wrap gap-[56px] p-[56px]">
+    <div className="flex flex-row flex-wrap gap-[56px]  p-[40px] sm:p-[56px]">
       {data?.houses?.map((item: House) => (
         <div
-          className=" w-[633px] h-[229px] flex flex-row gap-[16px] hover:shadow-2xl transition-[0.3s] rounded-[24px] "
+          className=" sm:w-[633px] p-2  sm:h-[229px]  flex flex-col sm:flex-row shadow-lg sm:shadow-none gap-[16px] hover:shadow-2xl transition-[0.3s] rounded-[24px] "
           key={item.id}
         >
-          <div className="border border-gray-300 overflow-hidden rounded-[24px]">
+          <div className="border border-gray-300 overflow-hidden rounded-[24px] h-[229px] sm:h-auto">
             <Image
               src={getFirstPhoto(item.photos)}
               alt="icone"

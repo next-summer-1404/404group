@@ -1,0 +1,144 @@
+"use client";
+import React, { useState } from "react";
+import AuthSideBanner from "../../../../../components/authContainer/AuthSideBanner";
+import { Button } from "@heroui/button";
+import RedirectButton from "../../../../../components/authContainer/RedirectButton";
+import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+import { PostInformation } from "../../../../../services/api/auth/register/stepThree/PostInformation";
+import { useForm } from "react-hook-form";
+import Cookies from "js-cookie";
+import { PostNewPasswordStepThree } from "../../../../../services/api/auth/forgetPassword/stepThree/PostNewPasswordStepThree";
+
+type FormInformation = {
+  PhoneNumber: string;
+  PhoneNumberRepeat: string;
+  password: string;
+};
+
+function forgetPassStepThree() {
+  const router = useRouter();
+  const userId = Cookies.get("userId");
+  const email = Cookies.get("email");
+  const resetCode = Cookies.get("resetCode");
+
+  if (!userId) {
+    toast.error("کاربر موقت پیدا نشد! دوباره تلاش کنید.");
+    router.push("/forgetPassword/step2");
+  }
+
+  const {
+    register,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<FormInformation>();
+
+  const [isLoading, setIsLoading] = useState(false);
+
+  const PostNewPassword = useMutation({
+    mutationFn: (data: FormInformation) =>
+      PostNewPasswordStepThree(email!, resetCode!, data.password),
+    onMutate: () => setIsLoading(true),
+    onSuccess: (response) => {
+      setIsLoading(false);
+      toast.success("عملیات با موفقیت انجام شد");
+      console.log(response);
+
+      router.push("/login");
+    },
+    onError: () => {
+      setIsLoading(false);
+      toast.error("خطا در ارسال اطلاعات، دوباره تلاش کنید!");
+    },
+  });
+
+  const onSubmit = (data: FormInformation) => {
+    if (data.password !== data.PhoneNumberRepeat) {
+      return toast.error("رمز عبور و تکرار آن یکسان نیست!");
+    }
+    if (userId) {
+      PostNewPassword.mutate(data);
+    }
+  };
+
+  return (
+    <div className="flex flex-col lg:flex-row justify-between ">
+      <div className="w-[100%]">
+        <div className="max-w-md mx-auto p-6 mt-[104px]">
+          <div className="flex flex-row-reverse justify-between">
+            <RedirectButton Link="/forgetPassword/step2" title="بازگشت" />
+            <h1 className="text-2xl font-bold mb-4 text-right">
+              بازیابی رمز عبور
+            </h1>
+          </div>
+
+          <p className="mb-8 text-gray-600 text-right">
+            رمز عبور جدید را وارد کنید
+          </p>
+
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col gap-4"
+          >
+            {/* رمز عبور */}
+            <label htmlFor="password" className="text-right font-semibold">
+              رمز عبور
+            </label>
+            <input
+              id="password"
+              type="password"
+              placeholder="رمز عبور خود را وارد کنید"
+              className={`text-right w-[390px] h-[48px] bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
+                errors.password ? "border-red-500" : "border-none"
+              }`}
+              {...register("password", { required: "رمز عبور الزامی است" })}
+            />
+            {errors.password && (
+              <p className="text-red-500 text-sm text-right">
+                {errors.password.message}
+              </p>
+            )}
+
+            {/* تکرار رمز عبور */}
+            <label
+              htmlFor="PhoneNumberRepeat"
+              className="text-right font-semibold"
+            >
+              تکرار رمز عبور
+            </label>
+            <input
+              id="PhoneNumberRepeat"
+              type="password"
+              placeholder="تکرار رمز عبور خود را وارد کنید"
+              className={`text-right w-[390px] h-[48px] bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
+                errors.PhoneNumberRepeat ? "border-red-500" : "border-none"
+              }`}
+              {...register("PhoneNumberRepeat", {
+                required: "تکرار رمز عبور الزامی است",
+              })}
+            />
+            {errors.PhoneNumberRepeat && (
+              <p className="text-red-500 text-sm text-right">
+                {errors.PhoneNumberRepeat.message}
+              </p>
+            )}
+
+            <Button
+              isLoading={isLoading}
+              type="submit"
+              disabled={isLoading}
+              className="bg-[#7575FE] hover:bg-[#6d6dfc] text-white rounded-[31px] h-[48px] w-[390px] mt-[8px]"
+            >
+              {isLoading ? "در حال ارسال..." : "ثبت نام"}
+            </Button>
+          </form>
+        </div>
+      </div>
+      <AuthSideBanner />
+    </div>
+  );
+}
+
+export default forgetPassStepThree;

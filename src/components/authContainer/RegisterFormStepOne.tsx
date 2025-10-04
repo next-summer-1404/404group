@@ -8,25 +8,23 @@ import { Toast } from "@heroui/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { PostForgetPassStepOne } from "../../services/api/auth/forgetPassword/stepOne/PostForgetPassStepOne";
+import { BlockList } from "net";
 type FormValues = {
   email: string;
 };
-
-function RegisterFormStepOne() {
-  const [email, setEmail] = useState("");
+interface IPropsRegisterFormStepOne {
+  inForgetPass?: Boolean;
+}
+function RegisterFormStepOne({ inForgetPass }: IPropsRegisterFormStepOne) {
+  // const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  //   const {
-  //     data: newsDetail,
-  //     isLoading,
-  //     refetch,
-  //   } = useQuery({
-  //     queryKey: ["newsDetail"],
-  //     queryFn: async () => getNewsById(),
-  //   });
+
   const PostEmail = useMutation({
     mutationFn: (data: string) => PostEmailForRegister(data),
-    onSuccess: (response) => {
+    onSuccess: (response, variables) => {
+      const email = variables;
       setIsLoading(false);
       toast.success(`کد تایید به ایمیل ${email} ارسال شد`);
       Cookies.set("tempUserId", response?.tempUserId, {
@@ -48,6 +46,25 @@ function RegisterFormStepOne() {
       toast.error(error.message || "خطایی رخ داده است");
     },
   });
+  const PostForgetPass = useMutation({
+    mutationFn: (data: string) => PostForgetPassStepOne(data),
+    onSuccess: (response, variables) => {
+      const email = variables;
+      setIsLoading(false);
+      toast.success(`کد تایید به ایمیل ${email} ارسال شد`);
+      Cookies.set("email", email, {
+        expires: 1,
+        path: "/",
+        secure: true,
+        sameSite: "strict",
+      });
+      router.push("/forgetPassword/step2");
+    },
+    onError: (error) => {
+      setIsLoading(false);
+      toast.error(error.message || "خطایی رخ داده است");
+    },
+  });
   const {
     register,
     handleSubmit,
@@ -55,10 +72,20 @@ function RegisterFormStepOne() {
   } = useForm<FormValues>();
 
   const onSubmit = (data: FormValues) => {
-    if (!isLoading) {
+    // console.log(data.email);
+    const email = data.email.trim();
+
+    if (!email) {
+      console.log("email is required");
+      return;
+    }
+    if (!isLoading && email) {
       setIsLoading(true);
-      setEmail(data.email.toString());
-      PostEmail.mutate(email);
+      if (inForgetPass) {
+        PostForgetPass.mutate(email);
+      } else {
+        PostEmail.mutate(email);
+      }
     }
   };
 

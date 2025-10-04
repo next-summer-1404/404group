@@ -1,5 +1,5 @@
 import http from "@/services/api/interceptor/interceptor";
-import { HousesResponse } from "../../../components/rent/HousesComponents";
+import { HousesResponse } from "../../../types/RentTypes/HomeTypes";
 
 interface housesFilter {
   page?: number;

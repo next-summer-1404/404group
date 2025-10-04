@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Login } from "../../services/api/auth/login/Login";
 import Cookies from "js-cookie";
+import Link from "next/link";
 interface LoginFormValues {
   email: string;
   password: string;
@@ -17,23 +18,34 @@ function LoginForm() {
   const router = useRouter();
 
   const PostLogin = useMutation({
-    mutationFn: (data: LoginFormValues) => Login(data.email, data.password),
+    mutationFn: (data: LoginFormValues) =>
+      fetch("/api/auth/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      }).then((res) => res.json()),
     onSuccess: (response) => {
       setIsLoading(false);
-      toast.success("خوش آمدید !");
-      Cookies.set("accessToken", response.accessToken, {
-        expires: 1,
-        path: "/",
-        secure: true,
-        sameSite: "strict",
-      });
-      Cookies.set("refreshToken", response.refreshToken, {
-        expires: 1,
-        path: "/",
-        secure: true,
-        sameSite: "strict",
-      });
-      router.push("/");
+      if (response.success) {
+        toast.success("خوش آمدید !");
+
+        // ذخیره در کلاینت
+        Cookies.set("accessToken", response.accessToken, {
+          expires: 1,
+          path: "/",
+          secure: true,
+          sameSite: "strict",
+        });
+
+        Cookies.set("refreshToken", response.refreshToken, {
+          expires: 1,
+          path: "/",
+          secure: true,
+          sameSite: "strict",
+        });
+
+        router.push("/");
+      }
     },
     onError: (error: any) => {
       setIsLoading(false);
@@ -79,10 +91,20 @@ function LoginForm() {
           {errors.email.message}
         </p>
       )}
+      <div className="flex justify-between  pl-5">
+        <label htmlFor="password" className="text-right font-semibold">
+          رمز عبور
+        </label>
+        <span>
+          <Link
+            className="text-blue-600 hover:underline mr-1 font-light"
+            href={"/forgetPassword/step1"}
+          >
+            فراموشی رمز عبور{" "}
+          </Link>
+        </span>
+      </div>
 
-      <label htmlFor="password" className="text-right font-semibold">
-        رمز عبور
-      </label>
       <input
         id="password"
         type="password"
