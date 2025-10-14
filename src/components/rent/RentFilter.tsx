@@ -44,10 +44,15 @@ export function RentFilter({
     queryFn: async () => getAllLocation(),
   });
 
-  const locationOptions = locations?.map((loc: ILocationData) => ({
-    key: loc.id,
-    label: loc.area_name || "نامشخص",
-  }));
+  const locationOptions = locations
+    ?.filter(
+      (loc: ILocationData, index: number, self: ILocationData[]) =>
+        index === self.findIndex((t) => t.area_name === loc.area_name)
+    )
+    .map((loc: ILocationData) => ({
+      key: loc.id,
+      label: loc.area_name || "نامشخص",
+    }));
   const sort = [
     { key: "last_updated", label: "آخرین آپدیت" },
     { key: "price", label: "قیمت" },
@@ -161,7 +166,7 @@ export function RentFilter({
               }}
             >
               {locationOptions?.map((loc: IKeyValueOptions) => (
-                <SelectItem key={loc.key}>{loc.label}</SelectItem>
+                <SelectItem key={loc.label}>{loc.label}</SelectItem>
               ))}
             </Select>
           )}

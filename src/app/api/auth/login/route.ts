@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import http from "@/services/api/interceptor/interceptor";
 import { ILogin } from "@/services/api/auth/login/Login";
+import { cookies } from "next/headers";
 
 export async function POST(req: Request) {
   try {
@@ -33,6 +34,9 @@ export async function POST(req: Request) {
       sameSite: "strict",
       maxAge: 60 * 60 * 24 * 7, // 7 روز
     });
+    const cookieStore = await cookies();
+    const accessTokenn = cookieStore.get("accessToken");
+    console.log(accessTokenn);
 
     // ✅ مهم: return response
     return response;

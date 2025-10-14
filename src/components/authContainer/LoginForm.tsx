@@ -30,20 +30,21 @@ function LoginForm() {
         toast.success("خوش آمدید !");
 
         // ذخیره در کلاینت
-        Cookies.set("accessToken", response.accessToken, {
+        Cookies.set("accessTokenClient", response.accessToken, {
+          httpOnly: false,
           expires: 1,
           path: "/",
           secure: true,
           sameSite: "strict",
         });
 
-        Cookies.set("refreshToken", response.refreshToken, {
+        Cookies.set("refreshTokenClient", response.refreshToken, {
+          httpOnly: false,
           expires: 1,
           path: "/",
           secure: true,
           sameSite: "strict",
         });
-
         router.push("/");
       }
     },
