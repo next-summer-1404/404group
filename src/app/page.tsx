@@ -6,7 +6,6 @@ export default async function Home() {
   return (
     <div>
       <SetRefreshToken />
-      <Button color="primary">Press me</Button>
     </div>
   );
 }

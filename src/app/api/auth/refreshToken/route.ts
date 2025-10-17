@@ -24,7 +24,7 @@ export async function GET() {
     return NextResponse.json({ decoded });
   }
 
-  // اگر منقضی شده
+
   console.log("Token expired, refreshing...");
 
   try {
@@ -50,7 +50,7 @@ export async function GET() {
       secure: true,
       path: "/",
       sameSite: "strict",
-      maxAge: 60 * 60, // 1 ساعت
+      maxAge: 60 * 60, 
     });
 
     return response;

@@ -14,7 +14,7 @@ import RentFilter from "./RentFilter";
 function ModalFilterRent() {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   return (
-    <div className="sm:hidden px-10 mt-10">
+    <div className=" px-10 mt-10">
       {" "}
       <Button
         onPress={onOpen}
