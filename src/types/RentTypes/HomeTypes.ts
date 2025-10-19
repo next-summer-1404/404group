@@ -11,10 +11,10 @@ export interface House {
   id: string;
   title: string;
   address: string;
-  photos: string[]; // آرایه از استرینگ
+  photos: string[];
   rate: number | null;
   discounted_price: number | null;
-  price: string; // یا number بسته به API
+  price: string;
   tags: string[];
   last_updated: string;
   capacity: number;
@@ -35,7 +35,6 @@ export interface House {
   isFavorite: boolean;
 }
 
-// اگر میخوای برای پاسخ API استفاده کنی:
 export interface HousesResponse {
   houses: House[];
   totalCount: number;

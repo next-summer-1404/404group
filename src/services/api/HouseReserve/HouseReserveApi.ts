@@ -2,14 +2,11 @@ import http from "@/services/api/interceptor/interceptor";
 import { HousesResponse } from "../../../types/RentTypes/HomeTypes";
 import { housesFilter } from "../../../types/HouseReserve/HouseReserveType";
 
-
-export const getAllHouses = async (
-  filters: housesFilter
-): Promise<HousesResponse> => {
+export const getHouseReserve = async (): Promise<HousesResponse> => {
   try {
-    const res: any = await http.get<HousesResponse>("/api/houses", {
-      params: filters,
-    });
+    const res: any = await http.get<HousesResponse>(
+      "/api/houses?transactionType=[reservation]"
+    );
 
     return res as HousesResponse;
   } catch (error) {

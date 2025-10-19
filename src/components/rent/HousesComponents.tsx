@@ -29,12 +29,12 @@ async function HousesComponents({ data }: { data: HousesResponse }) {
           className=" sm:w-[633px] p-2  sm:h-[229px]  flex flex-col sm:flex-row shadow-lg sm:shadow-none gap-[16px] hover:shadow-2xl transition-[0.3s] rounded-[24px] "
           key={item.id}
         >
-          <div className="border border-gray-300 overflow-hidden rounded-[24px] h-[229px] sm:h-auto">
+          <div className="border border-gray-300 rounded-[24px] h-[229px] w-[272px] sm:h-auto relative">
             <Image
               src={getFirstPhoto(item.photos)}
               alt="icone"
-              width={272}
-              height={229}
+              fill
+              className="object-cover rounded-[24px]"
             />
           </div>
           <div className=" pr-[16px] flex flex-col gap-[16px]">
