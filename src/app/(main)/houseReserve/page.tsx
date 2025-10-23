@@ -1,20 +1,26 @@
 import HouseReserveMap from "../../../components/houseReserveContainer/houseReserveMap";
-import Image from "next/image";
-import houseReserveBg from "@/assets/houseReserve/HouseReserveImageItems.png";
 import { getHouseReserve } from "../../../services/api/HouseReserve/HouseReserveApi";
-import {
-  formatNumberToPersian,
-  toPersianDigits,
-} from "../../../utils/hooks/formatNumberToPersian";
-import location from "@/assets/rent/location.png";
-import loc from "@/assets/houseReserve/location.svg";
-import ring from "@/assets/houseReserve/ring.svg";
-import rating from "@/assets/houseReserve/rating.svg";
 import HouseReserveFiltersComponents from "../../../components/houseReserveContainer/HouseReserveFiltersComponents";
 import HouseReserveCardBox from "../../../components/houseReserveContainer/HouseReserveCardBox";
+export interface HouseReserveProps {
+  searchParams: { [key: string]: string };
+}
+async function HouseReserve({ searchParams }: HouseReserveProps) {
+  const params: Record<string, string> = {};
 
-async function HouseReserve() {
-  const res = await getHouseReserve();
+  Object.entries(searchParams).forEach(([key, val]) => {
+    if (val !== undefined && val !== null) {
+      params[key] = val;
+    }
+  });
+
+  
+  delete params.lng;
+  delete params.lat;
+
+  
+  console.log(params);
+  const res = await getHouseReserve(params);
 
   return (
     <div>

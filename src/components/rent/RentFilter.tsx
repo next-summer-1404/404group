@@ -24,7 +24,7 @@ const animals = [
   { key: "tiger", label: "Tiger" },
 ];
 
-interface IKeyValueOptions {
+export interface IKeyValueOptions {
   key: string;
   label: string;
 }
@@ -46,12 +46,17 @@ export function RentFilter({
 
   const locationOptions = locations
     ?.filter(
-      (loc: ILocationData, index: number, self: ILocationData[]) =>
-        index === self.findIndex((t) => t.area_name === loc.area_name)
+      (loc: any, index: number, self: any[]) =>
+        index ===
+        self.findIndex(
+          (t) => t.dataValues.area_name === loc.dataValues.area_name
+        )
     )
-    .map((loc: ILocationData) => ({
-      key: loc.id,
-      label: loc.area_name || "نامشخص",
+    .map((loc: any) => ({
+      key: loc.dataValues.id,
+      label: loc.dataValues.area_name || "نامشخص",
+      value: loc.dataValues.id, // مقدار اصلی برای select
+      dataValue: loc.dataValues, // کل dataValues برای دسترسی در آینده
     }));
   const sort = [
     { key: "last_updated", label: "آخرین آپدیت" },
