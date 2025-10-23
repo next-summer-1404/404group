@@ -4,7 +4,7 @@ import { getHouse } from "@/services/api/HouseApiLand/route";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import SetRefreshToken from "../RefreshToken/SetRefreshToken";
-
+import landing from "../../../public/landing.png";
 const Landing = () => {
   interface property {
     photos: string;
@@ -33,7 +33,7 @@ const Landing = () => {
         <div className="flex-1 relative">
           <div className="rounded-3xl overflow-hidden shadow-2xl">
             <Image
-              src="/landing.png"
+              src={landing}
               alt="building"
               width={500}
               height={600}
@@ -113,7 +113,13 @@ const Landing = () => {
               >
                 <div className="h-56 relative">
                   <Image
-                    src={item.photos || "/villa.jpg"}
+                    src={
+                      Array.isArray(item.photos)
+                        ? item.photos[0] || "/villa.jpg"
+                        : typeof item.photos === "string" && item.photos !== ""
+                        ? item.photos
+                        : "/villa.jpg"
+                    }
                     alt={item.title || `property ${i}`}
                     fill
                     className="object-cover"
@@ -126,11 +132,11 @@ const Landing = () => {
                   <h6 className="font-light text-sm text-gray-500 dark:text-gray-400">
                     {item.address}
                   </h6>
-                  <p className="text-sm text-gray-500 dark:text-gray-400 flex gap-5">
+                  <div className="text-sm text-gray-500 dark:text-gray-400 flex gap-5">
                     <div>{item.rooms} خواب </div>
                     <div>{item.bathrooms} حمام </div>
                     <div>{item.parking} پارکینگ </div>
-                  </p>
+                  </div>
                   <h3 className="dark:text-white">{item.price} تومن</h3>
                 </div>
               </div>
