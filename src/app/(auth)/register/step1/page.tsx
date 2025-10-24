@@ -1,38 +1,33 @@
-"use client";
 import React from "react";
-import { Card } from "@heroui/card";
-import { useState } from "react";
-import { Button } from "@heroui/button";
-import { Input } from "@heroui/react";
+import AuthSideBanner from "../../../../components/authContainer/AuthSideBanner";
 
 import googleIcone from "@/assets/auth/googleIcone.png";
 import appleIcone from "@/assets/auth/appleIcnoe.png";
-import { useRouter } from "next/navigation";
-import AuthSideBanner from "../../../../components/authContainer/AuthSideBanner";
 import RedirectButton from "../../../../components/authContainer/RedirectButton";
 import Link from "next/link";
-import LoginForm from "../../../../components/authContainer/LoginForm";
+import RegisterFormStepOne from "../../../../components/authContainer/RegisterFormStepOne";
 
-function Login() {
+function registerStepOne() {
   return (
     <div className="flex flex-col lg:flex-row justify-between ">
       <div className="w-[100%] ">
         <div className="max-w-md mx-auto p-6  mt-[104px]">
           <div className="flex flex-row-reverse justify-between">
             {" "}
-            <RedirectButton Link="/" title="صفحه اصلی" />
-            <h1 className="text-2xl font-bold mb-4 text-right">خوش برگشتی! </h1>
+            <RedirectButton Link="/login" title="ورود" />
+            <h1 className="text-2xl font-bold mb-4 text-right">
+              ثبت نام در آلفا
+            </h1>
           </div>
 
           <p className="mb-8 text-gray-600 text-right">
-            برای ورود به حساب کاربری آلفا میتوانید با اکانت گوگل یا اپل خود و یا
-            با ایمیل و رمزعبور خود اقدام کنید
+            برای ثبت نام در آلفا میتوانید با اکانت گوگل یا اپل خود و یا با ارسال
+            کد تایید به ایمیل خود اقدام کنید
           </p>
 
           <div className="flex flex-col lg:flex-row justify-center gap-4 mb-8">
             <button
               className="flex items-center gap-2 bg-no-repeat bg-right  py-[12px] px-[37px] lg:p-0  lg:w-[187px] lg:h-[48px]   border rounded-[31px] border-[#F0F0F0]"
-              // onClick={() => handleLogin("google")}
               aria-label="ورود با گوگل"
             >
               <div className="flex gap-3 mx-auto">
@@ -46,7 +41,6 @@ function Login() {
             </button>
             <button
               className="flex items-center gap-2 bg-no-repeat bg-right py-[12px] px-[37px] lg:p-0  lg:w-[187px] lg:h-[48px]   border rounded-[31px] border-[#F0F0F0]"
-              // onClick={() => handleLogin("apple")}
               aria-label="ورود با گوگل"
             >
               {" "}
@@ -67,15 +61,12 @@ function Login() {
             </span>
           </div>
 
-          <LoginForm />
+          <RegisterFormStepOne />
 
           <div className="mt-6 text-center text-sm">
-            حساب کاربری ندارید؟
-            <Link
-              href="/register/step1"
-              className="text-blue-600 hover:underline mr-1"
-            >
-              ثبت نام در آلفا{" "}
+            حساب کاربری دارید؟
+            <Link href="/login" className="text-blue-600 hover:underline mr-1">
+              ورود به حساب
             </Link>
           </div>
         </div>
@@ -85,4 +76,4 @@ function Login() {
   );
 }
 
-export default Login;
+export default registerStepOne;

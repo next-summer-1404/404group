@@ -1,11 +1,11 @@
 import React from "react";
-import AuthSideBanner from "../../../../../components/authContainer/AuthSideBanner";
+import AuthSideBanner from "../../../../components/authContainer/AuthSideBanner";
 
 import googleIcone from "@/assets/auth/googleIcone.png";
 import appleIcone from "@/assets/auth/appleIcnoe.png";
-import RedirectButton from "../../../../../components/authContainer/RedirectButton";
+import RedirectButton from "../../../../components/authContainer/RedirectButton";
 import Link from "next/link";
-import RegisterFormStepOne from "../../../../../components/authContainer/RegisterFormStepOne";
+import RegisterFormStepOne from "../../../../components/authContainer/RegisterFormStepOne";
 
 function forgetPassStepOne() {
   return (

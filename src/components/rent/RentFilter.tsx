@@ -95,7 +95,7 @@ export function RentFilter({
       className={`   flex-row flex-wrap  flex   ${
         inMobile
           ? "gap-[14px] mt-5 justify-center"
-          : "gap-[24px] mt-36 px-[50px]"
+          : "gap-[24px] mt-[56px] px-[50px]"
       } `}
       style={{ direction: "rtl" }}
     >
