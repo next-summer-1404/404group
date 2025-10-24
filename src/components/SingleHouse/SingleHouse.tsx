@@ -1,6 +1,6 @@
 "use client";
 
-import { getHousedeteil } from "@/services/api/SingleHouse/route";
+import { getHousedeteil } from "@/services/api/HouseReserveDetails/HouseReserveDetails";
 import { Bath, BedDouble } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";

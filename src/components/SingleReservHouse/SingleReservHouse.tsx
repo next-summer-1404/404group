@@ -1,12 +1,14 @@
 "use client";
 
-import { getHousedeteil } from "@/services/api/SingleHouse/route";
 import { Button } from "@heroui/button";
 import { Bath, BedDouble } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { getHouseReserve } from "../../services/api/HouseReserve/HouseReserveApi";
+import { House } from "../../types/RentTypes/HomeTypes";
+import ReserveNowBox from "./ReserveNowBox";
 
-const SingleReservHouse = () => {
+const SingleReservHouse = ({ property }: any) => {
   interface data {
     photos: string;
     title: string;
@@ -21,21 +23,21 @@ const SingleReservHouse = () => {
     };
     tags?: string[];
   }
-  const [property, setProperty] = useState<data | null>(null);
+  // const [property, setProperty] = useState<data | null>(null);
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const data = await getHousedeteil();
-        setProperty(data);
-        console.log("API Data:", data);
-      } catch (err) {
-        console.error("Error fetching house:", err);
-      }
-    }
+  // useEffect(() => {
+  //   async function loadData() {
+  //     try {
+  //       const data = await getHouseReserve(id);
+  //       setProperty(data);
+  //       console.log("API Data:", data);
+  //     } catch (err) {
+  //       console.error("Error fetching house:", err);
+  //     }
+  //   }
 
-    loadData();
-  }, []);
+  //   loadData();
+  // }, []);
 
   return (
     <main
@@ -44,7 +46,7 @@ const SingleReservHouse = () => {
     >
       <div className="container mx-auto px-6 py-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="md:col-span-2">
+          <div className="md:col-span-2 border">
             <Image
               src="/property-main.jpg"
               alt="main property"
@@ -109,43 +111,7 @@ const SingleReservHouse = () => {
               </div>{" "}
             </div>
           </div>
-          <h3 className="font-bold text-lg text-[#7575FE]">
-            همین حالا رزرو کنید
-          </h3>
-
-          <div className="grid grid-cols-2 gap-2">
-            <div>
-              <label className="text-sm text-gray-600">تاریخ ورود</label>
-              <input
-                type="date"
-                className="w-full mt-1 p-2 rounded-xl border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-            <div>
-              <label className="text-sm text-gray-600">تاریخ خروج</label>
-              <input
-                type="date"
-                className="w-full mt-1 p-2 rounded-xl border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-            <div>
-              <label className="text-sm text-gray-600">تعداد نفرات</label>
-              <input
-                type="number"
-                placeholder="مثلاً ۲ نفر"
-                className="w-full mt-1 p-2 rounded-xl border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-primary"
-              />
-            </div>
-            <div className="text-sm text-gray-600 pt-9 ">
-              قیمت هر شب از
-              <span className="font-bold text-primary">
-                {property?.price} تومان
-              </span>
-            </div>
-            <div className="mx-auto w-10/12 col-span-2 mt-5 bg-[#7575FE] rounded-4xl text-white">
-              <Button className="w-full"> همین الان رزرو کن</Button>
-            </div>
-          </div>
+          <ReserveNowBox property={property} />
         </aside>
         <div className="lg:col-span-2 space-y-8">
           <div className="border rounded-3xl w-max h-max px-4 py-1 border-[#7575FE] text-[#7575FE]">

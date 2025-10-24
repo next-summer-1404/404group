@@ -14,17 +14,14 @@ async function HouseReserve({ searchParams }: HouseReserveProps) {
     }
   });
 
-  
   delete params.lng;
   delete params.lat;
 
-  
   console.log(params);
   const res = await getHouseReserve(params);
 
   return (
     <div>
-      <div className="h-[102px]"></div>
       <div className="relative w-full h-[800px] ">
         {/* نقشه */}
         <HouseReserveMap />

@@ -1,12 +1,12 @@
 "use client";
 import React, { useState } from "react";
-import AuthSideBanner from "../../../../../components/authContainer/AuthSideBanner";
+import AuthSideBanner from "../../../../components/authContainer/AuthSideBanner";
 import { Button } from "@heroui/button";
-import RedirectButton from "../../../../../components/authContainer/RedirectButton";
+import RedirectButton from "../../../../components/authContainer/RedirectButton";
 import { useMutation } from "@tanstack/react-query";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import { PostInformation } from "../../../../../services/api/auth/register/stepThree/PostInformation";
+import { PostInformation } from "../../../../services/api/auth/register/stepThree/PostInformation";
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 
