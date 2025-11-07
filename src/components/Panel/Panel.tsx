@@ -16,6 +16,9 @@ import { motion, AnimatePresence } from "framer-motion";
 import DashboardHome from "./Dashboard";
 import Reservations from "./Reservmange";
 import Profile from "./Profile";
+import Favorite from "./Favorite";
+import Payments from "./Payment";
+import Notif from "./Notif";
 
 const tabs = [
   { id: "dashboard", label: "داشبورد", icon: <Home size={18} /> },
@@ -113,6 +116,9 @@ export default function Dashboard() {
                 {activeTab === "dashboard" && <DashboardHome />}
                 {activeTab === "profile" && <Profile />}
                 {activeTab === "bookings" && <Reservations />}
+                {activeTab === "favorites" && <Favorite />}
+                {activeTab === "payments" && <Payments />}
+                {activeTab === "notifications" && <Notif />}
               </p>
             </motion.div>
           </AnimatePresence>

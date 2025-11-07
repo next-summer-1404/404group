@@ -62,9 +62,7 @@ function Login() {
           </div>
 
           <div className="text-gray-400 text-center mb-6 border-b border-[#F0F0F0]">
-            <span className="bg-white p-1 relative top-2.5 text-[#AAAAAA]">
-              یا
-            </span>
+            <span className="bg-white p-1 relative top-2.5 ">یا</span>
           </div>
 
           <LoginForm />
