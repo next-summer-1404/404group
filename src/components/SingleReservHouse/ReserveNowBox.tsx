@@ -1,31 +1,53 @@
 "use client";
 
 import { Button } from "@heroui/button";
-import React, { useState } from "react";
-import DatePicker from "react-multi-date-picker";
-
-// 📦 برای تقویم شمسی و زبان فارسی
-import persian from "react-date-object/calendars/persian";
-import persian_fa from "react-date-object/locales/persian_fa";
+import React from "react";
+import dynamic from "next/dynamic";
 import toast from "react-hot-toast";
 import { useReserve } from "../../context/ReserveContext";
 import { useRouter } from "next/navigation";
+import { formatNumberToPersian } from "../../utils/hooks/formatNumberToPersian";
 
-function ReserveNowBox({ property }: any) {
-  const { checkIn, setCheckIn, checkOut, setCheckOut, guests, setGuests } =
-    useReserve();
+// 📦 دینامیک ایمپورت برای جلوگیری از خطای hydration
+const DatePicker = dynamic(() => import("react-multi-date-picker"), {
+  ssr: false,
+});
+
+import persian from "react-date-object/calendars/persian";
+import persian_fa from "react-date-object/locales/persian_fa";
+import { Property } from "../../types/HouseReserve/HouseReserveType";
+
+function ReserveNowBox({ property }: { property: Property }) {
+  const {
+    checkIn,
+    setCheckIn,
+    checkOut,
+    setCheckOut,
+    guests,
+    setGuests,
+    setPrice,
+    setDiscountPrice,
+    setAddress,
+    setTitle,
+    setPhoto,
+    setId,
+  } = useReserve();
 
   const router = useRouter();
 
   const handleReserve = () => {
     if (!checkIn || !checkOut || !guests) {
-      toast.error("لطفاً همه فیلدها را پر کنید ");
+      toast.error("لطفاً همه فیلدها را پر کنید");
       return;
     }
+    console.log(property);
 
-    console.log("📅 تاریخ ورود:", checkIn?.format?.());
-    console.log("📅 تاریخ خروج:", checkOut?.format?.());
-    console.log("👥 تعداد نفرات:", guests);
+    setPrice(Number(property?.price));
+    setDiscountPrice(Number(property?.discounted_price));
+    setAddress(property?.address);
+    setTitle(property?.title);
+    setPhoto(property?.photos?.[0]);
+    setId(property?.id);
     router.push("/createBooking/step1");
   };
 
@@ -37,16 +59,19 @@ function ReserveNowBox({ property }: any) {
 
       <div className="flex flex-row flex-wrap justify-between gap-[25px]">
         {/* تاریخ ورود */}
-        <div className="flex flex-col  w-[45%]">
-          <label className="text-sm text-gray-600 mb-1">تاریخ ورود</label>
+        <div className="flex flex-col w-[45%]">
+          <label className="text-sm font-[600] text-gray-600 mb-1">
+            تاریخ ورود
+          </label>
           <DatePicker
             calendar={persian}
             locale={persian_fa}
             value={checkIn}
-            onChange={(date) => {
-              setCheckIn(date);
-              // اگر تاریخ خروج قبل از تاریخ ورود باشد، آن را خالی کن
-              if (checkOut && date && checkOut < date) {
+            onChange={(date: any) => {
+              const selectedDate =
+                Array.isArray(date) && date.length > 0 ? date[0] : date ?? null;
+              setCheckIn(selectedDate as any); // ✅ اینجا تایپ را تبدیل می‌کنیم
+              if (checkOut && selectedDate && checkOut < selectedDate) {
                 setCheckOut(null);
               }
             }}
@@ -64,15 +89,17 @@ function ReserveNowBox({ property }: any) {
         </div>
 
         {/* تاریخ خروج */}
-        <div className="flex flex-col  w-[45%]">
-          <label className="text-sm text-gray-600 mb-1">تاریخ خروج</label>
+        <div className="flex flex-col w-[45%]">
+          <label className="text-sm font-[600] text-gray-600 mb-1">
+            تاریخ خروج
+          </label>
           <DatePicker
             calendar={persian}
             locale={persian_fa}
             value={checkOut}
             onChange={setCheckOut}
-            minDate={checkIn || undefined} // ✅ محدود کردن حداقل تاریخ خروج به تاریخ ورود
-            disabled={!checkIn} // اگر تاریخ ورود هنوز انتخاب نشده، غیرفعال باشه
+            minDate={checkIn || undefined}
+            disabled={!checkIn}
             calendarPosition="bottom-right"
             placeholder="انتخاب تاریخ خروج"
             inputClass="custom-input"
@@ -87,29 +114,39 @@ function ReserveNowBox({ property }: any) {
         </div>
 
         {/* تعداد نفرات */}
-        <div className="flex flex-col  w-[45%]">
-          <label className="text-sm text-gray-600 mb-1">تعداد نفرات</label>
+        <div className="flex flex-col w-[45%]">
+          <label className="text-sm font-[600] text-gray-600 mb-1">
+            تعداد نفرات
+          </label>
           <input
             min={1}
             type="number"
             placeholder="مثلاً ۲ نفر"
             value={guests}
             onChange={(e) => setGuests(Number(e.target.value))}
-            className="w-[100%] h-[44px] mt-1 p-4   bg-[#F9F9F9] rounded-[31px] text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full h-[44px] mt-1 p-4 bg-[#F9F9F9] rounded-[31px] text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
 
         {/* قیمت */}
-        <div className="flex items-end text-sm text-gray-600 pb-2  w-[45%]">
-          قیمت هر شب از{" "}
-          <span className="font-bold text-primary mr-1">
-            {property?.price?.toLocaleString("fa-IR") || 0} تومان
-          </span>
+        <div className="flex flex-col gap-4 w-[45%]">
+          <label className="text-sm font-[600] text-[#7575FE] mb-1">
+            مجموع قیمت
+          </label>
+          <div className="flex justify-between">
+            <div className="text-[#A6A6A6] text-[20px] font-[700] relative">
+              {formatNumberToPersian(Number(property?.discounted_price))}
+              <div className="absolute border border-[#FF5555] w-full -rotate-12 top-1/2" />
+            </div>
+            <div className="text-[#1E1E1E] text-[20px] font-[700]">
+              {formatNumberToPersian(property?.price)}
+            </div>
+          </div>
         </div>
       </div>
 
       {/* دکمه رزرو */}
-      <div className="mt-5 ">
+      <div className="mt-5">
         <Button
           onClick={handleReserve}
           className="w-full bg-[#7575FE] rounded-[32px] text-white"

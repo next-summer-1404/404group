@@ -4,7 +4,7 @@ const Footer = () => {
   return (
     <footer
       dir="rtl"
-      className="max mr-12 ml-12 h-max py-12 rounded-3xl bg-gray-100 dark:bg-gray-900 mt-20 flex"
+      className="max mr-12 ml-12 h-max py-12 rounded-3xl bg-gray-100 dark:bg-gray-800 mt-20 flex"
     >
       <div className="max-w-1/4 mr-22 px-3 pt-4 pb-12">
         <div className="font-extrabold text-4xl tracking-widest">AIFA</div>
@@ -17,7 +17,7 @@ const Footer = () => {
         </p>
       </div>
       <div>
-        <ul className="text-black  tracking-wider mr-22 mt-15 px-3 pt-4 pb-12">
+        <ul className="text-black dark:text-white tracking-wider mr-22 mt-15 px-3 pt-4 pb-12">
           نحوه رزرو اقامتگاه
           <li className="text-sm text-gray-600 mt-5">راهنمای رزرو اقامتگاه</li>
           <li className="text-sm text-gray-600 mt-2">شیوه پرداخت</li>
@@ -26,7 +26,7 @@ const Footer = () => {
       </div>
       <div>
         {" "}
-        <ul className="text-black  tracking-wider mr-22 mt-15 px-3 pt-4 pb-12">
+        <ul className="text-black dark:text-white tracking-wider mr-22 mt-15 px-3 pt-4 pb-12">
           خدمات مشتریان
           <li className="text-sm text-gray-600 mt-5">پرسش های متداول مهمان</li>
           <li className="text-sm text-gray-600 mt-2">پرسش های متداول میزبان</li>
@@ -38,7 +38,7 @@ const Footer = () => {
       </div>
       <div>
         {" "}
-        <ul className="text-black  tracking-wider mr-22 mt-15 px-3 pt-4 pb-12">
+        <ul className="text-black dark:text-white tracking-wider mr-22 mt-15 px-3 pt-4 pb-12">
           راه های ارتیاطی دلتا
           <li className="text-sm text-gray-600 mt-5">
             ۰۹۲۲۲۳۸۲۳۹۳ , ۰۹۱۲۳۹۲۸۷۴۶

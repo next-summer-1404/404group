@@ -3,6 +3,7 @@ import Header from "../../../../components/Header/Header";
 import SingleReservHouse from "../../../../components/SingleReservHouse/SingleReservHouse";
 import Footer from "../../../../components/Footer/Footer";
 import { getHouseReserveDetail } from "../../../../services/api/HouseReserveDetails/HouseReserveDetails";
+import { Property } from "../../../../types/HouseReserve/HouseReserveType";
 export interface ISingleReserveHouseDetailParams {
   params: { id: string };
 }

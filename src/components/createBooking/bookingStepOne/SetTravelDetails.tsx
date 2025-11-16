@@ -1,15 +1,22 @@
 "use client";
+import Cookies from "js-cookie";
 
+import jalaali from "jalaali-js";
 import { Button } from "@heroui/button";
 import { Input } from "@heroui/input";
 import { Select, SelectItem } from "@heroui/react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
-import * as React from "react";
+import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { useReserve } from "../../../context/ReserveContext";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
+import { formatNumberToPersian } from "../../../utils/hooks/formatNumberToPersian";
+import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import { CreateBook } from "../../../services/api/booking/createBook/createBook";
+import { CreateBookingPayload } from "../../../types/Booking/createBooking";
 
 type Traveler = {
   firstName: string;
@@ -26,8 +33,22 @@ type TravelersForm = {
 };
 
 export default function TravelersForm() {
-  const { checkIn, setCheckIn, checkOut, setCheckOut, guests, setGuests } =
-    useReserve();
+  const [acceptInfo, setAcceeptInfo] = useState(false);
+  const router = useRouter();
+  const {
+    checkIn,
+    setCheckIn,
+    checkOut,
+    setCheckOut,
+    guests,
+    setGuests,
+    price,
+    setPrice,
+    discountPrice,
+    setDiscountPrice,
+    id,
+    setId,
+  } = useReserve();
   const form = useForm<TravelersForm>({
     defaultValues: {
       traveler_details: [
@@ -73,8 +94,16 @@ export default function TravelersForm() {
       }
     }
   }, [guests]);
+  const createBooking = useMutation({
+    mutationFn: (data: CreateBookingPayload) => CreateBook(data),
+    onSuccess: () => {
+      toast.success("اطلاعات با موفقیت ثبت شد.");
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
   const onSubmit = (data: TravelersForm) => {
-    // ✅ بررسی خالی بودن فیلدهای مسافران
     const hasEmptyTraveler = data.traveler_details.some(
       (traveler) =>
         !traveler.firstName ||
@@ -94,10 +123,21 @@ export default function TravelersForm() {
       toast.error("لطفاً ایمیل و شماره تلفن را وارد کنید.");
       return;
     }
-
+    setAcceeptInfo(true);
     // ✅ اگر همه پر بودن
+    const checkInM = Cookies.get("checkIn");
+    const checkOutM = Cookies.get("checkOut");
+    const dateCheckIn = new Date(Number(checkInM));
+    const dateCheckOut = new Date(Number(checkOutM));
+    console.log(dateCheckIn.toISOString());
+
+    const finalyData = {
+      ...data,
+      houseId: id,
+      reservedDates: [dateCheckIn.toISOString(), dateCheckOut.toISOString()],
+    };
+    createBooking.mutate(finalyData as CreateBookingPayload);
     console.log("✅ Traveler Data:", data);
-    toast.success("اطلاعات با موفقیت ثبت شد.");
   };
 
   return (
@@ -267,7 +307,6 @@ export default function TravelersForm() {
           </Button>
         </div>
       </div>
-
       {/* ارسال بلیط به دیگران */}
       <div className="border border-[#DDDDDD] w-full bg-[white] rounded-[24px] p-[16px]">
         <div className="flex flex-row mb-4">
@@ -324,7 +363,35 @@ export default function TravelersForm() {
             </Button>
           </div>
         </div>{" "}
-        {/* ثبت نهایی */}
+      </div>{" "}
+      <div className="flex flex-col justify-between mt-4 text-white">
+        <div className="h-[44px] flex flex-row gap-2 ">
+          <span className="text-[24px] text-[#1E2022] font-[700] ">
+            قیمت کل :
+          </span>
+          <span className="text-[32px] text-[#7575FE] font-[700]  flex items-center">
+            {formatNumberToPersian(price)}
+          </span>{" "}
+          <span className="text-[20px] text-[#7575FE] font-[400] flex items-center ">
+            تومان
+          </span>
+        </div>
+        <div className="flex justify-end">
+          {" "}
+          <Button
+            onClick={() => {
+              if (acceptInfo) {
+                router.push("/createBooking/step2");
+              } else {
+                toast.error("ابتدا اطلاعات مسافر را ثبت کنید !");
+              }
+            }}
+            variant="solid"
+            className="bg-[#7575FE] text-white px-[20px] py-[16px]"
+          >
+            تایید و ادامه فرایند
+          </Button>
+        </div>
       </div>
     </form>
   );

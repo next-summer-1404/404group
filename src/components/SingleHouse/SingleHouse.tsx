@@ -1,6 +1,6 @@
 "use client";
 
-import { getHousedeteil } from "@/services/api/HouseReserveDetails/HouseReserveDetails";
+// import { getHousedeteil } from "@/services/api/HouseReserveDetails/HouseReserveDetails";
 import { Bath, BedDouble } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
@@ -23,19 +23,19 @@ const SingleHouse = () => {
   }
   const [property, setProperty] = useState<data | null>(null);
 
-  useEffect(() => {
-    async function loadData() {
-      try {
-        const data = await getHousedeteil();
-        setProperty(data);
-        console.log("API Data:", data);
-      } catch (err) {
-        console.error("Error fetching house:", err);
-      }
-    }
+  // useEffect(() => {
+    // async function loadData() {
+    //   try {
+    //     const data = await getHousedeteil();
+    //     setProperty(data);
+    //     console.log("API Data:", data);
+    //   } catch (err) {
+    //     console.error("Error fetching house:", err);
+    //   }
+    // }
 
-    loadData();
-  }, []);
+    // loadData();
+  // }, []);
 
   return (
     <main

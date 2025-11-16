@@ -8,7 +8,20 @@
   --foreground: #171717;
 }
 /* اگر لازم باشه */
+:root {
+  --bg-light: #ffffff;
+  --bg-dark: #101828;
+}
 
+html.dark,
+.dark {
+  background-color: var(--bg-dark);
+}
+
+html,
+body {
+  background-color: var(--bg-light);
+}
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

@@ -6,9 +6,7 @@ import React from "react";
 const SingleHous = () => {
   return (
     <div>
-      <Header />
       <SingleHouse />
-      <Footer />
     </div>
   );
 };

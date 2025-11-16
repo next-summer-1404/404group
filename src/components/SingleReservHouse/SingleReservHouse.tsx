@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import { getHouseReserve } from "../../services/api/HouseReserve/HouseReserveApi";
 import { House } from "../../types/RentTypes/HomeTypes";
 import ReserveNowBox from "./ReserveNowBox";
+import { Property } from "../../types/HouseReserve/HouseReserveType";
 
 const SingleReservHouse = ({ property }: any) => {
   interface data {
@@ -23,21 +24,6 @@ const SingleReservHouse = ({ property }: any) => {
     };
     tags?: string[];
   }
-  // const [property, setProperty] = useState<data | null>(null);
-
-  // useEffect(() => {
-  //   async function loadData() {
-  //     try {
-  //       const data = await getHouseReserve(id);
-  //       setProperty(data);
-  //       console.log("API Data:", data);
-  //     } catch (err) {
-  //       console.error("Error fetching house:", err);
-  //     }
-  //   }
-
-  //   loadData();
-  // }, []);
 
   return (
     <main

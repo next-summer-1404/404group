@@ -43,7 +43,7 @@ function RegisterStepThree() {
       toast.success("عملیات با موفقیت انجام شد");
       console.log(response);
 
-      router.push("/");
+      router.push("/login");
     },
     onError: () => {
       setIsLoading(false);
