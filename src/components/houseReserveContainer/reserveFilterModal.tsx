@@ -1,7 +1,7 @@
 "use client";
 import { Button, Select, SelectItem, Slider } from "@heroui/react";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import trash from "@/assets/houseReserve/trash.svg";
 import { useQuery } from "@tanstack/react-query";
@@ -9,6 +9,11 @@ import { getAllLocation } from "../../services/api/Location/getAllLocation";
 import { IKeyValueOptions } from "../rent/RentFilter";
 
 export default function ReserveFilterModal() {
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    setIsReady(true);
+  }, []);
   const [open, setOpen] = useState(false);
   const [priceRange, setPriceRange] = useState<number[]>([500000, 2000000]);
   const { register, control, handleSubmit } = useForm({
@@ -29,20 +34,17 @@ export default function ReserveFilterModal() {
     queryFn: async () => getAllLocation(),
   });
 
-  const locationOptions = locations
-    ?.filter(
-      (loc: any, index: number, self: any[]) =>
-        index ===
-        self.findIndex(
-          (t) => t.dataValues.area_name === loc.dataValues.area_name
-        )
-    )
-    .map((loc: any) => ({
-      key: loc.dataValues.id,
-      label: loc.dataValues.area_name || "نامشخص",
-      value: loc.dataValues.id,
-      dataValue: loc.dataValues,
-    }));
+  const locationOptions = (locations || [])
+    .filter((loc: any) => loc?.dataValues?.area_name)
+    .map((loc: any) => {
+      const dv = loc?.dataValues || {};
+      return {
+        key: dv.id ?? null,
+        label: dv.area_name ?? "نامشخص",
+        value: dv.id ?? null,
+        dataValue: dv,
+      };
+    });
   return (
     <div>
       <Button
@@ -170,19 +172,21 @@ export default function ReserveFilterModal() {
                 </div>
               </div>
 
-              <Slider
-                step={100000}
-                minValue={100000}
-                maxValue={5000000}
-                value={priceRange}
-                color="secondary"
-                onChange={(val) => {
-                  if (Array.isArray(val)) setPriceRange(val);
-                }}
-                className="max-w-md"
-                dir="rtl"
-                formatOptions={{ style: "currency", currency: "IRR" }}
-              />
+              {isReady && (
+                <Slider
+                  step={100000}
+                  minValue={100000}
+                  maxValue={5000000}
+                  value={priceRange}
+                  color="secondary"
+                  onChange={(val) => {
+                    if (Array.isArray(val)) setPriceRange(val);
+                  }}
+                  className="max-w-md"
+                  dir="rtl"
+                  formatOptions={{ style: "currency", currency: "IRR" }}
+                />
+              )}
             </div>
 
             <div className="flex flex-row flex-no-wrap gap-8 justify-between ">
