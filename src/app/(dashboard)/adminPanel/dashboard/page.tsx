@@ -1,5 +1,5 @@
 import React from "react";
-import AdminDashboard from "../../../../components/adminPanelContainer/AdminDashboard";
+import AdminDashboard from "../../../../components/adminPanelContainer/Dashboard/AdminDashboard";
 
 function DashboardAdminPage() {
   return (

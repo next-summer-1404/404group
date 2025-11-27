@@ -13,8 +13,8 @@ import {
   X,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import AdminDashboard from "./AdminDashboard";
-import UsersAdminManage from "./UsersAdminManage";
+import AdminDashboard from "./Dashboard/AdminDashboard";
+import UsersAdminManage from "./users/UsersAdminManage";
 import SetRefreshToken from "../RefreshToken/SetRefreshToken";
 // import DashboardHome from "./Dashboard";
 // import Reservations from "./Reservmange";

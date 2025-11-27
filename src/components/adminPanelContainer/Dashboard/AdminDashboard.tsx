@@ -10,8 +10,8 @@ export interface IAdminDashboard {
 
 import { Users, Home, CalendarCheck2, Star } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { getDashboard } from "../../services/api/Admin/getDashboard/getDashboard";
-import LoadingDots from "../Loading/loadingOne";
+import { getDashboard } from "../../../services/api/Admin/getDashboard/getDashboard";
+import LoadingDots from "../../Loading/loadingOne";
 
 export default function AdminDashboard() {
   const { data: stats, isLoading } = useQuery({

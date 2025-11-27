@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getAllUser } from "../../services/api/Admin/User/getAllUser/getAllUser";
-import { IUser } from "../../types/adminPanel/adminPanelTypes";
+import { getAllUser } from "../../../services/api/Admin/User/getAllUser/getAllUser";
+import { IUser } from "../../../types/adminPanel/adminPanelTypes";
 
 import {
   Table,
@@ -27,10 +27,11 @@ import {
 } from "@heroui/react";
 
 import { useSearchParams, useRouter } from "next/navigation";
-import LoadingDots from "../Loading/loadingOne";
+import LoadingDots from "../../Loading/loadingOne";
 import { Edit, MoreVertical, Trash2 } from "lucide-react";
 import EditUserByAdmin from "./EditUserByAdmin";
 import EditRoleUser from "./EditRoleUser";
+import FilterOfUserTable from "./FilterOfUserTable";
 
 function UsersAdminManage() {
   const [user, setUser] = useState<IUser | undefined>();
@@ -53,10 +54,21 @@ function UsersAdminManage() {
   const router = useRouter();
 
   const currentPage = Number(searchParams.get("page") ?? 1);
+  const search = searchParams.get("search") ?? "";
+  const sort = searchParams.get("sort") ?? "";
+  const location = searchParams.get("location") ?? "";
+  // useEffect(() => console.log(search), [search]);
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["getAllUser", currentPage],
-    queryFn: () => getAllUser({ page: currentPage, limit: 5 }),
+    queryKey: ["getAllUser", currentPage, search, sort, location],
+    queryFn: () =>
+      getAllUser({
+        page: currentPage,
+        limit: 5,
+        email: search,
+        role: sort,
+        membershipDate: location,
+      }),
     select: (response) => ({
       users: response.data,
       totalCount: response.totalCount,
@@ -81,6 +93,7 @@ function UsersAdminManage() {
 
   return (
     <div className="w-full overflow-x-auto pb-0">
+      <FilterOfUserTable />
       <Table
         aria-label="جدول مدیریت کاربران"
         className="min-w-[900px]"
@@ -234,7 +247,9 @@ function UsersAdminManage() {
         <ModalContent>
           {(onClose) => (
             <>
-              <ModalHeader>ویرایش نقش کاربر</ModalHeader>
+              <ModalHeader>
+                ویرایش نقش {user?.fullName ? user?.fullName : "ناشناس"}
+              </ModalHeader>
               <ModalBody>
                 <EditRoleUser user={user} onClose={onClose} refetch={refetch} />
               </ModalBody>

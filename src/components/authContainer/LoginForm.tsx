@@ -2,12 +2,14 @@
 import { Button } from "@heroui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Login } from "../../services/api/auth/login/Login";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import jwt from "jsonwebtoken";
+
 interface LoginFormValues {
   email: string;
   password: string;
@@ -45,7 +47,15 @@ function LoginForm() {
           secure: true,
           sameSite: "strict",
         });
-        router.push("/");
+
+        const decoded: any = jwt.decode(response.accessToken);
+        const newRole = decoded.role;
+
+        if (newRole === "admin") {
+          router.push("/adminPanel/dashboard");
+        } else {
+          router.push("/");
+        }
       }
     },
     onError: (error: any) => {

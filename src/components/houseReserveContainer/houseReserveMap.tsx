@@ -19,7 +19,7 @@ export default function HouseReserveMap() {
   const lat = searchParams.get("lat");
   const lng = searchParams.get("lng");
   const customDivIcon = new L.DivIcon({
-    className: "custom-marker", // می‌توانی این کلاس را با Tailwind یا CSS استایل دهی کنی
+    className: "custom-marker", 
     html: `
       <div class="group relative w-[48px] h-[48px] flex justify-center items-center">
         <img 

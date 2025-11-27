@@ -5,7 +5,8 @@ import { useForm, Controller } from "react-hook-form";
 import { Select, SelectItem, Button } from "@heroui/react";
 import { EditUserByAdminProps } from "./EditUserByAdmin";
 import { useMutation } from "@tanstack/react-query";
-import { putRoles } from "../../services/api/Admin/User/putRoles/putRoles";
+import { putRoles } from "../../../services/api/Admin/User/putRoles/putRoles";
+import toast from "react-hot-toast";
 
 function EditRoleUser({ user, refetch, onClose }: EditUserByAdminProps) {
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -21,8 +22,11 @@ function EditRoleUser({ user, refetch, onClose }: EditUserByAdminProps) {
       refetch?.();
       onClose?.();
       setIsLoading(false);
+      toast.success("عملیات با موفقیت انجام شد ");
     },
-    onError: (error) => {},
+    onError: (error) => {
+      toast.success("مشکلی پیش آمده است ");
+    },
   });
 
   const onSubmit = (data: any) => {
@@ -34,7 +38,7 @@ function EditRoleUser({ user, refetch, onClose }: EditUserByAdminProps) {
   return (
     <form
       onSubmit={handleSubmit(onSubmit)}
-      className="flex flex-col gap-4 w-full max-w-sm"
+      className="flex flex-col gap-4 w-full max-w-sm pb-4"
     >
       <Controller
         name="role"
@@ -56,7 +60,7 @@ function EditRoleUser({ user, refetch, onClose }: EditUserByAdminProps) {
       <Button
         isLoading={isLoading}
         type="submit"
-        className="bg-[#7575FE] text-white rounded-full"
+        className="bg-[#7575FE] text-white rounded-full "
       >
         ویرایش
       </Button>

@@ -6,9 +6,10 @@ import { Input, Button, Checkbox } from "@heroui/react";
 import DatePicker from "react-multi-date-picker";
 import persian from "react-date-object/calendars/persian";
 import persian_fa from "react-date-object/locales/persian_fa";
-import { IUser } from "../../types/adminPanel/adminPanelTypes";
+import { IUser } from "../../../types/adminPanel/adminPanelTypes";
 import { useMutation } from "@tanstack/react-query";
-import { putUsers } from "../../services/api/Admin/User/PutUsers/PutUsers";
+import { putUsers } from "../../../services/api/Admin/User/PutUsers/PutUsers";
+import toast from "react-hot-toast";
 
 export interface EditUserByAdminProps {
   user?: IUser;
@@ -52,8 +53,11 @@ export default function EditUserByAdmin({
       refetch?.();
       onClose?.();
       setIsLoading(false);
+      toast.success("عملیات با موفقیت انجام شد ");
     },
-    onError: (error) => {},
+    onError: (error) => {
+      toast.success("مشکلی پیش آمده است ");
+    },
   });
   const onSubmit = (data: any) => {
     setIsLoading(true);
