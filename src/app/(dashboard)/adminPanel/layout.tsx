@@ -79,6 +79,18 @@ const tabs = [
     href: "/adminPanel/location",
     icon: <MapPin size={18} />,
   },
+  {
+    id: "categories",
+    label: "مدیریت دسته بندی ها",
+    href: "/adminPanel/category",
+    icon: <MapPin size={18} />,
+  },
+  {
+    id: "chat",
+    label: "مدیریت گفتگو ها",
+    href: "/adminPanel/chat",
+    icon: <MapPin size={18} />,
+  },
 ];
 
 export default function AdminLayout({

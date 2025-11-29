@@ -22,16 +22,21 @@ import {
   ModalBody,
   Input,
   useDisclosure,
+  Dropdown,
+  DropdownTrigger,
+  DropdownMenu,
+  DropdownItem,
 } from "@heroui/react";
 
 import LoadingDots from "../../Loading/loadingOne";
-import { MapPin } from "lucide-react";
+import { MapPin, MoreVertical, Pencil } from "lucide-react";
 
 import { MapContainer, TileLayer, Marker, useMapEvents } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import { createLocationByAdmin } from "../../../services/api/Admin/location/createLoc/createLocation";
 import toast from "react-hot-toast";
+import CreateLoc from "./CreateLoc";
 
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
@@ -43,35 +48,35 @@ L.Icon.Default.mergeOptions({
     "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
 });
 
-function SelectableMarker({
-  position,
-  setPosition,
-}: {
-  position: [number, number] | null;
-  setPosition: (pos: [number, number]) => void;
-}) {
-  useMapEvents({
-    click(e) {
-      setPosition([e.latlng.lat, e.latlng.lng]);
-    },
-  });
+function FlyToLocation({ position }: { position: [number, number] | null }) {
+  const map = useMapEvents({});
+  useEffect(() => {
+    if (position) {
+      map.flyTo(position, 13, { duration: 1.2 });
+    }
+  }, [position]);
 
-  return position ? <Marker position={position}></Marker> : null;
+  return null;
 }
-
 function LocationContainer() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page") ?? 1);
-
   const [selectedLocation, setSelectedLocation] = useState<AreaItem | null>(
     null
   );
-  const [isLoading, setIsLoading] = useState(false);
-  const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const [newName, setNewName] = useState("");
-  const [newPosition, setNewPosition] = useState<[number, number] | null>(null);
+  const {
+    isOpen: isCreateModal,
+    onOpen: onCreateModal,
+    onOpenChange: onCreateModalChange,
+  } = useDisclosure();
+  const {
+    isOpen: isEditModal,
+    onOpen: onEditModal,
+    onOpenChange: onEditModalChange,
+  } = useDisclosure();
 
+  const [mapCenter, setMapCenter] = useState<[number, number] | null>(null);
   const {
     data,
     isLoading: isLoadingData,
@@ -88,22 +93,7 @@ function LocationContainer() {
       totalCount: response.totalCount,
     }),
   });
-  const createLocMutation = useMutation({
-    mutationFn: (data: any) => createLocationByAdmin(data),
 
-    onSuccess: () => {
-      setIsLoading(false);
-      refetch?.();
-      onOpenChange(false); // <-- این مودال را می‌بندد
-      setNewName("");
-      setNewPosition(null);
-      toast.success("عملیات با موفقیت انجام شد ");
-    },
-
-    onError: (error) => {
-      toast.error("مشکلی پیش آمده است ");
-    },
-  });
   const totalPages = data ? Math.ceil(data.totalCount / 5) : 0;
 
   const handlePageChange = (page: number) => {
@@ -112,7 +102,7 @@ function LocationContainer() {
     router.replace(`?${params.toString()}`);
   };
 
-  if (isLoading) {
+  if (isLoadingData) {
     return (
       <div className="w-full flex justify-center py-10">
         <LoadingDots />
@@ -124,25 +114,15 @@ function LocationContainer() {
     ? [Number(data.locs[0].lat), Number(data.locs[0].lng)]
     : [35.7, 51.4];
 
-  const handleAddSubmit = () => {
-    setIsLoading(true);
-    const data = {
-      area_name: newName,
-      lat: newPosition?.[0],
-      lng: newPosition?.[1],
-    };
-    createLocMutation.mutate(data);
-  };
-
   return (
     <div className="w-full overflow-x-auto pb-10 space-y-5">
       {/* نقشه اصلی بالای جدول */}
       <div
         className={`h-[400px] w-full transition-all duration-300 ${
-          isOpen ? "bg-gray-300" : ""
+          isCreateModal ? "bg-gray-300" : ""
         }`}
       >
-        {!isOpen && (
+        {!isCreateModal && !isEditModal && (
           <MapContainer
             center={initialCenter}
             zoom={5}
@@ -150,6 +130,9 @@ function LocationContainer() {
             className="h-full w-full"
           >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+
+            <FlyToLocation position={mapCenter} />
+
             {data?.locs.map((loc) => (
               <Marker
                 key={loc.id}
@@ -161,7 +144,7 @@ function LocationContainer() {
       </div>
 
       <div className="flex justify-end">
-        <Button color="primary" onPress={() => onOpen()}>
+        <Button color="primary" onPress={() => onCreateModal()}>
           اضافه کردن مقصد +
         </Button>
       </div>
@@ -188,12 +171,37 @@ function LocationContainer() {
               <TableCell>{item.lat}</TableCell>
               <TableCell>{item.lng}</TableCell>
               <TableCell>
-                <Button
-                  onPress={() => setSelectedLocation(item)}
-                  className="flex items-center gap-2 bg-transparent"
-                >
-                  <MapPin size={16} /> مشاهده روی نقشه
-                </Button>
+                <Dropdown>
+                  <DropdownTrigger>
+                    <Button variant="light" className="px-2 min-w-unit-10">
+                      <MoreVertical size={18} />
+                    </Button>
+                  </DropdownTrigger>
+
+                  <DropdownMenu aria-label="actions">
+                    <DropdownItem
+                      key="show_map"
+                      startContent={<MapPin size={16} />}
+                      onPress={() => {
+                        // setSelectedLocation(item);
+                        setMapCenter([Number(item.lat), Number(item.lng)]);
+                      }}
+                    >
+                      مشاهده روی نقشه
+                    </DropdownItem>
+
+                    <DropdownItem
+                      key="edit"
+                      startContent={<Pencil size={16} />}
+                      onPress={() => {
+                        setSelectedLocation(item);
+                        onEditModal();
+                      }}
+                    >
+                      ویرایش
+                    </DropdownItem>
+                  </DropdownMenu>
+                </Dropdown>
               </TableCell>
             </TableRow>
           ))}
@@ -216,41 +224,36 @@ function LocationContainer() {
       )}
 
       {/* مودال اضافه کردن مقصد */}
-      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+      <Modal isOpen={isCreateModal} onOpenChange={onCreateModalChange}>
         <ModalContent>
           {(onClose) => (
             <>
               <ModalHeader>اضافه کردن مقصد جدید</ModalHeader>
               <ModalBody className="space-y-3 h-[500px] pb-4">
-                <Input
-                  placeholder="نام مقصد"
-                  value={newName}
-                  onChange={(e) => setNewName(e.target.value)}
+                <CreateLoc
+                  selectedLocation={selectedLocation}
+                  refetch={refetch}
+                  onOpenChange={onClose}
+                  inEdit={false}
                 />
-
-                <div className="h-[350px] w-full">
-                  <MapContainer
-                    center={initialCenter}
-                    zoom={5}
-                    scrollWheelZoom={true}
-                    className="h-full w-full"
-                  >
-                    <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-                    <SelectableMarker
-                      position={newPosition}
-                      setPosition={setNewPosition}
-                    />
-                  </MapContainer>
-                </div>
-
-                <Button
-                  color="primary"
-                  onPress={handleAddSubmit}
-                  className="rounded-full"
-                  isLoading={isLoading}
-                >
-                  ثبت
-                </Button>
+              </ModalBody>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
+      {/* مودال برای ویرایش کردن مقصد  */}
+      <Modal isOpen={isEditModal} onOpenChange={onEditModalChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader>ویرایش کردن مقصد جدید</ModalHeader>
+              <ModalBody className="space-y-3 h-[500px] pb-4">
+                <CreateLoc
+                  selectedLocation={selectedLocation}
+                  refetch={refetch}
+                  onOpenChange={onClose}
+                  inEdit={true}
+                />
               </ModalBody>
             </>
           )}
