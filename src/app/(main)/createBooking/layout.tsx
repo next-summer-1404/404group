@@ -5,7 +5,7 @@ function layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <div className="p-[48px]">{children}</div>;
+  return <div className="p-[48px] dark:bg-gray-900">{children}</div>;
 }
 
 export default layout;

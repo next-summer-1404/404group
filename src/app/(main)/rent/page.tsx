@@ -29,16 +29,16 @@ async function RentPage({ searchParams }: IHouseComponentsProps) {
   console.log(data.totalCount);
   const totalPages = data ? Math.ceil(data.totalCount / 10) : 0;
   return (
-    <div className="">
-      <div className="sm:hidden">
+    <div className="w-full bg-white dark:bg-gray-900 transition-colors duration-300">
+      <div className="sm:hidden bg-white dark:bg-gray-800 p-3 rounded-2xl shadow-md transition-colors duration-300">
         <ModalFilterRent />
       </div>
-      <div className="hidden sm:block">
+      <div className="hidden sm:block bg-white dark:bg-gray-800 p-4 rounded-2xl shadow-md transition-colors duration-300">
         <RentFilter />
       </div>
 
       <HousesComponents data={data} />
-      <div className=" flex justify-center items-center">
+      <div className="flex justify-center items-center mt-10 bg-transparent">
         {" "}
         <PaginationComponents totalCount={totalPages} />
       </div>

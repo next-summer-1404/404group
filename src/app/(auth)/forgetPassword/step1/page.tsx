@@ -6,6 +6,7 @@ import appleIcone from "@/assets/auth/appleIcnoe.png";
 import RedirectButton from "../../../../components/authContainer/RedirectButton";
 import Link from "next/link";
 import RegisterFormStepOne from "../../../../components/authContainer/RegisterFormStepOne";
+import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 
 function forgetPassStepOne() {
   return (
@@ -14,6 +15,7 @@ function forgetPassStepOne() {
         <div className="max-w-md mx-auto p-6  mt-[104px]">
           <div className="flex flex-row-reverse justify-between">
             {" "}
+            <ThemeToggle />
             <RedirectButton Link="/" title="صفحه اصلی" />
             <h1 className="text-2xl font-bold mb-4 text-right">
               بازیابی رمز عبور

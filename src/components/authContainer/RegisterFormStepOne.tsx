@@ -102,7 +102,7 @@ function RegisterFormStepOne({ inForgetPass }: IPropsRegisterFormStepOne) {
         id="email"
         type="email"
         placeholder="ایمیل خود را وارد کنید"
-        className={`text-right w-[390px] h-[48px] bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
+        className={`text-right w-[390px] h-[48px] dark:bg-gray-700 bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
           errors.email ? "border-red-500" : "border-none"
         }`}
         {...register("email", {

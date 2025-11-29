@@ -8,7 +8,7 @@ function layout({
   children: React.ReactNode;
 }>) {
   return (
-    <div>
+    <div className="dark:bg-gray-900">
       {" "}
       <Header />
       {children}

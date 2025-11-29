@@ -34,7 +34,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="fa" className={IRANYekan.className}>
+    <html lang="fa" className="IRANYekan.className dark:bg-gray-900">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >

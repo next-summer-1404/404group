@@ -10,6 +10,7 @@ import { PostInformation } from "../../../../services/api/auth/register/stepThre
 import { useForm } from "react-hook-form";
 import Cookies from "js-cookie";
 import { PostNewPasswordStepThree } from "../../../../services/api/auth/forgetPassword/stepThree/PostNewPasswordStepThree";
+import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 
 type FormInformation = {
   PhoneNumber: string;
@@ -68,6 +69,7 @@ function forgetPassStepThree() {
       <div className="w-[100%]">
         <div className="max-w-md mx-auto p-6 mt-[104px]">
           <div className="flex flex-row-reverse justify-between">
+            <ThemeToggle />
             <RedirectButton Link="/forgetPassword/step2" title="بازگشت" />
             <h1 className="text-2xl font-bold mb-4 text-right">
               بازیابی رمز عبور
@@ -90,7 +92,7 @@ function forgetPassStepThree() {
               id="password"
               type="password"
               placeholder="رمز عبور خود را وارد کنید"
-              className={`text-right w-[390px] h-[48px] bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
+              className={`text-right w-[390px] h-[48px] dark:bg-gray-700 bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
                 errors.password ? "border-red-500" : "border-none"
               }`}
               {...register("password", { required: "رمز عبور الزامی است" })}
@@ -112,7 +114,7 @@ function forgetPassStepThree() {
               id="PhoneNumberRepeat"
               type="password"
               placeholder="تکرار رمز عبور خود را وارد کنید"
-              className={`text-right w-[390px] h-[48px] bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
+              className={`text-right w-[390px] h-[48px] dark:bg-gray-700 bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
                 errors.PhoneNumberRepeat ? "border-red-500" : "border-none"
               }`}
               {...register("PhoneNumberRepeat", {

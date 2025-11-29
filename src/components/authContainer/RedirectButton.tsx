@@ -9,7 +9,7 @@ function RedirectButton({ Link, title }: IPropsRedirectButton) {
   const router = useRouter();
   return (
     <button
-      className=" bg-[#F0F0F0] w-[110px] sm:w-[135px] h-[40px] rounded-[100px]  text-center text-sm "
+      className=" bg-[#F0F0F0] dark:bg-gray-700 w-[110px] sm:w-[135px] h-[40px] rounded-[100px]  text-center text-sm "
       onClick={() => router.push(Link)}
       aria-label="بازگشت به صفحه اصلی"
     >

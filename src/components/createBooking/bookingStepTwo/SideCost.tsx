@@ -2,9 +2,20 @@ import React from "react";
 
 function SideCost() {
   return (
-    <div className="bg-[white] rounded-[24px] h-[225px]  px-[16px] py-[16px] flex flex-col gap-[32px]">
-      <h1 className="text-[24px] text-[black] font-[700]"> هزینه جانبی</h1>
-      <p className="text-[16px] text-[black] font-[400]">
+    <div
+      className="
+    bg-white dark:bg-gray-800 
+    rounded-[24px] 
+    px-4 py-4 sm:px-6 sm:py-6
+    flex flex-col gap-4 sm:gap-6
+    transition-colors duration-300
+  "
+    >
+      <h1 className="text-[20px] sm:text-[24px] font-[700] text-gray-900 dark:text-gray-100">
+        هزینه جانبی
+      </h1>
+
+      <p className="text-[14px] sm:text-[16px] font-[400] text-gray-700 dark:text-gray-300 leading-relaxed">
         لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با استفاده
         از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در ستون و
         سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و کاربردهای

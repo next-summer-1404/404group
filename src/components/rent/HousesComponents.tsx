@@ -25,6 +25,7 @@ async function HousesComponents({ data }: { data: HousesResponse }) {
   return (
     <div className="flex flex-row flex-wrap gap-[56px]  p-[40px] sm:p-[56px]">
       {data?.houses?.map((item: House) => (
+        // <Link href={`/SingleHous/${item.id}`} key={item.id}>
         <div
           className=" sm:w-[633px] p-2  sm:h-[229px]  flex flex-col sm:flex-row shadow-lg sm:shadow-none gap-[16px] hover:shadow-2xl transition-[0.3s] rounded-[24px] "
           key={item.id}
@@ -38,7 +39,9 @@ async function HousesComponents({ data }: { data: HousesResponse }) {
             />
           </div>
           <div className=" pr-[16px] flex flex-col gap-[16px]">
-            <h1 className="font-[700] text-[20px] text-black ">{item.title}</h1>
+            <h1 className="font-[700] text-[20px] text-black dark:text-white">
+              {item.title}
+            </h1>
             <div
               className={` ${
                 item.rate !== null ? "w-[90px]" : " w-[100px]"
@@ -105,7 +108,7 @@ async function HousesComponents({ data }: { data: HousesResponse }) {
                 <span className="text-[12px] text-[#595959] mt-1">تومان</span>
               </div>
               <Link
-                href={"/"}
+                href={`/SingleHous/${item.id}`}
                 className="text-[#7575FE] text-[16px] cursor-pointer"
               >
                 مشاهده جزئیات {">"}
@@ -113,6 +116,7 @@ async function HousesComponents({ data }: { data: HousesResponse }) {
             </div>
           </div>
         </div>
+        // </Link>
       ))}
     </div>
   );

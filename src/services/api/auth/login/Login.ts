@@ -8,10 +8,13 @@ export const Login = async (
   password: string
 ): Promise<ILogin> => {
   try {
-    const res: ILogin = await http.post("/api/auth/login", {
-      email: email,
-      password: password,
-    });
+    const res: ILogin = await http.post(
+      "https://delta-project.liara.run/api/auth/login",
+      {
+        email: email,
+        password: password,
+      }
+    );
     return res;
   } catch (error) {
     throw error;
