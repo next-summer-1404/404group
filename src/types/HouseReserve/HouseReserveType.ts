@@ -57,3 +57,40 @@ export interface Property {
 
   last_updated: Record<string, unknown>;
 }
+export interface IHousesResponse {
+  totalCount: number;
+  houses: IHouse[];
+}
+
+export interface IHouse {
+  id: string;
+  title: string;
+  address: string;
+  photos: string[];
+  rate: string;
+  discounted_price: number | null;
+  price: string;
+  tags: string[];
+  last_updated: string;
+  capacity: number;
+  location: {
+    lat: number;
+    lng: number;
+  };
+  categories: {
+    name: string;
+  };
+  bathrooms: number;
+  parking: number;
+  rooms: number;
+  yard_type: string;
+  num_comments: number;
+  discount_id: number | null;
+  transaction_type: "rental" | "sale" | string;
+  sellerId: string;
+  sellerName: string;
+  caption: string;
+  bookings: number;
+  favoriteId: string | null;
+  isFavorite: boolean;
+}

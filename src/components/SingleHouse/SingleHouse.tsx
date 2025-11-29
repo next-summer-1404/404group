@@ -1,11 +1,15 @@
 "use client";
 
-import { getHouse } from "@/services/api/HouseApiLand/route";
+import { getHouse } from "@/services/api/HouseApiLand/Houses";
 // import { getHousedeteil } from "@/services/api/HouseReserveDetails/HouseReserveDetails";
 import { Bath, BedDouble } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import {
+  IHouse,
+  IHousesResponse,
+} from "../../types/HouseReserve/HouseReserveType";
 
 const SingleHouse = ({ property }: any) => {
   interface data {
@@ -22,16 +26,16 @@ const SingleHouse = ({ property }: any) => {
     };
     tags?: string[];
   }
-  interface property {
-    photos: string;
-    title: string;
-    rooms: number;
-    bathrooms: number;
-    parking: number;
-    address: string;
-    price: number;
-  }
-  const [properties, setProperties] = useState<property[]>([]);
+  // interface property {
+  //   photos: string;
+  //   title: string;
+  //   rooms: number;
+  //   bathrooms: number;
+  //   parking: number;
+  //   address: string;
+  //   price: number;
+  // }
+  const [properties, setProperties] = useState<IHouse[]>([]);
 
   useEffect(() => {
     async function loadData() {
@@ -41,7 +45,9 @@ const SingleHouse = ({ property }: any) => {
 
     loadData();
   }, []);
-
+  if (!property) {
+    return <div>در حال بارگذاری...</div>;
+  }
   return (
     <main
       className="bg-white font-yekan text-gray-800 dark:bg-gray-900"
@@ -50,17 +56,20 @@ const SingleHouse = ({ property }: any) => {
       <div className="container mx-auto px-6 py-10">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           <div className="md:col-span-2 border">
-            <Image
-              src={
-                Array.isArray(property.photos) && property.photos.length > 0
-                  ? property.photos[0]
-                  : "/villa.png"
-              }
-              alt={property?.title || "property image"}
-              width={800}
-              height={600}
-              className="rounded-3xl object-cover w-full h-[400px]"
-            />
+            {property?.photos && (
+              <Image
+                src={
+                  Array.isArray(property?.photos) &&
+                  property?.photos?.length > 0
+                    ? property.photos[0]
+                    : "/villa.png"
+                }
+                alt={property?.title || "property image"}
+                width={800}
+                height={600}
+                className="rounded-3xl object-cover w-full h-[400px]"
+              />
+            )}{" "}
           </div>
           <div className="grid grid-cols-2 gap-4">
             {Array.isArray(property.photos) && property.photos.length > 0
@@ -153,7 +162,7 @@ const SingleHouse = ({ property }: any) => {
             <div className="text-gray-500 mb-2 font-semibold">برچسب ها</div>
             <div className="flex flex-wrap gap-2">
               {property?.tags && property.tags.length > 0 ? (
-                property.tags.map((tag, index) => (
+                property?.tags?.map((tag: any, index: any) => (
                   <span
                     key={index}
                     className="px-3 py-1 text-sm text-[#7575FE]"

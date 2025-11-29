@@ -1,6 +1,6 @@
 "use client";
 
-import { getHouse } from "@/services/api/HouseApiLand/route";
+import { getHouse } from "@/services/api/HouseApiLand/Houses";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import SetRefreshToken from "../RefreshToken/SetRefreshToken";

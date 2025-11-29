@@ -1,11 +1,9 @@
 import http from "@/services/api/interceptor/interceptor";
-import { HousesResponse } from "../../../types/RentTypes/HomeTypes";
+import { House, HousesResponse } from "../../../types/RentTypes/HomeTypes";
 
 export const getHouseReserveDetail = async (id: string) => {
   try {
-    const res = await http.get<HousesResponse>(
-      `https://delta-project.liara.run/api/houses/${id}`
-    );
+    const res: House = await http.get(`/api/houses/${id}`);
 
     return res;
   } catch (error) {
