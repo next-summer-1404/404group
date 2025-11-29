@@ -12,4 +12,8 @@ export interface FormFilterSearch {
   minMortgage?: number; // حداقل وام
   maxArea?: number; // حداکثر متراژ
   minArea?: number; // حداقل متراژ
+
+  status?: "pending" | "confirmed" | "canceled" | string;
+  user_id?: string;
+  house_id?: string;
 }

@@ -1,51 +1,27 @@
-import axios, {
-  AxiosHeaders,
-  AxiosResponse,
-  InternalAxiosRequestConfig,
-} from "axios";
-// import { getTokenAcc } from "../../common/getTokenAcc"; // تابع شما برای گرفتن توکن اضافی
+import axios, { AxiosHeaders, InternalAxiosRequestConfig } from "axios";
 
-const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const baseURL = process.env.NEXT_PUBLIC_BASE_URL;
+
+let ACCESS_TOKEN: string | null = null;
+
+export const setClientToken = (token: string | null) => {
+  ACCESS_TOKEN = token;
+};
 
 const instance = axios.create({
-  baseURL: baseUrl,
+  baseURL,
 });
 
-// اینترسپتور پاسخ
-instance.interceptors.response.use(
-  (response) => response.data // فقط داده‌ها را برمی‌گرداند
+instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
+  config.headers = config.headers ?? new AxiosHeaders();
 
-  // (error) => {
-  //   if (!error.response && error.message === "Network Error") {
-  //     console.error(
-  //       "Network Error detected, possibly due to CORS or server down"
-  //     );
-  //   } else if (error.response) {
-  //     console.error(
-  //       `HTTP Error: ${error.response.status}`,
-  //       error.response.data
-  //     );
-  //   }
-  // return Promise.reject(error);
-  // }
-);
+  if (ACCESS_TOKEN) {
+    config.headers.set("Authorization", `Bearer ${ACCESS_TOKEN}`);
+  }
 
-// اینترسپتور درخواست برای اضافه کردن توکن
+  return config;
+});
 
-// instance.interceptors.request.use((config: InternalAxiosRequestConfig) => {
-//   const tokenLocal =
-//     typeof window !== "undefined" ? localStorage.getItem("token") : null;
-//   const tokenAcc = getTokenAcc();
-//   const token = tokenLocal || tokenAcc;
-
-//   // اطمینان از وجود headers
-//   config.headers = config.headers ?? new AxiosHeaders();
-
-//   if (token) {
-//     (config.headers as AxiosHeaders).set("Authorization", `Bearer ${token}`);
-//   }
-
-//   return config;
-// });
+instance.interceptors.response.use((res) => res.data);
 
 export default instance;

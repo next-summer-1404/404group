@@ -4,6 +4,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactNode, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { ReserveProvider } from "../context/ReserveContext";
+import AxiosProvider from "./AxiosProvider";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());
@@ -14,7 +15,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
         <QueryClientProvider client={queryClient}>
           {" "}
           <Toaster position="top-left" reverseOrder={false} />
-          {children}
+          <AxiosProvider>{children}</AxiosProvider>
         </QueryClientProvider>
       </HeroUIProvider>
     </ReserveProvider>

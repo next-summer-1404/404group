@@ -2,13 +2,14 @@
 import { Button } from "@heroui/button";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import toast from "react-hot-toast";
 import { Login } from "../../services/api/auth/login/Login";
 import Cookies from "js-cookie";
 import Link from "next/link";
-import { jwtDecode } from "jwt-decode";
+import jwt from "jsonwebtoken";
+
 interface LoginFormValues {
   email: string;
   password: string;
@@ -48,7 +49,15 @@ function LoginForm() {
           secure: true,
           sameSite: "strict",
         });
-        router.push("/");
+
+        const decoded: any = jwt.decode(response.accessToken);
+        const newRole = decoded.role;
+
+        if (newRole === "admin") {
+          router.push("/adminPanel/dashboard");
+        } else {
+          router.push("/");
+        }
       }
     },
 
@@ -70,21 +79,21 @@ function LoginForm() {
       PostLogin.mutate({ email: data.email, password: data.password });
     }
   };
-  try {
-    const decoded: any = jwtDecode(accessToken);
-    const role = decoded?.role;
+  // try {
+  //   const decoded: any = jwt.decode(accessToken);
+  //   const role = decoded?.role;
 
-    if (role === "buyer") {
-      router.push("/BuyerDash");
-    } else if (role === "seller") {
-      router.push("/SellerDash");
-    } else {
-      router.push("/");
-    }
-  } catch (error) {
-    console.error("خطا در خواندن نقش کاربر", error);
-    router.push("/");
-  }
+  //   if (role === "buyer") {
+  //     router.push("/BuyerDash");
+  //   } else if (role === "seller") {
+  //     router.push("/SellerDash");
+  //   } else {
+  //     router.push("/");
+  //   }
+  // } catch (error) {
+  //   console.error("خطا در خواندن نقش کاربر", error);
+  //   router.push("/");
+  // }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
