@@ -81,33 +81,48 @@ function Stepper({ stepNumber }: { stepNumber: number }) {
   };
 
   return (
-    <div>
+    <div className="hidden lg:block">
       {/* دایره‌ها و خطوط */}
       <div className="h-[80px] flex flex-row flex-nowrap items-center">
-        {steps.map((step, index) => (
-          <React.Fragment key={step.id}>
-            {/* دایره */}
-            <div
-              className="size-[80px] rounded-full flex justify-center items-center transition-all duration-300"
-              style={{ backgroundColor: getStepBgColor(step) }}
-            >
-              <Image
-                src={getStepIcon(step)}
-                alt={step.title}
-                width={40}
-                height={40}
-              />
-            </div>
+        {steps.map((step, index) => {
+          const bg = getStepBgColor(step); // رنگ دایره
+          const line = getLineColor(step); // رنگ خط
 
-            {/* خط بین مراحل */}
-            {index !== steps.length - 1 && (
+          return (
+            <React.Fragment key={step.id}>
+              {/* دایره اصلی */}
               <div
-                className="h-[8px] w-[289px] transition-all duration-300"
-                style={{ backgroundColor: getLineColor(step) }}
-              ></div>
-            )}
-          </React.Fragment>
-        ))}
+                className="
+              size-[80px] rounded-full flex justify-center items-center 
+              transition-all duration-300
+              border border-gray-300 dark:border-gray-700
+              dark:bg-gray-800
+            "
+                style={{ backgroundColor: bg }} // اجازه میدیم رنگ لایت از تابع بیاد
+              >
+                <Image
+                  src={getStepIcon(step)}
+                  alt={step.title}
+                  width={40}
+                  height={40}
+                  className="dark:opacity-90"
+                />
+              </div>
+
+              {/* خط بین مراحل */}
+              {index !== steps.length - 1 && (
+                <div
+                  className="
+                h-[8px] w-[289px] 
+                transition-all duration-300
+                dark:bg-gray-700
+              "
+                  style={{ backgroundColor: line }}
+                ></div>
+              )}
+            </React.Fragment>
+          );
+        })}
       </div>
 
       {/* عناوین زیر استپ‌ها */}
@@ -115,13 +130,18 @@ function Stepper({ stepNumber }: { stepNumber: number }) {
         {steps.map((step) => (
           <h1
             key={step.id}
-            className={`text-[14px] font-[600] ${
-              step.id === currentStep
-                ? "text-[#0D3B66]"
-                : step.id < currentStep || step.alwaysDone
-                ? "text-gray-600"
-                : "text-gray-400"
-            }`}
+            className={`
+          text-[14px] font-[600] 
+          transition-colors duration-300
+
+          ${
+            step.id === currentStep
+              ? "text-[#0D3B66] dark:text-indigo-400"
+              : step.id < currentStep || step.alwaysDone
+              ? "text-gray-600 dark:text-gray-300"
+              : "text-gray-400 dark:text-gray-500"
+          }
+        `}
           >
             {step.title}
           </h1>

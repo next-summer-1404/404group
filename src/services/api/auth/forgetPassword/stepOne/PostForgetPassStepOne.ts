@@ -7,7 +7,7 @@ export const PostForgetPassStepOne = async (
 ): Promise<ForgetResponseStepOne> => {
   try {
     const res: ForgetResponseStepOne = await http.post(
-      "/api/auth/forgot-password/request",
+      "https://delta-project.liara.run/api/auth/forgot-password/request",
       {
         email: email,
       }

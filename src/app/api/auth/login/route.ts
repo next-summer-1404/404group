@@ -7,7 +7,10 @@ export async function POST(req: Request) {
   try {
     const { email, password } = await req.json();
 
-    const res: ILogin = await http.post(`/api/auth/login`, { email, password });
+    const res: ILogin = await http.post(
+      `https://delta-project.liara.run/api/auth/login`,
+      { email, password }
+    );
 
     const { accessToken, refreshToken } = res;
 

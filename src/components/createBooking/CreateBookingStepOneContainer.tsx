@@ -6,7 +6,7 @@ import SetTravelDetails from "./bookingStepOne/SetTravelDetails";
 
 function CreateBookingStepOneContainer() {
   return (
-    <div className="rounded-[24px] bg-[#F5F5F5]  px-[16px] py-[32px]">
+    <div className="rounded-[24px] bg-[#F5F5F5] dark:bg-gray-900 px-4 sm:px-6 md:px-8 py-8 sm:py-10 md:py-12">
       <Information />
       <SetTravelDetails />
     </div>

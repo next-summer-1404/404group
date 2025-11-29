@@ -1,6 +1,5 @@
 "use client";
-
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Home,
   User,
@@ -13,12 +12,15 @@ import {
   X,
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import DashboardHome from "./Dashboard";
-import Reservations from "./Reservmange";
-import Profile from "./Profile";
-import Favorite from "./Favorite";
+import UseInformation from "./useInformation/UseInformation";
+import BuyerFavorite from "./Favorite";
+import BuyerContain from "./Dashboard/BuyerContain";
+import ReservePart from "./Dashboard/ReservePart";
 import Payments from "./Payment";
-import Notif from "./Notif";
+import Notifiction from "./Notif";
+import BuyerHero from "./Dashboard/BuyerHero";
+import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import Link from "next/link";
 
 const tabs = [
   { id: "dashboard", label: "داشبورد", icon: <Home size={18} /> },
@@ -29,24 +31,63 @@ const tabs = [
   { id: "notifications", label: "اعلان‌ها", icon: <Bell size={18} /> },
 ];
 
-export default function Dashboard() {
+export default function DashboardBuyer() {
   const [activeTab, setActiveTab] = useState("dashboard");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
+  const renderContent = () => {
+    if (activeTab === "dashboard") {
+      return (
+        <>
+          <BuyerHero />
+          <BuyerContain />
+          <ReservePart />
+        </>
+      );
+    }
+    if (activeTab === "profile") return <UseInformation />;
+    if (activeTab === "bookings") return <ReservePart />;
+    if (activeTab === "favorites") return <BuyerFavorite />;
+    if (activeTab === "payments") return <Payments />;
+    if (activeTab === "notifications") return <Notifiction />;
+    return null;
+  };
+
   return (
-    <div className="flex h-fit bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+    <div className="flex flex-col md:flex-row min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
+      {/* 📌 Sidebar – ریسپانسیو کامل */}
+
       <aside
-        className={`fixed md:static mr-5 my-6 rounded-2xl top-0 right-0  md:w-64 w-64 bg-white dark:bg-gray-800 shadow-lg z-20 transform transition-transform duration-300
+        className={`
+          bg-white dark:bg-gray-800 shadow-lg
+          md:rounded-2xl md:m-6
+          z-30
           ${
-            sidebarOpen ? "translate-x-0" : "translate-x-full md:translate-x-0"
-          }`}
+            sidebarOpen
+              ? "fixed right-0 top-0 w-64 h-full rounded-none"
+              : "hidden md:block md:static md:w-64 md:h-auto"
+          }
+        `}
       >
-        <div className="flex items-center justify-between px-4 py-3 border-gray-200 dark:border-gray-700">
-          <h1 className="text-xl font-bold">دلتا</h1>
-          <button className="md:hidden" onClick={() => setSidebarOpen(false)}>
+        <div className="mt-3 mr-6 flex gap-38">
+          <div className="mt-2">
+            <Link href={"/"}>
+              <Home size={25} />
+            </Link>
+          </div>
+          <div>
+            <ThemeToggle />
+          </div>
+        </div>
+        {/* هدر سایدبار فقط در موبایل */}
+        <div className="flex items-center justify-between px-4 py-4 border-b border-gray-200 dark:border-gray-700 md:hidden">
+          <h1 className="text-lg font-bold">دلتا</h1>
+          <button onClick={() => setSidebarOpen(false)}>
             <X />
           </button>
         </div>
+
+        {/* ناوبری */}
         <nav className="flex flex-col gap-1 p-4">
           {tabs.map((tab) => (
             <button
@@ -55,7 +96,7 @@ export default function Dashboard() {
                 setActiveTab(tab.id);
                 setSidebarOpen(false);
               }}
-              className={`flex items-center justify-between p-2 rounded-lg transition
+              className={`flex items-center justify-between p-3 rounded-lg transition w-full
                 ${
                   activeTab === tab.id
                     ? "bg-gray-200 dark:bg-gray-700 font-semibold"
@@ -68,8 +109,10 @@ export default function Dashboard() {
             </button>
           ))}
         </nav>
-        <div className="mt-50 p-4">
-          <div className="flex items-center justify-between border-dashed border-1.5 p-3 rounded-xl">
+
+        {/* کیف پول – فقط دسکتاپ */}
+        <div className="p-4 mt-4 hidden md:block">
+          <div className="flex items-center justify-between border border-dashed p-3 rounded-xl">
             <div>
               <p className="text-sm font-semibold">کیف پول</p>
               <p className="text-xs text-gray-500">عدم موجودی</p>
@@ -79,47 +122,46 @@ export default function Dashboard() {
         </div>
       </aside>
 
+      {/* اوورلی موبایل */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/40 md:hidden"
+          className="fixed inset-0 bg-black/40 z-20 md:hidden"
           onClick={() => setSidebarOpen(false)}
-        ></div>
+        />
       )}
 
-      <div className="flex-1 flex flex-col">
-        <header className="flex mx-5 mt-6 rounded-2xl items-center justify-between px-4 py-3 bg-white dark:bg-gray-800 shadow-md">
+      {/* 📌 بخش اصلی */}
+      <div className="flex-1 flex flex-col md:pr-0 md:pl-0">
+        {/* هدر بالا */}
+        <header className="flex mx-3 mt-4 md:mt-6 rounded-xl items-center justify-between px-4 py-3 bg-white dark:bg-gray-800 shadow-md">
           <div className="flex items-center gap-2">
+            {/* دکمه باز کردن سایدبار در موبایل */}
             <button className="md:hidden" onClick={() => setSidebarOpen(true)}>
-              <Menu />
+              <Menu size={22} />
             </button>
-            <h2 className="font-bold text-lg">
+            <h2 className="font-bold text-base md:text-lg">
               {tabs.find((t) => t.id === activeTab)?.label}
             </h2>
           </div>
+
           <div className="flex items-center gap-3">
-            <span className="text-sm">امیر محمد ملایی</span>
-            <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+            <span className="text-sm hidden sm:block">امیر محمد ملایی</span>
+            <div className="w-8 h-8 bg-gray-300 rounded-full" />
           </div>
         </header>
 
-        <main className="flex-1 p-6">
+        {/* محتوای تب‌ها */}
+        <main className="flex-1  p-3 md:p-6">
           <AnimatePresence mode="wait">
             <motion.div
               key={activeTab}
-              initial={{ opacity: 0, y: 20 }}
+              initial={{ opacity: 0, y: 15 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -20 }}
-              transition={{ duration: 0.3 }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow p-6 text-center"
+              exit={{ opacity: 0, y: -15 }}
+              transition={{ duration: 0.25 }}
+              className="bg-gray-200 dark:bg-gray-800 rounded-xl shadow p-4 md:p-6"
             >
-              <p>
-                {activeTab === "dashboard" && <DashboardHome />}
-                {activeTab === "profile" && <Profile />}
-                {activeTab === "bookings" && <Reservations />}
-                {activeTab === "favorites" && <Favorite />}
-                {activeTab === "payments" && <Payments />}
-                {activeTab === "notifications" && <Notif />}
-              </p>
+              {renderContent()}
             </motion.div>
           </AnimatePresence>
         </main>

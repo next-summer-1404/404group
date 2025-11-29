@@ -8,6 +8,7 @@ import toast from "react-hot-toast";
 import { Login } from "../../services/api/auth/login/Login";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import { jwtDecode } from "jwt-decode";
 interface LoginFormValues {
   email: string;
   password: string;
@@ -28,6 +29,8 @@ function LoginForm() {
       setIsLoading(false);
       if (response.success) {
         toast.success("خوش آمدید !");
+        const accessToken = response.accessToken;
+        const refreshToken = response.refreshToken;
 
         // ذخیره در کلاینت
         Cookies.set("accessTokenClient", response.accessToken, {
@@ -48,6 +51,7 @@ function LoginForm() {
         router.push("/");
       }
     },
+
     onError: (error: any) => {
       setIsLoading(false);
       toast.error(error.message || "خطایی رخ داده است");
@@ -66,6 +70,21 @@ function LoginForm() {
       PostLogin.mutate({ email: data.email, password: data.password });
     }
   };
+  try {
+    const decoded: any = jwtDecode(accessToken);
+    const role = decoded?.role;
+
+    if (role === "buyer") {
+      router.push("/BuyerDash");
+    } else if (role === "seller") {
+      router.push("/SellerDash");
+    } else {
+      router.push("/");
+    }
+  } catch (error) {
+    console.error("خطا در خواندن نقش کاربر", error);
+    router.push("/");
+  }
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4">
@@ -76,7 +95,7 @@ function LoginForm() {
         id="email"
         type="email"
         placeholder="ایمیل خود را وارد کنید"
-        className={`text-right w-[390px] h-[48px] bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
+        className={`text-right w-[390px] h-[48px] dark:bg-gray-700 bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
           errors.email ? "border-red-500" : "border-none"
         }`}
         {...register("email", {
@@ -110,7 +129,7 @@ function LoginForm() {
         id="password"
         type="password"
         placeholder="رمز عبور خود را وارد کنید"
-        className={`text-right w-[390px] h-[48px] bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
+        className={`text-right w-[390px] h-[48px] dark:bg-gray-700 bg-[#F9F9F9] rounded-[31px] p-4 outline-none border ${
           errors.password ? "border-red-500" : "border-none"
         }`}
         {...register("password", { required: "رمز عبور الزامی است" })}

@@ -62,13 +62,15 @@ export default function ReserveFilterModal() {
       )}
 
       <div
-        className={`text-black pt-[24px] pr-[56px] pl-[36px] rounded-tl-[32px] rounded-bl-[32px] fixed top-65 right-0 h-[649px] w-[540px] bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
+        className={`text-black dark:bg-gray-800 pt-[24px] pr-[56px] pl-[36px] rounded-tl-[32px] rounded-bl-[32px] fixed top-65 right-0 h-[649px] w-[540px] bg-white shadow-xl z-50 transform transition-transform duration-300 ease-in-out ${
           open ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="p-6">
           <div className="flex justify-between items-center pb-3">
-            <h2 className="font-[700] text-[#1E1E1E] text-[20px]">فیلترها</h2>
+            <h2 className="font-[700] text-[#1E1E1E] dark:text-white text-[20px]">
+              فیلترها
+            </h2>
             <button
               onClick={() => setOpen(false)}
               className="text-gray-500 hover:text-gray-800 flex flex-row flex-nowrap gap-0"
@@ -104,7 +106,7 @@ export default function ReserveFilterModal() {
                 </Select>
               </div> */}
               <div className=" w-[100%] flex flex-col gap-3">
-                <label className="font-[600] text-[14px] text-[#1E1E1E]">
+                <label className="font-[600] text-[14px] dark:text-white text-[#1E1E1E]">
                   محل مورد نظر
                 </label>
                 <Controller
@@ -134,7 +136,7 @@ export default function ReserveFilterModal() {
               </div>
               {/* مرتب‌سازی */}
               <div className=" w-[100%] flex flex-col gap-3">
-                <label className="font-[600] text-[14px] text-[#1E1E1E]">
+                <label className="font-[600] dark:text-white text-[14px] text-[#1E1E1E]">
                   مرتب‌سازی بر اساس
                 </label>
                 <Select
@@ -152,21 +154,21 @@ export default function ReserveFilterModal() {
             </div>
             {/* فیلتر قیمت */}
             <div>
-              <label className="font-[600] text-[14px] text-[#1E1E1E] mb-2 block">
+              <label className="font-[600] dark:text-white text-[14px] text-[#1E1E1E] mb-2 block">
                 محدوده قیمت
               </label>
               <div className="text-[#757575] font-sans text-[14px] mt-2 flex justify-between">
                 <div>
                   {" "}
                   قیمت از{" "}
-                  <span className="text-black font-medium text-[16px]">
+                  <span className="text-black dark:text-white font-medium text-[16px]">
                     {priceRange[0].toLocaleString()} تومان
                   </span>
                 </div>
                 <div>
                   {" "}
                   قیمت تا{" "}
-                  <span className="text-black font-medium text-[16px]">
+                  <span className="text-black dark:text-white font-medium text-[16px]">
                     {priceRange[1].toLocaleString()} تومان
                   </span>
                 </div>
@@ -192,7 +194,7 @@ export default function ReserveFilterModal() {
             <div className="flex flex-row flex-no-wrap gap-8 justify-between ">
               {/* امکانات هتل */}
               <div className=" w-[100%] flex flex-col gap-3">
-                <label className="font-[600] text-[14px] text-[#1E1E1E]">
+                <label className="font-[600] dark:text-white text-[14px] text-[#1E1E1E]">
                   امکانات هتل
                 </label>
                 <Select
@@ -210,7 +212,7 @@ export default function ReserveFilterModal() {
 
               {/* امتیازات هتل */}
               <div className=" w-[100%] flex flex-col gap-3">
-                <label className="font-[600] text-[14px] text-[#1E1E1E]">
+                <label className="font-[600] dark:text-white text-[14px] text-[#1E1E1E]">
                   امتیازات هتل
                 </label>
                 <Select

@@ -30,10 +30,10 @@ function HouseReserveCardBox({ houses, totalCount }: HousesResponse) {
   };
 
   return (
-    <div className=" w-[100%] h-[80%] border-black mt-8 flex gap-6 flex-row flex-wrap p-2 overflow-auto scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-blue-200">
+    <div className="w-[100%] h-[80%] border-black mt-8 flex gap-6 flex-row flex-wrap p-2 overflow-auto scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-blue-200">
       {houses?.map((items) => (
         <Link href={`/SingleReservHouse/${items.id}`} key={items.id}>
-          <div className=" w-[218px] h-[317px] border-black  hover:scale-90 transition-[0.5s]">
+          <div className="shadow-2xl rounded-2xl w-[218px] h-[317px] border-black  hover:scale-90 transition-[0.5s]">
             <div className="w-[218px] h-[182px]  rounded-[24px] border-black relative">
               {" "}
               <Image
@@ -102,7 +102,7 @@ function HouseReserveCardBox({ houses, totalCount }: HousesResponse) {
               </div>
             </div>
             <div className="flex flex-col gap-[16px]">
-              <h1 className="text-[18px] font-[700] text-black mt-4">
+              <h1 className="text-[18px] font-[700] dark:text-white text-black mt-4">
                 {items.title}
               </h1>
               <div className="  flex flex-row gap-[7px]">
@@ -110,7 +110,7 @@ function HouseReserveCardBox({ houses, totalCount }: HousesResponse) {
                   <div className="size-[32px] rounded-[16px] bg-[#F3F3F3] flex justify-center items-center">
                     <Image src={location} alt="l" width={20} height={20} />
                   </div>
-                  <p className="text-[14px] mt-0.5 text-black">
+                  <p className="text-[14px] dark:text-gray-300 mt-0.5 text-black">
                     {items.address
                       ? items.address.length > 10
                         ? items.address.substring(0, 10) + "..."
@@ -122,7 +122,9 @@ function HouseReserveCardBox({ houses, totalCount }: HousesResponse) {
                   <div className="size-[32px] rounded-[16px] bg-[#F3F3F3] flex justify-center items-center">
                     <Image src={ring} alt="l" width={20} height={20} />
                   </div>
-                  <p className="text-[14px] mt-0.5 text-black">6 شب</p>
+                  <p className="text-[14px] mt-0.5 dark:text-gray-300 text-black">
+                    6 شب
+                  </p>
                 </div>
               </div>
               <div className="flex  justify-between text-black">
@@ -136,7 +138,7 @@ function HouseReserveCardBox({ houses, totalCount }: HousesResponse) {
                   <div></div>
                 )}
                 {items?.price ? (
-                  <div>
+                  <div className="dark:text-white">
                     {formatNumberToPersian(items?.price)}{" "}
                     <span className="text-[10px] font-[700]">تومان</span>
                   </div>

@@ -6,6 +6,7 @@ import RedirectButton from "../../../../components/authContainer/RedirectButton"
 import RegisterFormStepTow from "../../../../components/authContainer/RegisterFormStepTow";
 import Cookies from "js-cookie";
 import Link from "next/link";
+import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 function registerStepTow() {
   const [email, setEmail] = useState<string | null>(null);
 
@@ -22,6 +23,7 @@ function registerStepTow() {
         <div className="max-w-md mx-auto p-6  mt-[104px]">
           <div className="flex flex-row-reverse justify-between">
             {" "}
+            <ThemeToggle />
             <RedirectButton Link="/register/step1" title="بازگشت" />
             <h1 className="text-2xl font-bold mb-4 text-right">
               ثبت نام در آلفا

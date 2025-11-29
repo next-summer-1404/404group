@@ -146,19 +146,19 @@ export default function TravelersForm() {
       className="flex flex-col gap-8 w-full mx-auto"
     >
       {/* فرم مسافران */}
-      <div className="rounded-[24px] shadow-md border border-[#DDDDDD] mt-[16px] p-[16px] bg-[white] relative">
+      <div className="rounded-[24px] shadow-md border border-gray-300 dark:border-gray-700 mt-4 p-4 sm:p-6 bg-white dark:bg-gray-800 transition-colors duration-300 relative">
         {fields.map((field, index) => (
-          <div key={field.id} className="relative flex flex-col gap-4 mt-4">
-            <h2 className="font-semibold text-lg text-gray-800">
+          <div key={field.id} className="relative flex flex-col gap-4 mt-6">
+            <h2 className="font-semibold text-lg text-gray-800 dark:text-gray-100">
               مسافر {index + 1}
             </h2>
 
-            <div className="grid grid-cols-5 gap-4 items-end">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 items-end">
               {/* نام */}
-              <div className="">
+              <div>
                 <label
                   htmlFor={`firstName-${index}`}
-                  className="block mb-1 text-sm font-medium"
+                  className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   نام
                 </label>
@@ -166,8 +166,8 @@ export default function TravelersForm() {
                   id={`firstName-${index}`}
                   {...form.register(`traveler_details.${index}.firstName`)}
                   placeholder="علی"
-                  className="bg-[#F9F9F9]  rounded-[31px]"
-                  radius={"full"}
+                  className="rounded-[31px] bg-gray-100 dark:bg-gray-700 dark:text-gray-100 w-full"
+                  radius="full"
                 />
               </div>
 
@@ -175,7 +175,7 @@ export default function TravelersForm() {
               <div>
                 <label
                   htmlFor={`lastName-${index}`}
-                  className="block mb-1 text-sm font-medium"
+                  className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   نام خانوادگی
                 </label>
@@ -183,8 +183,8 @@ export default function TravelersForm() {
                   id={`lastName-${index}`}
                   {...form.register(`traveler_details.${index}.lastName`)}
                   placeholder="احمدی"
-                  className="bg-[#F9F9F9]  rounded-[31px]"
-                  radius={"full"}
+                  className="rounded-[31px] bg-gray-100 dark:bg-gray-700 dark:text-gray-100 w-full"
+                  radius="full"
                 />
               </div>
 
@@ -192,10 +192,11 @@ export default function TravelersForm() {
               <div>
                 <label
                   htmlFor={`gender-${index}`}
-                  className="block mb-1 text-sm font-medium"
+                  className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   جنسیت
                 </label>
+
                 <Controller
                   name={`traveler_details.${index}.gender`}
                   control={form.control}
@@ -203,7 +204,7 @@ export default function TravelersForm() {
                     <Select
                       placeholder="انتخاب جنسیت"
                       radius="full"
-                      className="bg-[#F9F9F9]  rounded-[31px]"
+                      className="rounded-[31px] bg-gray-100 dark:bg-gray-700 dark:text-gray-100 w-full"
                       selectedKeys={field.value ? [field.value] : []}
                       onSelectionChange={(keys) =>
                         field.onChange(Array.from(keys)[0])
@@ -225,7 +226,7 @@ export default function TravelersForm() {
               <div>
                 <label
                   htmlFor={`nationalId-${index}`}
-                  className="block mb-1 text-sm font-medium"
+                  className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   کد ملی
                 </label>
@@ -233,8 +234,8 @@ export default function TravelersForm() {
                   id={`nationalId-${index}`}
                   {...form.register(`traveler_details.${index}.nationalId`)}
                   placeholder="1234567890"
-                  className="bg-[#F9F9F9]  rounded-[31px]"
-                  radius={"full"}
+                  className="rounded-[31px] bg-gray-100 dark:bg-gray-700 dark:text-gray-100 w-full"
+                  radius="full"
                 />
               </div>
 
@@ -242,7 +243,7 @@ export default function TravelersForm() {
               <div>
                 <label
                   htmlFor={`birthDate-${index}`}
-                  className="block mb-1 text-sm font-medium"
+                  className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300"
                 >
                   تاریخ تولد
                 </label>
@@ -258,14 +259,12 @@ export default function TravelersForm() {
                       onChange={(date) => field.onChange(date)}
                       calendarPosition="bottom-right"
                       placeholder="انتخاب تاریخ تولد"
-                      inputClass="custom-input"
-                      style={{
-                        width: "100%",
-                        height: "40px",
-                        borderRadius: "31px",
-                        padding: "8px",
-                        background: "#F4F4F5",
-                      }}
+                      inputClass="
+                    w-full h-10 rounded-[31px] p-2
+                    bg-gray-100 text-gray-800 
+                    dark:bg-gray-700 dark:text-gray-100
+                    transition-colors duration-300
+                  "
                     />
                   )}
                 />
@@ -277,7 +276,7 @@ export default function TravelersForm() {
                   type="button"
                   variant="bordered"
                   color="danger"
-                  className="mt-3"
+                  className="mt-2"
                   onClick={() => remove(index)}
                 >
                   حذف
@@ -287,11 +286,11 @@ export default function TravelersForm() {
           </div>
         ))}
 
-        {/* افزودن مسافر جدید */}
+        {/* افزودن مسافر */}
         <div className="flex justify-end">
           <Button
             type="button"
-            className="border-[#7575FE] border text-[#7575FE] mt-4"
+            className="border-[#7575FE] text-[#7575FE] dark:border-indigo-400 dark:text-indigo-400 mt-6"
             variant="bordered"
             onClick={() =>
               append({
@@ -307,87 +306,80 @@ export default function TravelersForm() {
           </Button>
         </div>
       </div>
-      {/* ارسال بلیط به دیگران */}
-      <div className="border border-[#DDDDDD] w-full bg-[white] rounded-[24px] p-[16px]">
-        <div className="flex flex-row mb-4">
-          <h1 className="text-[#1E2022] text-[24px] font-[700]">
+
+      {/* ارسال بلیط */}
+      <div className="border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 rounded-[24px] p-4 sm:p-6 transition-colors duration-300">
+        <div className="flex flex-col sm:flex-row mb-4 gap-2 sm:gap-4">
+          <h1 className="text-gray-900 dark:text-gray-100 text-[20px] sm:text-[24px] font-[700]">
             ارسال بلیط به دیگران
           </h1>
-          <p className="text-[#777777] text-[16px] font-[400] mt-2 mr-2">
+          <p className="text-gray-500 dark:text-gray-400 text-[14px] sm:text-[16px] font-[400]">
             (ارسال بلیط به ایمیل و شماره همراه دیگر)
           </p>
         </div>
-        {/* 📱 شماره تلفن و ✉️ ایمیل */}
-        <div className="flex flex-row gap-4 justify-between mt-[32px]">
-          <div className="flex flex-row gap-4">
-            {" "}
-            <div>
-              <label
-                htmlFor="sharedMobile"
-                className="block mb-1 text-sm font-medium"
-              >
+
+        {/* شماره موبایل و ایمیل */}
+        <div className="flex flex-col lg:flex-row gap-4 mt-6 items-start lg:items-end justify-between">
+          <div className="flex flex-col sm:flex-row gap-4 w-full lg:w-auto">
+            <div className="w-full sm:w-[250px]">
+              <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
                 شماره تلفن
               </label>
               <Input
-                id="sharedMobile"
                 {...form.register("sharedMobile")}
                 placeholder="09121234567"
-                className="bg-[#F9F9F9]  rounded-[31px]"
-                radius={"full"}
+                className="rounded-[31px] bg-gray-100 dark:bg-gray-700 dark:text-gray-100 w-full"
+                radius="full"
               />
             </div>
-            <div>
-              <label
-                htmlFor="sharedEmail"
-                className="block mb-1 text-sm font-medium"
-              >
+
+            <div className="w-full sm:w-[300px]">
+              <label className="block mb-1 text-sm font-medium text-gray-700 dark:text-gray-300">
                 ایمیل
               </label>
               <Input
-                id="sharedEmail"
                 {...form.register("sharedEmail")}
                 placeholder="example@email.com"
-                className="bg-[#F9F9F9]  rounded-[31px]"
-                radius={"full"}
+                className="rounded-[31px] bg-gray-100 dark:bg-gray-700 dark:text-gray-100 w-full"
+                radius="full"
               />
-            </div>{" "}
+            </div>
           </div>
-          <div className="flex justify-end mt-4 text-white">
-            {" "}
+
+          <div className="w-full sm:w-auto flex justify-end">
             <Button
               type="submit"
               variant="solid"
-              className="bg-[#7575FE] text-white"
+              className="bg-[#7575FE] text-white w-full sm:w-auto mt-2 sm:mt-0"
             >
               ثبت اطلاعات مسافران
             </Button>
           </div>
-        </div>{" "}
-      </div>{" "}
-      <div className="flex flex-col justify-between mt-4 text-white">
-        <div className="h-[44px] flex flex-row gap-2 ">
-          <span className="text-[24px] text-[#1E2022] font-[700] ">
+        </div>
+      </div>
+
+      {/* قیمت کل */}
+      <div className="flex flex-col gap-4 justify-between mt-4">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2">
+          <span className="text-[20px] sm:text-[24px] text-gray-900 dark:text-gray-100 font-[700]">
             قیمت کل :
           </span>
-          <span className="text-[32px] text-[#7575FE] font-[700]  flex items-center">
+          <span className="text-[28px] sm:text-[32px] text-[#7575FE] dark:text-indigo-400 font-[700]">
             {formatNumberToPersian(price)}
-          </span>{" "}
-          <span className="text-[20px] text-[#7575FE] font-[400] flex items-center ">
+          </span>
+          <span className="text-[18px] sm:text-[20px] text-[#7575FE] dark:text-indigo-400 font-[400]">
             تومان
           </span>
         </div>
+
         <div className="flex justify-end">
-          {" "}
           <Button
             onClick={() => {
-              if (acceptInfo) {
-                router.push("/createBooking/step2");
-              } else {
-                toast.error("ابتدا اطلاعات مسافر را ثبت کنید !");
-              }
+              if (acceptInfo) router.push("/createBooking/step2");
+              else toast.error("ابتدا اطلاعات مسافر را ثبت کنید !");
             }}
             variant="solid"
-            className="bg-[#7575FE] text-white px-[20px] py-[16px]"
+            className="bg-[#7575FE] dark:bg-indigo-500 text-white px-[20px] py-[16px] w-full sm:w-auto"
           >
             تایید و ادامه فرایند
           </Button>

@@ -6,6 +6,7 @@ import appleIcone from "@/assets/auth/appleIcnoe.png";
 import RedirectButton from "../../../../components/authContainer/RedirectButton";
 import Link from "next/link";
 import RegisterFormStepOne from "../../../../components/authContainer/RegisterFormStepOne";
+import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 
 function registerStepOne() {
   return (
@@ -14,6 +15,7 @@ function registerStepOne() {
         <div className="max-w-md mx-auto p-6  mt-[104px]">
           <div className="flex flex-row-reverse justify-between">
             {" "}
+            <ThemeToggle />
             <RedirectButton Link="/login" title="ورود" />
             <h1 className="text-2xl font-bold mb-4 text-right">
               ثبت نام در آلفا
@@ -56,7 +58,9 @@ function registerStepOne() {
           </div>
 
           <div className="text-gray-400 text-center mb-6 border-b border-[#F0F0F0]">
-            <span className="bg-white p-1 relative top-2.5 ">یا</span>
+            <span className="bg-white dark:bg-gray-900 p-1 relative top-2.5 ">
+              یا
+            </span>
           </div>
 
           <RegisterFormStepOne />

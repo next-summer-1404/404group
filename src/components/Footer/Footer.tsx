@@ -4,48 +4,74 @@ const Footer = () => {
   return (
     <footer
       dir="rtl"
-      className="max mr-12 ml-12 h-max py-12 rounded-3xl bg-gray-100 dark:bg-gray-800 mt-20 flex"
+      className="
+    mx-12 
+    h-max py-12 
+    rounded-3xl 
+    bg-gray-100 dark:bg-gray-800 
+    mt-20 
+    flex flex-col md:flex-row 
+    gap-10 md:gap-0 
+    justify-between
+  "
     >
-      <div className="max-w-1/4 mr-22 px-3 pt-4 pb-12">
-        <div className="font-extrabold text-4xl tracking-widest">AIFA</div>
-        <p className="leading-relaxed break-words whitespace-normal mt-6 px-1 text-gray-600 dark:text-gray-400">
-          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ، و با
-          استفاده از طراحان گرافیک است، چاپگرها و متون بلکه روزنامه و مجله در
-          ستون و سطرآنچنان که لازم است، و برای شرایط فعلی تکنولوژی مورد نیاز، و
-          کاربردهای متنوع با هدف بهبود ابزارهای کاربردی می باشد، کتابهای زیادی
-          در شصت و سه درصد گذشته حال و آینده، شناخت فراوان جامعه
+      {/* ستون ۱ */}
+      <div className="md:w-1/4 w-full px-3 pt-4 pb-12">
+        <div className="font-extrabold text-4xl tracking-widest dark:text-white">
+          AIFA
+        </div>
+        <p className="leading-relaxed break-words whitespace-normal mt-6 px-1 text-gray-600 dark:text-gray-400 text-sm md:text-base">
+          لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت چاپ...
         </p>
       </div>
-      <div>
-        <ul className="text-black dark:text-white tracking-wider mr-22 mt-15 px-3 pt-4 pb-12">
-          نحوه رزرو اقامتگاه
-          <li className="text-sm text-gray-600 mt-5">راهنمای رزرو اقامتگاه</li>
-          <li className="text-sm text-gray-600 mt-2">شیوه پرداخت</li>
-          <li className="text-sm text-gray-600 mt-2">لغو رزرو اقامتگاه</li>
-        </ul>
-      </div>
-      <div>
-        {" "}
-        <ul className="text-black dark:text-white tracking-wider mr-22 mt-15 px-3 pt-4 pb-12">
-          خدمات مشتریان
-          <li className="text-sm text-gray-600 mt-5">پرسش های متداول مهمان</li>
-          <li className="text-sm text-gray-600 mt-2">پرسش های متداول میزبان</li>
-          <li className="text-sm text-gray-600 mt-2">
-            چطور اقامتگاه ثبت کنیم؟؟
+
+      {/* ستون ۲ */}
+      <div className="md:w-1/4 w-full">
+        <ul className="text-black dark:text-white tracking-wider px-3 pt-4 pb-12">
+          <p className="font-semibold mb-4">نحوه رزرو اقامتگاه</p>
+          <li className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            راهنمای رزرو اقامتگاه
           </li>
-          <li className="text-sm text-gray-600 mt-2">حریم شخصی کاربران</li>
+          <li className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            شیوه پرداخت
+          </li>
+          <li className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            لغو رزرو اقامتگاه
+          </li>
         </ul>
       </div>
-      <div>
-        {" "}
-        <ul className="text-black dark:text-white tracking-wider mr-22 mt-15 px-3 pt-4 pb-12">
-          راه های ارتیاطی دلتا
-          <li className="text-sm text-gray-600 mt-5">
+
+      {/* ستون ۳ */}
+      <div className="md:w-1/4 w-full">
+        <ul className="text-black dark:text-white tracking-wider px-3 pt-4 pb-12">
+          <p className="font-semibold mb-4">خدمات مشتریان</p>
+          <li className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            پرسش های متداول مهمان
+          </li>
+          <li className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            پرسش های متداول میزبان
+          </li>
+          <li className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            چطور اقامتگاه ثبت کنیم؟
+          </li>
+          <li className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            حریم شخصی کاربران
+          </li>
+        </ul>
+      </div>
+
+      {/* ستون ۴ */}
+      <div className="md:w-1/4 w-full">
+        <ul className="text-black dark:text-white tracking-wider px-3 pt-4 pb-12">
+          <p className="font-semibold mb-4">راه‌های ارتباطی دلتا</p>
+          <li className="text-sm text-gray-600 dark:text-gray-400 mt-2">
             ۰۹۲۲۲۳۸۲۳۹۳ , ۰۹۱۲۳۹۲۸۷۴۶
           </li>
-          <li className="text-sm text-gray-600 mt-2">delta@gmail.com</li>
-          <li className="text-sm text-gray-600 mt-2">
-            گبلان , رشت , میدان آزادی , جنب چهار راه عظیم زاده
+          <li className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            delta@gmail.com
+          </li>
+          <li className="text-sm text-gray-600 dark:text-gray-400 mt-2">
+            گیلان , رشت , میدان آزادی , جنب چهار راه عظیم زاده
           </li>
         </ul>
       </div>

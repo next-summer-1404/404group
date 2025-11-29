@@ -8,10 +8,13 @@ export const PostVerifyCode = async (
   verificationCode: string
 ): Promise<RegisterVerifyCode> => {
   try {
-    const res: RegisterVerifyCode = await http.post("/api/auth/verify-email", {
-      tempUserId: tempUserId,
-      verificationCode: verificationCode,
-    });
+    const res: RegisterVerifyCode = await http.post(
+      "https://delta-project.liara.run/api/auth/verify-email",
+      {
+        tempUserId: tempUserId,
+        verificationCode: verificationCode,
+      }
+    );
     return res;
   } catch (error) {
     throw error;

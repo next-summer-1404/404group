@@ -59,7 +59,7 @@ const OTPInput = ({ length = 6, setVerifyCode }: OTPInputProps) => {
           ref={(el) => {
             inputsRef.current[i] = el;
           }}
-          className="w-12 h-12 sm:w-16 sm:h-16 text-center text-[24px] rounded-xl sm:rounded-[24px] bg-[#F9F9F9] border-2 border-transparent focus:border-[#7575FE] focus:scale-110 transition-all focus:outline-none"
+          className="w-12 h-12 dark:bg-gray-500 sm:w-16 sm:h-16 text-center text-[24px] rounded-xl sm:rounded-[24px] bg-[#F9F9F9] border-2 border-transparent focus:border-[#7575FE] focus:scale-110 transition-all focus:outline-none"
         />
       ))}
     </div>

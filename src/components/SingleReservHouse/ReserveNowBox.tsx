@@ -52,15 +52,15 @@ function ReserveNowBox({ property }: { property: Property }) {
   };
 
   return (
-    <div className="bg-white shadow-md p-5 rounded-2xl">
-      <h3 className="font-bold text-lg text-[#7575FE] mb-4">
+    <div className="bg-white dark:bg-gray-700 shadow-md p-5 rounded-2xl">
+      <h3 className="font-bold text-lg dark:text-white text-[#7575FE] mb-4">
         همین حالا رزرو کنید
       </h3>
 
       <div className="flex flex-row flex-wrap justify-between gap-[25px]">
         {/* تاریخ ورود */}
         <div className="flex flex-col w-[45%]">
-          <label className="text-sm font-[600] text-gray-600 mb-1">
+          <label className="text-sm font-[600] text-gray-600 dark:text-gray-300 mb-1">
             تاریخ ورود
           </label>
           <DatePicker
@@ -77,20 +77,16 @@ function ReserveNowBox({ property }: { property: Property }) {
             }}
             calendarPosition="bottom-right"
             placeholder="انتخاب تاریخ ورود"
-            inputClass="custom-input"
-            style={{
-              width: "100%",
-              height: "48px",
-              borderRadius: "31px",
-              padding: "8px",
-              background: "#F9F9F9",
-            }}
+            inputClass="w-full h-12 rounded-[31px] p-2 my-2 
+    bg-gray-50 text-gray-800 border border-gray-200
+    dark:bg-gray-600 dark:text-gray-100 dark:border-gray-700
+    transition-colors duration-300"
           />
         </div>
 
         {/* تاریخ خروج */}
         <div className="flex flex-col w-[45%]">
-          <label className="text-sm font-[600] text-gray-600 mb-1">
+          <label className="text-sm font-[600] dark:text-gray-300 text-gray-600 mb-1">
             تاریخ خروج
           </label>
           <DatePicker
@@ -102,20 +98,16 @@ function ReserveNowBox({ property }: { property: Property }) {
             disabled={!checkIn}
             calendarPosition="bottom-right"
             placeholder="انتخاب تاریخ خروج"
-            inputClass="custom-input"
-            style={{
-              width: "100%",
-              height: "48px",
-              borderRadius: "31px",
-              padding: "8px",
-              background: "#F9F9F9",
-            }}
+            inputClass="w-full h-12 rounded-[31px] p-2 my-2 
+    bg-gray-50 text-gray-800 border border-gray-200
+    dark:bg-gray-600 dark:text-gray-100 dark:border-gray-700
+    transition-colors duration-300"
           />
         </div>
 
         {/* تعداد نفرات */}
         <div className="flex flex-col w-[45%]">
-          <label className="text-sm font-[600] text-gray-600 mb-1">
+          <label className="text-sm font-[600] dark:text-gray-300 text-gray-600 mb-1">
             تعداد نفرات
           </label>
           <input
@@ -124,7 +116,7 @@ function ReserveNowBox({ property }: { property: Property }) {
             placeholder="مثلاً ۲ نفر"
             value={guests}
             onChange={(e) => setGuests(Number(e.target.value))}
-            className="w-full h-[44px] mt-1 p-4 bg-[#F9F9F9] rounded-[31px] text-sm focus:outline-none focus:ring-2 focus:ring-primary"
+            className="w-full dark:bg-gray-600 dark:text-gray-100 h-[44px] mt-1 p-4 bg-[#F9F9F9] rounded-[31px] text-sm focus:outline-none focus:ring-2 focus:ring-primary"
           />
         </div>
 
@@ -138,7 +130,7 @@ function ReserveNowBox({ property }: { property: Property }) {
               {formatNumberToPersian(Number(property?.discounted_price))}
               <div className="absolute border border-[#FF5555] w-full -rotate-12 top-1/2" />
             </div>
-            <div className="text-[#1E1E1E] text-[20px] font-[700]">
+            <div className="text-[#1E1E1E] dark:text-white text-[20px] font-[700]">
               {formatNumberToPersian(property?.price)}
             </div>
           </div>

@@ -24,14 +24,16 @@ export async function GET() {
     return NextResponse.json({ decoded });
   }
 
-
   console.log("Token expired, refreshing...");
 
   try {
     // درخواست رفرش به بک‌اند
-    const res: ResposeRefreshToken = await http.post("/api/auth/refresh", {
-      token: refreshToken,
-    });
+    const res: ResposeRefreshToken = await http.post(
+      "https://delta-project.liara.run/api/auth/refresh",
+      {
+        token: refreshToken,
+      }
+    );
 
     if (!res.accessToken) {
       return NextResponse.json(
@@ -50,7 +52,7 @@ export async function GET() {
       secure: true,
       path: "/",
       sameSite: "strict",
-      maxAge: 60 * 60, 
+      maxAge: 60 * 60,
     });
 
     return response;
