@@ -6,12 +6,9 @@ export const getAllHouses = async (
   filters: housesFilter
 ): Promise<HousesResponse> => {
   try {
-    const res: any = await http.get<HousesResponse>(
-      "https://delta-project.liara.run/api/houses",
-      {
-        params: filters,
-      }
-    );
+    const res: any = await http.get<HousesResponse>("/api/houses", {
+      params: filters,
+    });
 
     return res as HousesResponse;
   } catch (error) {

@@ -11,7 +11,7 @@ export const PostInformation = async (
 ): Promise<RegisterInformation> => {
   try {
     const res: RegisterInformation = await http.post(
-      "https://delta-project.liara.run/api/auth/complete-registration",
+      "/api/auth/complete-registration",
       {
         userId: userId,
         password: password,

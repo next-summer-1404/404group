@@ -5,7 +5,7 @@ export const getCustomersBooking = async (
   id: string
 ): Promise<BookingCustomersResponse> => {
   const response = await http.get<BookingCustomersResponse>(
-    `https://delta-project.liara.run/bookings/${id}/customers`
+    `/api/bookings/${id}/customers`
   );
 
   return response;

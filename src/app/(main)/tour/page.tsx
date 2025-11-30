@@ -25,9 +25,9 @@ async function TourPage({ searchParams }: IHouseComponentsProps) {
   });
 
   console.log(params);
-  const res: TourResponse = await getAllTour();
-  const data = res;
-  // console.log(data.totalCount);
+  const TourResponse = await getAllTour();
+  const data = TourResponse;
+  console.log(data);
   // const totalPages = data ? Math.ceil(data.totalCount / 10) : 0;
   return (
     <div className="">

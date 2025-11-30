@@ -3,11 +3,9 @@ import { TourResponse } from "@/types/TourTypes/TourTypes";
 
 export const getAllTour = async () => {
   try {
-    const res = await http.get<TourResponse>(
-      "https://delta-project.liara.run/api/tour"
-    );
-    const data = res.data;
-    console.log("Server API RESPONSE:", res);
+    const res = await http.get<TourResponse>("/api/tour");
+    const data = res;
+    console.log("Server API RESPONSE:", data);
     return res.data; // ✅ کل res رو برمی‌گردونی
   } catch (error) {
     throw error;

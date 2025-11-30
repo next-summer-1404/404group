@@ -43,21 +43,21 @@ export function RentFilter({
     queryKey: ["getAllLocations"],
     queryFn: async () => getAllLocation(),
   });
-
-  const locationOptions = locations
-    ?.filter(
-      (loc: any, index: number, self: any[]) =>
-        index ===
-        self.findIndex(
-          (t) => t.dataValues.area_name === loc.dataValues.area_name
-        )
-    )
-    .map((loc: any) => ({
-      key: loc.dataValues.id,
-      label: loc.dataValues.area_name || "نامشخص",
-      value: loc.dataValues.id, // مقدار اصلی برای select
-      dataValue: loc.dataValues, // کل dataValues برای دسترسی در آینده
-    }));
+  // console.log(location);
+  // const locationOptions = locations
+  //   ?.filter(
+  //     (loc: any, index: number, self: any[]) =>
+  //       index ===
+  //       self.findIndex(
+  //         (t) => t.dataValues.area_name === loc.dataValues.area_name
+  //       )
+  //   )
+  //   .map((loc: any) => ({
+  //     key: loc.dataValues.id,
+  //     label: loc.dataValues.area_name || "نامشخص",
+  //     value: loc.dataValues.id, // مقدار اصلی برای select
+  //     dataValue: loc.dataValues, // کل dataValues برای دسترسی در آینده
+  //   }));
   const sort = [
     { key: "last_updated", label: "آخرین آپدیت" },
     { key: "price", label: "قیمت" },
@@ -170,9 +170,9 @@ export function RentFilter({
                 height: "48px",
               }}
             >
-              {locationOptions?.map((loc: IKeyValueOptions) => (
+              {/* {locationOptions?.map((loc: IKeyValueOptions) => (
                 <SelectItem key={loc.label}>{loc.label}</SelectItem>
-              ))}
+              ))} */}
             </Select>
           )}
         />

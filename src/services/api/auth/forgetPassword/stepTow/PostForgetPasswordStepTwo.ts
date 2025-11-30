@@ -9,7 +9,7 @@ export const PostForgetPasswordStepTwo = async (
 ): Promise<ForgetResponseStepTwo> => {
   try {
     const res: ForgetResponseStepTwo = await http.post(
-      "https://delta-project.liara.run/api/auth/forgot-password/verify",
+      "/api/auth/forgot-password/verify",
       {
         email: email,
         resetCode: resetCode,

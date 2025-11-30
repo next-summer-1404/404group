@@ -5,9 +5,6 @@ import {
 } from "@/types/panel/UpdateUserType";
 
 export const putUpdateUser = async (id: string, value: UpdateUserRequest) => {
-  const res = await http.put<UpdateUserResponse>(
-    `https://delta-project.liara.run/users/${id}`,
-    value
-  );
+  const res = await http.put<UpdateUserResponse>(`/api/users/${id}`, value);
   return res;
 };

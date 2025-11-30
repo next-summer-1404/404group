@@ -27,6 +27,7 @@ const ContainDashboard = () => {
     const fetchUserInfo = async () => {
       try {
         const res = await getUsers(userId);
+        console.log(res);
         setUserInfo(res);
         setPercentage(res?.additionalPercentage ?? 0);
       } catch (err) {

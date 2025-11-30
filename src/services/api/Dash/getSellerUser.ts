@@ -3,7 +3,7 @@ import { GetSellerHousesResponse } from "@/types/panel/SellerUserType";
 
 export const getSellerUser = async (): Promise<GetSellerHousesResponse> => {
   const response = await http.get<GetSellerHousesResponse>(
-    "https://delta-project.liara.run/houses/seller/user"
+    "/api/houses/seller/user"
   );
   return response;
 };

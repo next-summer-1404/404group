@@ -6,7 +6,7 @@ import {
 
 export const putPassword = async (value: ChangePasswordRequest) => {
   const res = await http.put<ChangePasswordResponse>(
-    "https://delta-project.liara.run/users/change-password",
+    "/api/users/change-password",
     value
   );
   return res;

@@ -9,7 +9,7 @@ export const putUploadPicture = async (value: UploadProfilePictureRequest) => {
   formData.append("picture", value.picture);
 
   const res = await http.put<UploadProfilePictureResponse>(
-    "https://delta-project.liara.run/users/upload/picture",
+    "/api/users/upload/picture",
     formData,
     {
       headers: {

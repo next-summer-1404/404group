@@ -23,6 +23,6 @@ export interface Tour {
 }
 
 export interface TourResponse {
-  houses: Tour[];
+  tours: Tour[];
   totalCount: number;
 }

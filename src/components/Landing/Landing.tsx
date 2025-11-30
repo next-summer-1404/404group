@@ -328,7 +328,7 @@ const Landing = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-6 py-20">
+      {/* <div className="container mx-auto px-6 py-20">
         <h2 className="text-3xl font-bold mb-12 text-gray-900 dark:text-gray-100">
           نظرات کاربران
         </h2>
@@ -347,7 +347,7 @@ const Landing = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };
