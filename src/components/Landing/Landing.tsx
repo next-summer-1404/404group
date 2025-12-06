@@ -19,14 +19,14 @@ const Landing = () => {
   }
   const [properties, setProperties] = useState<property[]>([]);
 
-  useEffect(() => {
-    async function loadData() {
-      const data = await getHouse();
-      setProperties(data.houses.slice(0, 4));
-    }
+  // useEffect(() => {
+  //   async function loadData() {
+  //     const data = await getHouse();
+  //     setProperties(data.houses.slice(0, 4));
+  //   }
 
-    loadData();
-  }, []);
+  //   loadData();
+  // }, []);
   return (
     <div className="w-full" dir="rtl">
       <SetRefreshToken />

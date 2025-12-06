@@ -18,12 +18,9 @@ import {
 import { IHouseResponse } from "../../../types/adminPanel/housesAdmin";
 import { Funnel, XCircle } from "lucide-react";
 import { getAllHousesForAdmin } from "../../../services/api/Admin/houses/getAllHouse";
+import { useSetParams } from "../../../utils/hooks/useSetParams";
 
 function FilterOfBooking() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const parsed = useParseSearchParams(searchParams);
-
   // ---------------------
   // دریافت لیست کاربران
   // ---------------------
@@ -47,33 +44,17 @@ function FilterOfBooking() {
       totalCount: res.totalCount,
     }),
   });
+  const { setParams, getParams } = useSetParams();
 
-  // ---------------------
-  // State های فیلترها
-  // ---------------------
   const [sortDate, setSortDate] = useState<Date | null>(
-    parsed.sort ? new Date(parsed.sort) : null
+    getParams("sort") ? new Date(getParams("sort")) : null
   );
 
-  const [status, setStatus] = useState<string>(parsed.status ?? "");
+  const [status, setStatus] = useState<string>(getParams("status") ?? "");
 
-  const [userId, setUserId] = useState<string>(parsed.user_id ?? "");
+  const [userId, setUserId] = useState<string>(getParams("user_id") ?? "");
 
-  const [houseId, setHouseId] = useState<string>(parsed.house_id ?? "");
-
-  // ---------------------
-  // SUBMIT — ارسال فیلترها به URL
-  // ---------------------
-  const handleSubmit = () => {
-    const params = useBuildSearchParams({
-      sort: sortDate ? sortDate.toISOString() : undefined,
-      status: status || undefined,
-      user_id: userId || undefined,
-      house_id: houseId || undefined,
-    });
-
-    router.replace(`?${params.toString()}`);
-  };
+  const [houseId, setHouseId] = useState<string>(getParams("house_id") ?? "");
 
   return (
     <div className="w-full flex flex-row flex-wrap gap-4 bg-white p-4 rounded-xl mt-4">
@@ -101,7 +82,11 @@ function FilterOfBooking() {
         label="وضعیت رزرو"
         placeholder="انتخاب وضعیت"
         selectedKeys={status ? [status] : []}
-        onSelectionChange={(keys) => setStatus(Array.from(keys)[0] as string)}
+        onSelectionChange={(keys) => {
+          const statusValue = Array.from(keys)[0] as string | undefined;
+          setStatus(statusValue ?? "");
+          setParams("status", statusValue ?? null);
+        }}
         className="w-[250px]"
       >
         <SelectItem key="pending">در انتظار</SelectItem>
@@ -117,7 +102,11 @@ function FilterOfBooking() {
         }
         isLoading={loadingUsers}
         selectedKeys={userId ? [userId] : []}
-        onSelectionChange={(keys) => setUserId(Array.from(keys)[0] as string)}
+        onSelectionChange={(keys) => {
+          const userIdValue = keys.currentKey as string;
+          setUserId(userIdValue);
+          setParams("user_id", userIdValue);
+        }}
         className="w-[300px]"
       >
         {(getAllUsers?.users ?? []).map((user) => (
@@ -133,31 +122,17 @@ function FilterOfBooking() {
         }
         isLoading={loadingHouses}
         selectedKeys={houseId ? [houseId] : []}
-        onSelectionChange={(keys) => setHouseId(Array.from(keys)[0] as string)}
+        onSelectionChange={(keys) => {
+          const houseIdValue = keys.currentKey as string;
+          setHouseId(houseIdValue);
+          setParams("house_id", houseIdValue);
+        }}
         className="w-[300px]"
       >
         {(getAllHousesBook?.houses ?? []).map((house: any) => (
           <SelectItem key={house.id}>{house.title}</SelectItem>
         ))}
       </Select>
-
-      <div className="flex items-center gap-3 ">
-        {/* دکمه اعمال فیلتر با آیکون */}
-        <button
-          onClick={handleSubmit}
-          className="bg-[#7575FE] text-white px-4 py-4 rounded-[14px] flex items-center gap-2"
-        >
-          <Funnel size={18} />
-        </button>
-
-        {/* دکمه حذف تمام فیلترها */}
-        <button
-          onClick={() => router.replace("?")}
-          className="bg-red-500 text-white px-4 py-4 rounded-[14px] flex items-center gap-2"
-        >
-          <XCircle size={18} />
-        </button>
-      </div>
     </div>
   );
 }

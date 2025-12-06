@@ -129,12 +129,12 @@ function BookingManage() {
 
               {/* از تاریخ */}
               <TableCell>
-                {toPersianDate(item.reservedDates[0].value)}
+                {toPersianDate(item.reservedDates[0]?.value)}
               </TableCell>
 
               {/* تا تاریخ */}
               <TableCell>
-                {toPersianDate(item.reservedDates[1].value)}
+                {toPersianDate(item.reservedDates[1]?.value)}
               </TableCell>
 
               {/* وضعیت */}
@@ -159,7 +159,9 @@ function BookingManage() {
               </TableCell>
 
               {/* شماره تماس */}
-              <TableCell>{item.sharedMobile}</TableCell>
+              <TableCell>
+                {item.sharedMobile ? item.sharedMobile : "-"}
+              </TableCell>
 
               {/* عملیات */}
               <TableCell className="w-10">
