@@ -34,7 +34,7 @@ export default function ThemeToggle() {
       onClick={toggleTheme}
       aria-label="تغییر تم"
       variant="flat"
-      className="rounded-full bg-gray-100 dark:bg-gray-800 text-black dark:text-white"
+      className="rounded-full bg-gray-100 dark:bg-gray-800 text-black dark:text-white  h-[48px] w-[48px]"
     >
       {isDark ? <SunIcon size={20} /> : <MoonIcon size={20} />}
     </Button>

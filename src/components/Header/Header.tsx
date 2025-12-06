@@ -13,87 +13,115 @@ import {
   NavbarMenuToggle,
 } from "@heroui/react";
 import { useUser } from "@/utils/hooks/useUsers";
+import { usePathname } from "next/navigation";
+import { Dot } from "lucide-react";
 
 export default function Header({ user }: any) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const usrs = useUser();
+  const pathname = usePathname();
+
+  const navItemsRight = [
+    { title: "خانه", href: "/", w: "w-[87px]" },
+    { title: "مقالات", href: "#", w: "w-[86px]" },
+    { title: "درباره آلفا", href: "#", w: "w-[103px]" },
+  ];
+
+  const navItemsLeft = [
+    { title: "رهن و اجاره", href: "/houseReserve", w: "w-[140px]" },
+    { title: "رزرو سریع", href: "#", w: "w-[129px]" },
+  ];
+
   return (
     <Navbar
-      maxWidth="xl"
-      className="shadow-sm bg-white dark:bg-gray-900 mt-2 h-max"
+      maxWidth="full"
+      className=" bg-white dark:bg-gray-900 w-full h-max  px-[56px] py-[10px]"
       dir="rtl"
       isMenuOpen={isMenuOpen}
       onMenuOpenChange={setIsMenuOpen}
     >
-      {/* ---------- موبایل: دکمه همبرگری ---------- */}
+      {/* ---------- موبایل ---------- */}
       <NavbarContent className="md:hidden" justify="start">
         <NavbarMenuToggle className="text-black dark:text-white" />
       </NavbarContent>
 
-      {/* ---------- دسکتاپ: بخش راست ---------- */}
-      <NavbarContent justify="start" className="hidden md:flex gap-4">
-        <NavbarItem>
-          <button className="py-2 px-5 rounded-full bg-gray-100 dark:bg-gray-800 text-black dark:text-white">
-            <Link href="/">خانه</Link>
-          </button>
-        </NavbarItem>
+      {/* ---------- کل ساختار دسکتاپ ---------- */}
+      <div className="flex flex-row w-full">
+        {/* ---------- بخش راست (خانه – مقالات – درباره) ---------- */}
+        <NavbarContent className="hidden md:flex gap-4">
+          {navItemsRight.map((item, index) => (
+            <Link key={index} href={item.href}>
+              <button
+                className={` cursor-pointer h-[48px] rounded-full ${
+                  item.w
+                } font-[600px] text-[16px] pb-1 
+                 bg-gray-100 dark:bg-gray-800 flex items-center justify-center gap-2
+                  ${pathname === item.href ? "font-[700]" : ""}
+                `}
+              >
+                {pathname === item.href && (
+                  <div className="w-[7px] h-[7px] bg-black dark:bg-white rounded-full mt-1"></div>
+                )}
 
-        <NavbarItem>
-          <button className="py-2 px-5 rounded-full bg-gray-100 dark:bg-gray-800 text-black dark:text-white">
-            مقالات
-          </button>
-        </NavbarItem>
-
-        <NavbarItem>
-          <button className="py-2 px-5 rounded-full bg-gray-100 dark:bg-gray-800 text-black dark:text-white">
-            درباره آلفا
-          </button>
-        </NavbarItem>
-      </NavbarContent>
-
-      {/* ---------- مرکز ---------- */}
-      <NavbarContent className="hidden md:flex mr-60" justify="center">
-        <NavbarBrand>
-          <span className="font-extrabold text-2xl dark:text-white tracking-wide">
-            AIFA
-          </span>
-        </NavbarBrand>
-      </NavbarContent>
-
-      {/* ---------- بخش چپ در دسکتاپ ---------- */}
-      <NavbarContent justify="start" className="hidden md:flex gap-3 mr-40">
-        <NavbarItem>
-          <button className="cursor-pointer py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-black dark:text-white px-5">
-            <Link href="/houseReserve">رهن و اجاره</Link>
-          </button>
-        </NavbarItem>
-
-        <NavbarItem>
-          <button className="py-2 rounded-full bg-gray-100 dark:bg-gray-800 text-black dark:text-white px-5">
-            رزرو سریع
-          </button>
-        </NavbarItem>
-
-        {!user ? (
-          <NavbarItem>
-            <button className="py-2 rounded-full px-6 text-white font-bold bg-gradient-to-r from-indigo-500 to-purple-500 hover:opacity-90">
-              <Link href="/login">ثبت نام / ورود</Link>
-            </button>
-          </NavbarItem>
-        ) : (
-          <NavbarItem>
-            <Link href={`/dashboard/${user.role}`}>
-              <img
-                src={user.avatar || "/avatar-default.png"}
-                className="w-10 h-10 rounded-full border border-gray-300 dark:border-gray-700 cursor-pointer"
-                alt="profile"
-              />
+                <div>{item.title}</div>
+              </button>
             </Link>
-          </NavbarItem>
-        )}
+          ))}
+        </NavbarContent>
 
-        <ThemeToggle />
-      </NavbarContent>
+        {/* ---------- لوگو وسط ---------- */}
+        <NavbarContent className="hidden md:flex flex-row justify-center items-center my-3 flex-1">
+          <NavbarBrand className="flex flex-row justify-center items-center">
+            <span className="font-[800] text-[32px] dark:text-white tracking-wide">
+              AIFA
+            </span>
+          </NavbarBrand>
+        </NavbarContent>
+
+        {/* ---------- بخش چپ دسکتاپ ---------- */}
+        <NavbarContent className="hidden md:flex gap-4">
+          {navItemsLeft.map((item, index) => (
+            <Link key={index} href={item.href}>
+              <button
+                className={` cursor-pointer h-[48px] rounded-full ${
+                  item.w
+                } font-[600px] text-[16px] pb-1 
+                 bg-gray-100 dark:bg-gray-800 flex items-center justify-center gap-2
+                  ${pathname === item.href ? "font-[700]" : ""}
+                `}
+              >
+                {pathname === item.href && (
+                  <div className="w-[7px] h-[7px] bg-black dark:bg-white rounded-full mt-1"></div>
+                )}
+
+                <div>{item.title}</div>
+              </button>
+            </Link>
+          ))}
+
+          <div className="h-[24px] border-r border-[#DEDEDE]"></div>
+
+          {!user ? (
+            <NavbarItem>
+              <button className="h-[48px] font-[600px] text-[16px] pb-1 rounded-full w-[135px] text-white bg-[#7575FE]">
+                <Link href="/login">ثبت نام / ورود</Link>
+              </button>
+            </NavbarItem>
+          ) : (
+            <NavbarItem>
+              <Link href={`/dashboard/${user.role}`}>
+                <img
+                  src={user.avatar || "/avatar-default.png"}
+                  className="w-10 h-10 rounded-full border border-gray-300 dark:border-gray-700 cursor-pointer"
+                  alt="profile"
+                />
+              </Link>
+            </NavbarItem>
+          )}
+
+          <ThemeToggle />
+        </NavbarContent>
+      </div>
 
       {/* ---------- موبایل: منوی باز‌شونده ---------- */}
       <NavbarMenu className="dark:bg-gray-900 bg-white text-black dark:text-white">
@@ -146,7 +174,7 @@ export default function Header({ user }: any) {
         )}
 
         <NavbarMenuItem>
-          <div className="pt-4">
+          <div>
             <ThemeToggle />
           </div>
         </NavbarMenuItem>
