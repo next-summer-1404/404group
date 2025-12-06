@@ -33,6 +33,9 @@ import { deletePayment } from "../../../services/api/Admin/payment/deletePayment
 import toast from "react-hot-toast";
 import { verifyPayment } from "../../../services/api/Admin/payment/verifyPayment/verifyPayment";
 import EditPaymentModal from "./EditPaymentModal";
+import { useSetParams } from "../../../utils/hooks/useSetParams";
+import TabelSkeleton from "../../Loading/TabelSkeleton";
+import FilterPaymentManagment from "./FilterPaymentManagment";
 
 // نوع داده پرداخت
 
@@ -44,18 +47,21 @@ function PaymentContainer() {
     onOpen: onEditPayment,
     onOpenChange: onEditPaymentChange,
   } = useDisclosure();
-
-  const searchParams = useSearchParams();
-  const router = useRouter();
-
-  const currentPage = Number(searchParams.get("page") ?? 1);
+  const { setParams, getParams } = useSetParams();
+  const currentPage = Number(getParams("page", "1"));
+  const status = getParams("status", "");
+  const userId = getParams("user_id", "");
+  const amount = getParams("amount", "");
 
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["getAllPayments", currentPage],
+    queryKey: ["getAllPayments", currentPage, status, userId, amount],
     queryFn: () =>
       getAllPayments({
         page: currentPage,
         limit: 5,
+        status: status,
+        user_id: userId,
+        amount: amount,
       }),
     select: (response) => ({
       payments: response.data,
@@ -86,131 +92,122 @@ function PaymentContainer() {
   });
   const totalPages = data ? Math.ceil(data.totalCount / 5) : 0;
 
-  const handlePageChange = (page: number) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("page", page.toString());
-    router.replace(`?${params.toString()}`);
-  };
-
-  if (isLoading) {
-    return (
-      <div className="w-full flex justify-center py-10">
-        <LoadingDots />
-      </div>
-    );
-  }
-
   return (
     <div className="w-full overflow-x-auto pb-10">
-      <Table aria-label="جدول مدیریت پرداخت‌ها" removeWrapper>
-        <TableHeader>
-          <TableColumn>مبلغ</TableColumn>
-          <TableColumn>وضعیت</TableColumn>
-          <TableColumn>توضیحات</TableColumn>
-          <TableColumn>تاریخ</TableColumn>
-          <TableColumn>عملیات</TableColumn>
-        </TableHeader>
+      <FilterPaymentManagment />
+      {isLoading ? (
+        <TabelSkeleton rows={5} cols={5} />
+      ) : (
+        <Table aria-label="جدول مدیریت پرداخت‌ها" removeWrapper>
+          <TableHeader>
+            <TableColumn>مبلغ</TableColumn>
+            <TableColumn>وضعیت</TableColumn>
+            <TableColumn>توضیحات</TableColumn>
+            <TableColumn>تاریخ</TableColumn>
+            <TableColumn>عملیات</TableColumn>
+          </TableHeader>
 
-        <TableBody emptyContent={"پرداختی پیدا نشد"}>
-          {(data?.payments ?? []).map((item: PaymentItem) => (
-            <TableRow key={item.id}>
-              {/* مبلغ */}
-              <TableCell className="font-medium">
-                <Chip color={"secondary"} variant="flat" size="sm">
-                  {" "}
-                  {Number(item.amount).toLocaleString("fa-IR")} تومان
-                </Chip>
-              </TableCell>
+          <TableBody emptyContent={"پرداختی پیدا نشد"}>
+            {(data?.payments ?? []).map((item: PaymentItem) => (
+              <TableRow key={item.id}>
+                {/* مبلغ */}
+                <TableCell className="font-medium">
+                  <Chip color={"secondary"} variant="flat" size="sm">
+                    {" "}
+                    {Number(item.amount).toLocaleString("fa-IR")} تومان
+                  </Chip>
+                </TableCell>
 
-              {/* وضعیت */}
-              <TableCell>
-                <Chip
-                  color={
-                    item.status === "completed"
-                      ? "success"
+                {/* وضعیت */}
+                <TableCell>
+                  <Chip
+                    color={
+                      item.status === "completed"
+                        ? "success"
+                        : item.status === "pending"
+                        ? "warning"
+                        : "default"
+                    }
+                    variant="flat"
+                    size="sm"
+                  >
+                    {item.status === "completed"
+                      ? "تکمیل شده"
                       : item.status === "pending"
-                      ? "warning"
-                      : "default"
-                  }
-                  variant="flat"
-                  size="sm"
-                >
-                  {item.status === "completed"
-                    ? "تکمیل شده"
-                    : item.status === "pending"
-                    ? "در انتظار"
-                    : item.status}
-                </Chip>
-              </TableCell>
+                      ? "در انتظار"
+                      : item.status}
+                  </Chip>
+                </TableCell>
 
-              {/* توضیحات */}
-              <TableCell>{item.description ?? "-"}</TableCell>
+                {/* توضیحات */}
+                <TableCell>{item.description ?? "-"}</TableCell>
 
-              {/* تاریخ */}
-              <TableCell>
-                {item.createdAt
-                  ? new Date(item.createdAt).toLocaleDateString("fa-IR")
-                  : "-"}
-              </TableCell>
+                {/* تاریخ */}
+                <TableCell>
+                  {item.createdAt
+                    ? new Date(item.createdAt).toLocaleDateString("fa-IR")
+                    : "-"}
+                </TableCell>
 
-              {/* عملیات */}
-              <TableCell className="w-10">
-                <Dropdown>
-                  <DropdownTrigger>
-                    <Button className="bg-transparent">
-                      <MoreVertical />
-                    </Button>
-                  </DropdownTrigger>
-
-                  <DropdownMenu aria-label="actions">
-                    <DropdownItem key="edit">
-                      <Button
-                        onPress={() => {
-                          setPaymentSelected(item);
-                          onEditPayment();
-                        }}
-                        className="flex items-center gap-2 bg-transparent p-0"
-                      >
-                        <Edit size={16} />
-                        ویرایش پرداختی
+                {/* عملیات */}
+                <TableCell className="w-10">
+                  <Dropdown>
+                    <DropdownTrigger>
+                      <Button className="bg-transparent">
+                        <MoreVertical />
                       </Button>
-                    </DropdownItem>
-                    <DropdownItem key="accepet">
-                      <Button
-                        onPress={() =>
-                          verifyPaymentMutation.mutate(Number(item.id))
-                        }
-                        className="flex items-center gap-2 bg-transparent p-0"
-                      >
-                        <Edit size={16} />
-                        تایید پرداختی
-                      </Button>
-                    </DropdownItem>
+                    </DropdownTrigger>
 
-                    <DropdownItem key="delete">
-                      <Button
-                        className="flex items-center gap-2 text-[red] bg-transparent p-0"
-                        onClick={() => {
-                          deletePaymentMutation.mutate(Number(item.id));
-                        }}
-                      >
-                        <Trash2 size={16} color="red" /> حذف
-                      </Button>
-                    </DropdownItem>
-                  </DropdownMenu>
-                </Dropdown>
-              </TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
+                    <DropdownMenu aria-label="actions">
+                      <DropdownItem key="edit">
+                        <Button
+                          onPress={() => {
+                            setPaymentSelected(item);
+                            onEditPayment();
+                          }}
+                          className="flex items-center gap-2 bg-transparent p-0"
+                        >
+                          <Edit size={16} />
+                          ویرایش پرداختی
+                        </Button>
+                      </DropdownItem>
+                      <DropdownItem key="accepet">
+                        <Button
+                          onPress={() =>
+                            verifyPaymentMutation.mutate(Number(item.id))
+                          }
+                          className="flex items-center gap-2 bg-transparent p-0"
+                        >
+                          <Edit size={16} />
+                          تایید پرداختی
+                        </Button>
+                      </DropdownItem>
+
+                      <DropdownItem key="delete">
+                        <Button
+                          className="flex items-center gap-2 text-[red] bg-transparent p-0"
+                          onClick={() => {
+                            deletePaymentMutation.mutate(Number(item.id));
+                          }}
+                        >
+                          <Trash2 size={16} color="red" /> حذف
+                        </Button>
+                      </DropdownItem>
+                    </DropdownMenu>
+                  </Dropdown>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      )}
       {/* صفحه‌بندی */}
       {totalPages > 1 && (
         <div className="flex justify-center pt-5">
           <Pagination
             total={totalPages}
             initialPage={currentPage}
-            onChange={handlePageChange}
+            onChange={(page: number) => setParams("page", page)}
             variant="bordered"
             showControls
             color="secondary"

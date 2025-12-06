@@ -11,7 +11,7 @@ export const useSetParams = () => {
     value: string | number | boolean | undefined | null
   ) {
     const params = new URLSearchParams(searchParams.toString());
-    if (value !== undefined && value !== "" && value !== null) {
+    if (value !== undefined && value !== "" && value !== null && value !== 0) {
       params.set(key, String(value));
     } else {
       params.delete(key);

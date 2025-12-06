@@ -76,6 +76,7 @@ function FilterForHousesByAdmin() {
       </Select>{" "}
       <Slider
         className="max-w-md"
+        color="foreground"
         label="جستجو بر اساس قیمت "
         maxValue={Number(maxPrice)}
         minValue={0}
