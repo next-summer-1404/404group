@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 
 import {
@@ -26,19 +26,26 @@ import { IHouse, IHouseResponse } from "../../../types/adminPanel/housesAdmin";
 import { getAllHousesForAdmin } from "../../../services/api/Admin/houses/getAllHouse";
 import { deleteHouses } from "../../../services/api/Admin/houses/deleteHouses/deleteHouses";
 import toast from "react-hot-toast";
+import FilterForHousesByAdmin from "./FilterForHousesByAdmin";
 
 function HousesAdminManage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const currentPage = Number(searchParams.get("page") ?? 1);
-
+  const sellerId = searchParams.get("sellerId") ?? "";
+  const price = searchParams.get("price") ?? "";
+  useEffect(() => {
+    console.log(price);
+  }, [price]);
   // --- React Query ---
   const { data, isLoading, refetch } = useQuery({
-    queryKey: ["getAllHousesByAdmin", currentPage],
+    queryKey: ["getAllHousesByAdmin", currentPage, sellerId, price],
     queryFn: () =>
       getAllHousesForAdmin({
         page: currentPage,
         limit: 5,
+        sellerId: sellerId,
+        price: price,
       }),
     select: (response: IHouseResponse) => ({
       houses: response.data,
@@ -73,7 +80,7 @@ function HousesAdminManage() {
 
   return (
     <div className="w-full overflow-x-auto pb-0">
-      {/* ================= Table =================== */}
+      <FilterForHousesByAdmin />
       <Table
         aria-label="جدول مدیریت خانه‌ها"
         className="min-w-[900px]"
