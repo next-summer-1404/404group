@@ -9,7 +9,7 @@ export const getAllCategory = async (filters: any) => {
   if (filters.sort) params.sort = filters.sort;
   if (filters.name) params.name = filters.name;
 
-  const res: StylesResponse = await http.get("/api/admin/users", {
+  const res: StylesResponse = await http.get("/api/categories", {
     params: params,
   });
   return res;

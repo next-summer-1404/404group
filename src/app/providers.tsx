@@ -5,6 +5,7 @@ import { ReactNode, useState } from "react";
 import { Toaster } from "react-hot-toast";
 import { ReserveProvider } from "../context/ReserveContext";
 import AxiosProvider from "./AxiosProvider";
+import { ThemeProvider } from "next-themes";
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient());

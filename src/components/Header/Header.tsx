@@ -8,7 +8,8 @@ import { useUser } from "@/utils/hooks/useUsers";
 import { usePathname } from "next/navigation";
 import { Bolt, Building, FileText, Home, Info, Menu } from "lucide-react";
 import MobileMenuModal from "./MobileModal";
-
+import Image from "next/image";
+import icon from "@/assets/landing/DownIcon.svg";
 export default function Header({ user }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
@@ -62,7 +63,7 @@ export default function Header({ user }: any) {
             {navItemsRight.map((item, index) => (
               <Link key={index} href={item.href}>
                 <button
-                  className={`cursor-pointer h-[48px] rounded-full ${
+                  className={`cursor-pointer h-[48px] rounded-full dark:text-white ${
                     item.w
                   } font-[600px] text-[16px] pb-1 
                  bg-gray-100 dark:bg-gray-800 flex items-center justify-center gap-2
@@ -90,7 +91,7 @@ export default function Header({ user }: any) {
             {navItemsLeft.map((item, index) => (
               <Link key={index} href={item.href}>
                 <button
-                  className={`cursor-pointer h-[48px] rounded-full ${
+                  className={`cursor-pointer h-[48px] rounded-full dark:text-white ${
                     item.w
                   } font-[600px] text-[16px] pb-1 
                    bg-gray-100 dark:bg-gray-800 flex items-center justify-center gap-2
@@ -100,7 +101,10 @@ export default function Header({ user }: any) {
                   {pathname === item.href && (
                     <div className="w-[7px] h-[7px] bg-black dark:bg-white rounded-full mt-1"></div>
                   )}
-                  {item.title}
+                  {item.title}{" "}
+                  <div className="relative  size-[20px] mt-2">
+                    <Image src={icon} alt="i" fill className="object-cover" />
+                  </div>
                 </button>
               </Link>
             ))}
@@ -109,7 +113,9 @@ export default function Header({ user }: any) {
 
             {!user ? (
               <NavbarItem>
-                <button className="h-[48px] font-[600px] text-[16px] pb-1 rounded-full w-[135px] text-white bg-[#7575FE]">
+                <button
+                  className={`h-[48px] font-[600px] text-[16px] pb-1 rounded-full w-[135px] text-white bg-primary-light`}
+                >
                   <Link href="/login">ثبت نام / ورود</Link>
                 </button>
               </NavbarItem>

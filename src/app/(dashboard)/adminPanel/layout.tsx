@@ -23,6 +23,8 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import SetRefreshToken from "../../../components/RefreshToken/SetRefreshToken";
 import { AnimatePresence, motion } from "framer-motion";
+import { getInfoType, useGetInfo } from "../../../utils/hooks/getInfoByToken";
+import Image from "next/image";
 
 const tabs = [
   {
@@ -100,7 +102,7 @@ export default function AdminLayout({
 }) {
   const pathname = usePathname();
   const [sidebarOpen, setSidebarOpen] = useState(false);
-
+  const getInfo: getInfoType = useGetInfo();
   return (
     <div className="flex h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
       <SetRefreshToken />
@@ -173,8 +175,15 @@ export default function AdminLayout({
           </h2>
 
           <div className="flex items-center gap-3">
-            <span className="text-sm">Admin</span>
-            <div className="w-8 h-8 bg-gray-300 rounded-full"></div>
+            <span className="text-sm">{getInfo?.name}</span>
+            <div className="w-8 h-8 bg-gray-300 rounded-full relative overflow-hidden">
+              <Image
+                src={getInfo?.profilePicture}
+                alt="P"
+                fill
+                className="object-cover"
+              />
+            </div>
           </div>
         </header>
         {/* Dynamic Page Content */}{" "}
