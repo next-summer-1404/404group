@@ -11,7 +11,7 @@ interface IStatsCardProps {
   description: string;
   index?: number;
 }
-const statsAnimation: Variants = {
+export const statsAnimation: Variants = {
   hidden: { opacity: 0, y: 80 },
   visible: (delayIndex: number) => ({
     opacity: 1,

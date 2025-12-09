@@ -31,7 +31,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fa" className="dark">
+    <html lang="fa" className="light">
       <body className={`${IRANYekan.variable} antialiased`}>
         <Providers>{children}</Providers>
       </body>

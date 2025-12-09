@@ -11,14 +11,17 @@ interface NextArrowProps {
 }
 
 const NextArrow: React.FC<NextArrowProps> = ({ onClick }) => {
-  const isDark = useIsDark();
-  console.log(isDark);
+  const { resolvedTheme } = useTheme();
   return (
     <div
       className="w-[56px] h-[56px] p-4 absolute right-2 top-[50%] -translate-y-1/2 cursor-pointer z-10 bg-[#F9F9F9] rounded-full hover:bg-[#d2d2d2] transition dark:bg-indigo-300"
       onClick={onClick}
     >
-      <Image src={nextArrowBlack} alt=">" width={24} height={24} />
+      {resolvedTheme === "dark" ? (
+        <Image src={nextArrowWhite} alt=">" width={24} height={24} />
+      ) : (
+        <Image src={nextArrowBlack} alt=">" width={24} height={24} />
+      )}
     </div>
   );
 };

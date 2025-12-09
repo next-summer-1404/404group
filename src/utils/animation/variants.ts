@@ -19,7 +19,10 @@ export const fadeInLeft = {
   hidden: { opacity: 0, x: 140 },
   visible: { opacity: 1, x: 0, transition: { duration: 1 } },
 };
-
+export const fadeInRight = {
+  hidden: { opacity: 0, x: -140 },
+  visible: { opacity: 1, x: 0, transition: { duration: 1 } },
+};
 export const springRightToLeft: Variants = {
   hidden: { opacity: 0, x: 80 }, // از راست وارد شود
   visible: {
@@ -30,6 +33,20 @@ export const springRightToLeft: Variants = {
       stiffness: 180, // قدرت فنر
       damping: 4, // میزان کاهش نوسان
       mass: 1, // وزن انیمیشن
+      duration: 0.6,
+    },
+  },
+};
+export const springRightToLeftAndFade: Variants = {
+  hidden: { opacity: 0, x: 80 }, // از راست وارد شود
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: "spring",
+      stiffness: 120, // قدرت فنر
+      damping: 10, // میزان کاهش نوسان
+      mass: 2, // وزن انیمیشن
       duration: 0.6,
     },
   },

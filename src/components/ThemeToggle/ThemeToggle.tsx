@@ -1,42 +1,32 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { Button } from "@heroui/button";
 import { MoonIcon, SunIcon } from "lucide-react";
 
 export default function ThemeToggle() {
-  const [isDark, setIsDark] = useState(false);
+  const { resolvedTheme, theme, setTheme } = useTheme();
 
-  useEffect(() => {
-    // بررسی وضعیت ذخیره‌شده در localStorage
-    const saved = localStorage.getItem("theme");
-    if (saved === "dark") {
-      document.documentElement.classList.add("dark");
-      setIsDark(true);
-    }
-  }, []);
-
-  const toggleTheme = () => {
-    const next = !isDark;
-    setIsDark(next);
-    if (next) {
-      document.documentElement.classList.add("dark");
-      localStorage.setItem("theme", "dark");
+  const toggle = () => {
+    // اگر کاربر روی سیستم باشد، وضعیت فعلی سیستم را معکوس کن
+    if (theme === "system") {
+      setTheme(resolvedTheme === "dark" ? "light" : "dark");
     } else {
-      document.documentElement.classList.remove("dark");
-      localStorage.setItem("theme", "light");
+      setTheme(theme === "dark" ? "light" : "dark");
     }
   };
 
   return (
     <Button
       isIconOnly
-      onClick={toggleTheme}
-      aria-label="تغییر تم"
-      variant="flat"
-      className="rounded-full bg-gray-100 dark:bg-gray-800 text-black dark:text-white  h-[48px] w-[48px]"
+      onClick={toggle}
+      className="rounded-full bg-gray-100 dark:bg-gray-800 text-black dark:text-white h-[48px] w-[48px]"
     >
-      {isDark ? <SunIcon size={20} /> : <MoonIcon size={20} />}
+      {resolvedTheme === "dark" ? (
+        <SunIcon size={20} />
+      ) : (
+        <MoonIcon size={20} />
+      )}
     </Button>
   );
 }

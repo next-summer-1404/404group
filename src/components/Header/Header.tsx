@@ -10,10 +10,13 @@ import { Bolt, Building, FileText, Home, Info, Menu } from "lucide-react";
 import MobileMenuModal from "./MobileModal";
 import Image from "next/image";
 import icon from "@/assets/landing/DownIcon.svg";
+import iconWhite from "@/assets/landing/DownIconWhite.svg";
+import { useTheme } from "next-themes";
 export default function Header({ user }: any) {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
   const usrs = useUser();
+  const { resolvedTheme } = useTheme();
 
   const navItemsRight = [
     { title: "خانه", href: "/", w: "w-[87px]", icon: <Home size={18} /> },
@@ -103,7 +106,16 @@ export default function Header({ user }: any) {
                   )}
                   {item.title}{" "}
                   <div className="relative  size-[20px] mt-2">
-                    <Image src={icon} alt="i" fill className="object-cover" />
+                    {resolvedTheme === "dark" ? (
+                      <Image
+                        src={iconWhite}
+                        alt="i"
+                        fill
+                        className="object-cover"
+                      />
+                    ) : (
+                      <Image src={icon} alt="i" fill className="object-cover" />
+                    )}{" "}
                   </div>
                 </button>
               </Link>
