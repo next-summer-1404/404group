@@ -37,6 +37,20 @@ export const springRightToLeft: Variants = {
     },
   },
 };
+export const springLeftToRight: Variants = {
+  hidden: { opacity: 0, x: -50 }, // از راست وارد شود
+  visible: {
+    opacity: 1,
+    x: 0,
+    transition: {
+      type: "spring",
+      stiffness: 120, // قدرت فنر
+      damping: 10, // میزان کاهش نوسان
+      mass: 2, // وزن انیمیشن
+      duration: 0.6,
+    },
+  },
+};
 export const springRightToLeftAndFade: Variants = {
   hidden: { opacity: 0, x: 80 }, // از راست وارد شود
   visible: {
@@ -64,6 +78,20 @@ export const springBottomtoUp: Variants = {
       duration: 0.6,
     },
   },
+};
+export const springBottomtoUpDelay: Variants = {
+  hidden: { y: 180 },
+  visible: (delayIndex: number) => ({
+    y: 0,
+    transition: {
+      duration: 0.6,
+      type: "spring",
+      stiffness: 120, // قدرت فنر
+      damping: 4, // میزان کاهش نوسان
+      mass: 1,
+      delay: delayIndex * 0.03, // هر کارت ۰.۲ ثانیه بعدی بیاید
+    },
+  }),
 };
 export const hoverCard = {
   rest: { scale: 1, x: 0 },

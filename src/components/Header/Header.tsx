@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import ThemeToggle from "../ThemeToggle/ThemeToggle";
 import { Navbar, NavbarBrand, NavbarContent, NavbarItem } from "@heroui/react";
 import { useUser } from "@/utils/hooks/useUsers";
@@ -12,12 +12,15 @@ import Image from "next/image";
 import icon from "@/assets/landing/DownIcon.svg";
 import iconWhite from "@/assets/landing/DownIconWhite.svg";
 import { useTheme } from "next-themes";
-export default function Header({ user }: any) {
+import { useGetInfo } from "../../utils/hooks/getInfoByToken";
+export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
-  const usrs = useUser();
+  const user = useGetInfo();
   const { resolvedTheme } = useTheme();
-
+  useEffect(() => {
+    console.log("users ;jsflksjdfkl", user);
+  }, [user]);
   const navItemsRight = [
     { title: "خانه", href: "/", w: "w-[87px]", icon: <Home size={18} /> },
     { title: "مقالات", href: "#", w: "w-[86px]", icon: <FileText size={18} /> },
@@ -126,19 +129,22 @@ export default function Header({ user }: any) {
             {!user ? (
               <NavbarItem>
                 <button
-                  className={`h-[48px] font-[600px] text-[16px] pb-1 rounded-full w-[135px] text-white bg-primary-light`}
+                  className={`h-[48px] font-[600px] text-[16px] pb-1 rounded-full w-[135px] text-white  bg-[#7575FE]`}
                 >
                   <Link href="/login">ثبت نام / ورود</Link>
                 </button>
               </NavbarItem>
             ) : (
               <NavbarItem>
-                <Link href={`/dashboard/${user.role}`}>
-                  <img
-                    src={user.avatar || "/avatar-default.png"}
-                    className="w-10 h-10 rounded-full border border-gray-300 dark:border-gray-700 cursor-pointer"
-                    alt="profile"
-                  />
+                <Link href={`/dashboard/${user?.role}`}>
+                  <div className=" size-[48px] rounded-full relative">
+                    <Image
+                      src={user?.profilePicture}
+                      alt="p"
+                      fill
+                      className="object-cover rounded-full"
+                    />
+                  </div>
                 </Link>
               </NavbarItem>
             )}

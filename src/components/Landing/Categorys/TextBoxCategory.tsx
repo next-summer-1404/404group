@@ -23,7 +23,7 @@ function TextBoxCategory() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        className="mr-[30px] font-[700] text-[32px] text-[#000000] w-[219px] h-[84px] dark:text-white"
+        className="mr-[30px] font-[700] text-[32px] text-[#000000] w-[219px] h-[84px] dark:text-white "
       >
         هر ملکی بخوای اینجا پیدا میشه!
       </motion.h1>
@@ -32,7 +32,7 @@ function TextBoxCategory() {
         initial="hidden"
         whileInView="visible"
         viewport={{ once: true, amount: 0.2 }}
-        className="mr-[30px] font-[500] text-[16px] text-[#555555] w-[372px] h-[56px] dark:text-gray-300"
+        className="mr-[30px] font-[500] text-[16px] text-[#555555] w-[372px] h-[56px] dark:text-gray-300 mt-[16px]"
       >
         با کلیک به روی هر دسته بندی می توانید تمام آگهی مربوط آن را مشاهده کنید
         و به ملک مورد علاقه خود برسید

@@ -5,6 +5,7 @@ import landing from "../../../public/landing.png";
 import Link from "next/link";
 import IntroSectionLanding from "./IntroLanding/IntroSectionLanding";
 import CategorysComponenetInLandingPage from "./Categorys/CategorysComponenetInLandingPage";
+import DiscountLandingComponents from "./Discount/DiscountLandingComponents";
 
 const Landing = () => {
   return (
@@ -12,6 +13,7 @@ const Landing = () => {
       <SetRefreshToken />
       <IntroSectionLanding />
       <CategorysComponenetInLandingPage />
+      <DiscountLandingComponents />
     </div>
   );
 };

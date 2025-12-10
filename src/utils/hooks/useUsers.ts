@@ -1,31 +1,29 @@
 // hooks/useUser.ts
 "use client";
-
+import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 import { useEffect, useState } from "react";
-import { jwtDecode } from "jwt-decode";
-
-interface DecodedToken {
-  role: "seller" | "buyer";
-  id: string;
-  avatar?: string;
-  exp: number;
-}
 
 export const useUser = () => {
-  const [user, setUser] = useState<DecodedToken | null>(null);
-
+  const [decodeState, setDecodeState] = useState("");
+  const token = Cookies.get("accessTokenClient");
   useEffect(() => {
-    const token = localStorage.getItem("accessTokenClient");
     if (token) {
-      try {
-        const decoded = jwtDecode<DecodedToken>(token);
-        setUser(decoded);
-      } catch (err) {
-        console.error("Invalid token");
-        setUser(null);
-      }
-    }
-  }, []);
+      const decoded: any = jwt.decode(token);
 
-  return user;
+      const now = Math.floor(Date.now() / 1000);
+      if (decoded.exp && decoded.exp < now) {
+        console.log("Token expired!");
+        setDecodeState("");
+      } else {
+        console.log("Token is valid");
+        setDecodeState(decoded);
+      }
+    } else {
+      console.log("No token found");
+      return;
+    }
+  }, [token]);
+
+  return decodeState;
 };
