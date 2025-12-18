@@ -2,7 +2,7 @@
 import Image from "next/image";
 import React, { useState } from "react";
 import houseReserveBg from "@/assets/houseReserve/HouseReserveImageItems.png";
-import location from "@/assets/rent/location.png";
+import location from "@/assets/rent/location.svg";
 import loc from "@/assets/houseReserve/location.svg";
 import ring from "@/assets/houseReserve/ring.svg";
 import rating from "@/assets/houseReserve/rating.svg";
@@ -13,6 +13,8 @@ import {
 import { HousesResponse } from "../../types/RentTypes/HomeTypes";
 import { useRouter, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { motion } from "framer-motion";
+import { scale, scaleHover } from "../../utils/animation/variants";
 function HouseReserveCardBox({ houses, totalCount }: HousesResponse) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -33,7 +35,12 @@ function HouseReserveCardBox({ houses, totalCount }: HousesResponse) {
     <div className="w-[100%] h-[80%] border-black mt-8 flex gap-6 flex-row flex-wrap p-2 overflow-auto scrollbar-thin scrollbar-thumb-blue-600 scrollbar-track-blue-200">
       {houses?.map((items) => (
         <Link href={`/SingleReservHouse/${items.id}`} key={items.id}>
-          <div className="shadow-2xl rounded-2xl w-[218px] h-[317px] border-black  hover:scale-90 transition-[0.5s]">
+          <motion.div
+            variants={scaleHover}
+            initial="hidden"
+            whileHover="visible"
+            className="shadow-2xl rounded-2xl w-[218px] h-[317px] border-black "
+          >
             <div className="w-[218px] h-[182px]  rounded-[24px] border-black relative">
               {" "}
               <Image
@@ -102,15 +109,15 @@ function HouseReserveCardBox({ houses, totalCount }: HousesResponse) {
               </div>
             </div>
             <div className="flex flex-col gap-[16px]">
-              <h1 className="text-[18px] font-[700] dark:text-white text-black mt-4">
+              <h1 className="text-[18px] font-[700] dark:text-white text-black mt-4 mr-4">
                 {items.title}
               </h1>
               <div className="  flex flex-row gap-[7px]">
-                <div className="flex flex-row flex-nowrap gap-[7px]">
+                <div className="flex flex-row flex-nowrap gap-[7px]  mr-2">
                   <div className="size-[32px] rounded-[16px] bg-[#F3F3F3] flex justify-center items-center">
                     <Image src={location} alt="l" width={20} height={20} />
                   </div>
-                  <p className="text-[14px] dark:text-gray-300 mt-0.5 text-black">
+                  <p className="text-[14px] dark:text-gray-300 mt-0.5 text-black ">
                     {items.address
                       ? items.address.length > 10
                         ? items.address.substring(0, 10) + "..."
@@ -123,11 +130,11 @@ function HouseReserveCardBox({ houses, totalCount }: HousesResponse) {
                     <Image src={ring} alt="l" width={20} height={20} />
                   </div>
                   <p className="text-[14px] mt-0.5 dark:text-gray-300 text-black">
-                    6 شب
+                    {items.bookings} شب
                   </p>
                 </div>
               </div>
-              <div className="flex  justify-between text-black">
+              <div className="flex  justify-between text-black mr-2">
                 {items?.discounted_price ? (
                   <div className="text-[#A6A6A6] relative">
                     <div className="border border-red-500 -rotate-12 w-full absolute top-4 right-0"></div>
@@ -138,7 +145,7 @@ function HouseReserveCardBox({ houses, totalCount }: HousesResponse) {
                   <div></div>
                 )}
                 {items?.price ? (
-                  <div className="dark:text-white">
+                  <div className="dark:text-white ml-2">
                     {formatNumberToPersian(items?.price)}{" "}
                     <span className="text-[10px] font-[700]">تومان</span>
                   </div>
@@ -147,7 +154,7 @@ function HouseReserveCardBox({ houses, totalCount }: HousesResponse) {
                 )}
               </div>
             </div>
-          </div>
+          </motion.div>
         </Link>
       ))}
     </div>

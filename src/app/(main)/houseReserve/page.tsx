@@ -28,9 +28,9 @@ async function HouseReserve({ searchParams }: HouseReserveProps) {
 
         {/* باکس روی نقشه */}
         <div className="absolute top-0 right-0 z-[1000] dark:bg-gray-900 w-[540px] h-[800px] bg-white bg-opacity-70 rounded-2xl text-white p-6">
-          <div className="text-black dark:text-white">
+          {/* <div className="text-black dark:text-white">
             خانه {">"} رزرو هتل {">"} رزرو هتل رشت
-          </div>
+          </div> */}
           <HouseReserveFiltersComponents />
           <HouseReserveCardBox
             houses={res?.houses}

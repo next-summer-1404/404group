@@ -52,7 +52,7 @@ export default function Header() {
       {/* ------------------ NAVBAR ------------------ */}
       <Navbar
         maxWidth="full"
-        className="bg-white dark:bg-gray-900 w-full h-max md:px-[56px] py-[10px]"
+        className="bg-white dark:bg-gray-900 w-full h-max md:px-[56px] py-[10px] z-[100000000] "
         dir="rtl"
       >
         {/* ---------- MOBILE MENU BUTTON ---------- */}

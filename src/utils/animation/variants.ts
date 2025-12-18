@@ -115,3 +115,29 @@ export const scale: Variants = {
     },
   },
 };
+export const scaleHover: Variants = {
+  hidden: { scale: 1 },
+  visible: {
+    scale: 1.05,
+    transition: {
+      type: "spring",
+      stiffness: 120, // قدرت فنر
+      damping: 2, // میزان کاهش نوسان
+      mass: 1, // وزن انیمیشن
+      duration: 0.3,
+    },
+  },
+};
+export const scaleDesc: Variants = {
+  hidden: { scale: 0 },
+  visible: {
+    scale: 1,
+    transition: {
+      type: "spring",
+      stiffness: 130, // قدرت فنر
+      damping: 10, // میزان کاهش نوسان
+      mass: 1, // وزن انیمیشن
+      duration: 0.6,
+    },
+  },
+};

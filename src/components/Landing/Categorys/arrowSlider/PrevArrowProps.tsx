@@ -15,7 +15,7 @@ const PrevArrow: React.FC<PrevArrowProps> = ({ onClick }) => {
 
   return (
     <div
-      className=" size-[56px] p-4 absolute -left-7 top-[50%] -translate-y-1/2 cursor-pointer z-10  bg-[#F9F9F9]  rounded-full dark:bg-indigo-300 hover:bg-[#d2d2d2] transition"
+      className="z-10 size-[56px] p-4 absolute -left-7 top-[50%] -translate-y-1/2 cursor-pointer   bg-[#F9F9F9]  rounded-full dark:bg-indigo-300 hover:bg-[#d2d2d2] transition"
       onClick={onClick}
     >
       {resolvedTheme === "dark" ? (

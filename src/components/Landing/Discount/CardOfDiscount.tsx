@@ -1,10 +1,14 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-import location from "@/assets/rent/location.png";
-import parking from "@/assets/rent/parking.png";
-import bathRome from "@/assets/rent/bathRome.png";
-import bed from "@/assets/rent/bed.png";
+import location from "@/assets/rent/location.svg";
+import locationWhite from "@/assets/rent/locationWhite.svg";
+import human from "@/assets/rent/human.svg";
+import humanWhite from "@/assets/rent/humanWhite.svg";
+import bathRome from "@/assets/rent/bathRome.svg";
+import bathRomeWhite from "@/assets/rent/bathRomeWhite.svg";
+import bed from "@/assets/rent/bed.svg";
+import bedWhite from "@/assets/rent/bedWhite.svg";
 import imageHouses from "@/assets/rent/imageHouses.png";
 import {
   formatNumberToPersian,
@@ -23,10 +27,12 @@ import {
   springBottomtoUpDelay,
 } from "../../../utils/animation/variants";
 import { useIsMobile } from "../../../utils/hooks/useIsMobile";
+import { useIsDark } from "../../../utils/hooks/useIsDark";
 interface ICardOfDiscountProps {
   item: House;
 }
 function CardOfDiscount({ item }: ICardOfDiscountProps) {
+  const isDark = useIsDark();
   return (
     <>
       <div className=" border-gray-300 rounded-[24px] h-[282px] w-[303px] relative">
@@ -43,8 +49,12 @@ function CardOfDiscount({ item }: ICardOfDiscountProps) {
         </h1>
 
         <div className="flex flex-row flex-nowrap gap-[8px]">
-          <div className="size-[32px] rounded-[16px] bg-[#F3F3F3] flex justify-center items-center">
-            <Image src={location} alt="l" width={20} height={20} />
+          <div className="size-[32px] rounded-[16px] bg-[#F3F3F3] flex justify-center items-center dark:bg-gray-800">
+            {isDark ? (
+              <Image src={locationWhite} alt="l" width={20} height={20} />
+            ) : (
+              <Image src={location} alt="l" width={20} height={20} />
+            )}
           </div>
           <p className="text-[14px] mt-0.5">
             {item.caption
@@ -55,8 +65,12 @@ function CardOfDiscount({ item }: ICardOfDiscountProps) {
           </p>
         </div>
         <div className="flex flex-row flex-nowrap gap-[8px]">
-          <div className="size-[32px] rounded-[16px] bg-[#F3F3F3] flex justify-center items-center">
-            <Image src={bed} alt="l" width={20} height={20} />
+          <div className="size-[32px] rounded-[16px] bg-[#F3F3F3] flex justify-center items-center dark:bg-gray-800">
+            {isDark ? (
+              <Image src={bedWhite} alt="l" width={20} height={20} />
+            ) : (
+              <Image src={bed} alt="l" width={20} height={20} />
+            )}{" "}
           </div>{" "}
           <p className="font-[500] text-[14px] mt-1">
             {item.rooms !== null
@@ -64,18 +78,26 @@ function CardOfDiscount({ item }: ICardOfDiscountProps) {
               : "بدون "}{" "}
             خواب
           </p>
-          <div className="size-[32px] rounded-[16px] bg-[#F3F3F3] flex justify-center items-center">
-            <Image src={parking} alt="l" width={20} height={20} />
+          <div className="size-[32px] rounded-[16px] bg-[#F3F3F3] flex justify-center items-center dark:bg-gray-800">
+            {isDark ? (
+              <Image src={humanWhite} alt="l" width={20} height={20} />
+            ) : (
+              <Image src={human} alt="l" width={20} height={20} />
+            )}{" "}
           </div>{" "}
           <p className="font-[500] text-[14px]  mt-1">
             {" "}
-            {item.parking !== null
-              ? toPersianDigits(item.parking.toString())
+            {item.capacity !== null
+              ? toPersianDigits(item.capacity.toString())
               : "بدون "}{" "}
             پارکینگ
           </p>
-          <div className="size-[32px] rounded-[16px] bg-[#F3F3F3] flex justify-center items-center">
-            <Image src={bathRome} alt="l" width={20} height={20} />
+          <div className="size-[32px] rounded-[16px] bg-[#F3F3F3] flex justify-center items-center dark:bg-gray-800">
+            {isDark ? (
+              <Image src={bathRomeWhite} alt="l" width={20} height={20} />
+            ) : (
+              <Image src={bathRome} alt="l" width={20} height={20} />
+            )}{" "}
           </div>{" "}
           <p className="font-[500] text-[14px]  mt-1">
             {" "}

@@ -6,6 +6,10 @@ import Link from "next/link";
 import IntroSectionLanding from "./IntroLanding/IntroSectionLanding";
 import CategorysComponenetInLandingPage from "./Categorys/CategorysComponenetInLandingPage";
 import DiscountLandingComponents from "./Discount/DiscountLandingComponents";
+import DestinationList from "./Distination/DestinationList";
+import DescriptionInLanding from "./Description/DescriptionInLanding";
+import SellAndBuyComponents from "./SellAndBuy/SellAndBuyComponents";
+import CommentInLanding from "./Comment/CommentInLanding";
 
 const Landing = () => {
   return (
@@ -14,6 +18,10 @@ const Landing = () => {
       <IntroSectionLanding />
       <CategorysComponenetInLandingPage />
       <DiscountLandingComponents />
+      <DestinationList />
+      <DescriptionInLanding />
+      {/* <SellAndBuyComponents /> */}
+      {/* <CommentInLanding /> */}
     </div>
   );
 };

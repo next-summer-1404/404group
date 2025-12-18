@@ -54,6 +54,7 @@ function SliderForCategorys({ value }: SliderForCategorysProps) {
       initial="hidden"
       whileInView="visible"
       viewport={{ once: true, amount: 0.3 }}
+      className="mx-auto  p-6 sm:p-0"
     >
       {" "}
       <Slider {...settings}>
