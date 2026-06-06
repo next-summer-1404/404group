@@ -20,14 +20,18 @@ const HeroDashboard = () => {
   }, []);
 
   const cards = [
-    { id: 1, title: "بازدید های امروز", value: data?.bookings.bookingCount },
+    { id: 1, title: "کل رزرو ها", value: data?.bookings.bookingCount },
     {
       id: 2,
       title: "رزرو های در انتظار",
+      value: data?.bookings.pendingBookings,
+    },
+    {
+      id: 3,
+      title: "رزرو های تایید شده",
       value: data?.bookings.conformedBookings,
     },
-    { id: 3, title: "رزرو های فعال", value: data?.bookings.canceledBookings },
-    { id: 4, title: "کل املاک ها", value: data?.bookings.pendingBookings },
+    { id: 4, title: "کل املاک ها", value: data?.houses },
   ];
 
   return (

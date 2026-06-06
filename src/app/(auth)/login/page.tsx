@@ -16,7 +16,7 @@ import ThemeToggle from "@/components/ThemeToggle/ThemeToggle";
 
 function Login() {
   return (
-    <div className="flex flex-col lg:flex-row justify-between w-full">
+    <div className="flex flex-col lg:flex-row justify-between">
       {/* فرم سمت راست (در موبایل بالا) */}
       <div className="w-full lg:w-1/2">
         <div className="max-w-md mx-auto p-6 mt-10 lg:mt-[104px]">

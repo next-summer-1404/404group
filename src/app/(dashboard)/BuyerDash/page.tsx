@@ -1,7 +1,7 @@
 import DashboardBuyer from "@/components/Panel/Panel";
 import React from "react";
 
-const BuyerDash = () => {
+const buyerDash = () => {
   return (
     <main className="font-sans grid grid-rows-[20px_1fr_20px] min-h-screen dark:bg-gray-900 bg-white font-yekan">
       <DashboardBuyer />
@@ -9,4 +9,4 @@ const BuyerDash = () => {
   );
 };
 
-export default BuyerDash;
+export default buyerDash;

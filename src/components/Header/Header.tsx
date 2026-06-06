@@ -47,6 +47,15 @@ export default function Header() {
     },
   ];
 
+  let dashboardHref = "/";
+  if (user?.role === "admin") {
+    dashboardHref = "/adminPanel/dashboard";
+  } else if (user?.role === "buyer") {
+    dashboardHref = "/buyerDash";
+  } else if (user?.role === "seller") {
+    dashboardHref = "/sellerDash";
+  }
+
   return (
     <>
       {/* ------------------ NAVBAR ------------------ */}
@@ -136,7 +145,7 @@ export default function Header() {
               </NavbarItem>
             ) : (
               <NavbarItem>
-                <Link href={`/dashboard/${user?.role}`}>
+                <Link href={dashboardHref}>
                   <div className=" size-[48px] rounded-full relative">
                     <Image
                       src={user?.profilePicture}

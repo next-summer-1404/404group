@@ -5,12 +5,10 @@ import Footer from "../../../../components/Footer/Footer";
 import { getHouseReserveDetail } from "../../../../services/api/HouseReserveDetails/HouseReserveDetails";
 import { Property } from "../../../../types/HouseReserve/HouseReserveType";
 export interface ISingleReserveHouseDetailParams {
-  params: { id: string };
+  params: promise<{ id: string }>;
 }
-async function SingleReservHouseDetail({
-  params,
-}: ISingleReserveHouseDetailParams) {
-  const id = params.id;
+async function SingleReservHouseDetail({ params }: props) {
+  const id = await params;
   console.log(id);
 
   const property = await getHouseReserveDetail(id);

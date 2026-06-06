@@ -55,8 +55,6 @@ export default function DashboardBuyer() {
 
   return (
     <div className="flex flex-col md:flex-row min-h-screen bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-gray-100">
-      {/* 📌 Sidebar – ریسپانسیو کامل */}
-
       <aside
         className={`
           bg-white dark:bg-gray-800 shadow-lg

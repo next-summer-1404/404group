@@ -5,7 +5,7 @@ export interface ILogin {
 }
 export const Login = async (
   email: string,
-  password: string
+  password: string,
 ): Promise<ILogin> => {
   try {
     const res: ILogin = await http.post("/api/auth/login", {

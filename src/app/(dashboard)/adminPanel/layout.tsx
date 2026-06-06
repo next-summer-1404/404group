@@ -115,6 +115,13 @@ export default function AdminLayout({
       >
         <div className="flex items-center justify-between px-4 py-3">
           <h1 className="text-xl font-bold">دلتا</h1>
+          <div className="mt-3 mr-6 flex gap-38">
+            <div className="mt-2">
+              <Link href={"/"}>
+                <Home size={25} />
+              </Link>
+            </div>
+          </div>
           <button className="md:hidden" onClick={() => setSidebarOpen(false)}>
             <X />
           </button>

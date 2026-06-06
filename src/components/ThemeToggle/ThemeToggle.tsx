@@ -8,7 +8,6 @@ export default function ThemeToggle() {
   const { resolvedTheme, theme, setTheme } = useTheme();
 
   const toggle = () => {
-    // اگر کاربر روی سیستم باشد، وضعیت فعلی سیستم را معکوس کن
     if (theme === "system") {
       setTheme(resolvedTheme === "dark" ? "light" : "dark");
     } else {

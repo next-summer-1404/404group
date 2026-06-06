@@ -9,6 +9,7 @@ import {
   springRightToLeftAndFade,
 } from "../../../utils/animation/variants";
 import { Button } from "@heroui/button";
+import Link from "next/link";
 function TextBoxDiscount() {
   return (
     <>
@@ -43,7 +44,7 @@ function TextBoxDiscount() {
           className="hidden sm:block ml-[30px] sm:ml-0"
         >
           <Button className=" h-[48px] rounded-[100px] bg-[#7575FE] text-[white]">
-            مشاهده همه
+            <Link href="/rent">مشاهده همه</Link>
           </Button>
         </motion.div>
       </div>

@@ -9,6 +9,7 @@ import { House } from "../../types/RentTypes/HomeTypes";
 import ReserveNowBox from "./ReserveNowBox";
 import { Property } from "../../types/HouseReserve/HouseReserveType";
 import { getHouse } from "@/services/api/HouseApiLand/Houses";
+import Link from "next/link";
 
 const SingleReservHouse = ({ property }: any) => {
   interface data {

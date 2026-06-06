@@ -56,9 +56,9 @@ function LoginForm() {
         if (newRole === "admin") {
           router.push("/adminPanel/dashboard");
         } else if (newRole === "buyer") {
-          router.push("/BuyerDash");
+          router.push("/buyerDash");
         } else if (newRole === "seller") {
-          router.push("/SellerDash");
+          router.push("/sellerDash");
         } else {
           router.push("/");
         }

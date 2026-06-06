@@ -5,10 +5,10 @@ import { getHouseReserveDetail } from "../../../../services/api/HouseReserveDeta
 import { Property } from "../../../../types/HouseReserve/HouseReserveType";
 import SingleHouse from "@/components/SingleHouse/SingleHouse";
 export interface ISingleReserveHouseDetailParams {
-  params: { id: string };
+  params: promise<{ id: string }>;
 }
-async function SingleHouseDetail({ params }: ISingleReserveHouseDetailParams) {
-  const id = params.id;
+async function SingleHouseDetail({ params }: props) {
+  const id = await params;
   console.log(id);
 
   const property = await getHouseReserveDetail(id);
