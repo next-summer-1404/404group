@@ -8,8 +8,8 @@ export async function POST(req: Request) {
     const { email, password } = await req.json();
 
     const res: ILogin = await http.post(
-      `https://delta-project.liara.run/api/auth/login`,
-      { email, password }
+      `http://188.121.111.8:3003/api/auth/login`,
+      { email, password },
     );
 
     const { accessToken, refreshToken } = res;
